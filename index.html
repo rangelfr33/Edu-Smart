@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduSmart - Smartphone na Educação</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #10b981;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text: #1e293b;
+            --text-light: #64748b;
+            --radius: 
+
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding-bottom: 40px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 2.5rem 1rem;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            opacity: 0.9;
+            font-size: 1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            background: white;
+            padding: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            overflow-x: auto;
+        }
+
+        nav button {
+            background: none;
+            border: none;
+            padding: 8px 16px;
+            font-weight: 600;
+            color: var(--text-light);
+            cursor: pointer;
+            border-radius: 20px;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        nav button.active, nav button:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        main {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 0 15px;
+        }
+
+        .section {
+            display: none;
+            background: var(--card-bg);
+            padding: 24px;
+            border-radius: var(--radius);
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 8px;
+        }
+
+        /* Card list */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .card {
+            border: 1px solid #e2e8f0;
+            padding: 15px;
+            border-radius: 8px;
+            background: #fafafa;
+        }
+
+        .card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+            color: var(--text);
+        }
+
+        .card p {
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        /* Quiz */
+        .quiz-option {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            background: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            text-align: left;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: 0.2s;
+        }
+
+        .quiz-option:hover {
+            background: #e2e8f0;
+        }
+
+        .feedback {
+            margin-top: 15px;
+            font-weight: bold;
+            padding: 10px;
+            border-radius: 6px;
+        }
+
+        .correct { background: #d1fae5; color: #065f46; }
+        .wrong { background: #fee2e2; color: #991b1b; }
+
+        /* Pomodoro Timer */
+        .timer-display {
+            font-size: 3.5rem;
+            font-weight: bold;
+            text-align: center;
+            color: var(--primary);
+            margin: 20px 0;
+        }
+
+        .timer-controls {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn-secondary {
+            background: #64748b;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>EduSmart 📱</h1>
+        <p>O Smartphone como Ferramenta Pedagógica no Ensino Médio</p>
+    </header>
+
+    <nav>
+        <button class="active" onclick="showTab('inicio')">Início</button>
+        <button onclick="showTab('materiais')">Biblioteca</button>
+        <button onclick="showTab('quiz')">Quiz</button>
+        <button onclick="showTab('foco')">Cronômetro Foco</button>
+        <button onclick="showTab('apps')">Apps Indicados</button>
+    </nav>
+
+    <main>
+        <section id="inicio" class="section active">
+            <h2>Bem-vindo ao EduSmart</h2>
+            <p>Esta plataforma web é um projeto pedagógico que visa transformar o celular em um grande aliado do aprendizado no Ensino Médio.</p>
+            <br>
+            <p>Acesse o menu acima para explorar a biblioteca de estudos, testar seus conhecimentos no quiz interativo, utilizar o método Pomodoro para foco ou conhecer aplicativos recomendados para suas disciplinas!</p>
+            
+            <div class="card-grid">
+                <div class="card">
+                    <h3>📚 Estudo Dirigido</h3>
+                    <p>Acesse resumos e guias de estudo otimizados para leitura mobile.</p>
+                </div>
+                <div class="card">
+                    <h3>⏱️ Gestão do Tempo</h3>
+                    <p>Organize suas rotinas de estudos sem distrações do smartphone.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="materiais" class="section">
+            <h2>Biblioteca Digital</h2>
+            <p>Conteúdos essenciais para revisão rápida:</p>
+            <div class="card-grid">
+                <div class="card">
+                    <h3>Matemática</h3>
+                    <p>Funções, Geometria e Estatística para o ENEM.</p>
+                </div>
+                <div class="card">
+                    <h3>Língua Portuguesa</h3>
+                    <p>Técnicas de Redação Dissertativa e Gramática Aplicada.</p>
+                </div>
+                <div class="card">
+                    <h3>Informática / Tecnologia</h3>
+                    <p>Lógica de Programação, Algoritmos e Cultura Digital.</p>
+                </div>
+                <div class="card">
+                    <h3>História & Ciências Humanas</h3>
+                    <p>Resumos e mapas mentais para fixação.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="quiz" class="section">
+            <h2>Quiz Rápido: Uso de Tecnologia</h2>
+            <p><strong>Pergunta:</strong> Qual é a principal vantagem de utilizar o smartphone como ferramenta pedagógica?</p>
+            
+            <button class="quiz-option" onclick="checkQuiz(false)">A) Subsidiar distrações e jogos durante o horário de aula.</button>
+            <button class="quiz-option" onclick="checkQuiz(true)">B) Permitir acesso rápido a informações, metodologias ativas e mídias interativas.</button>
+            <button class="quiz-option" onclick="checkQuiz(false)">C) Substituir completamente o papel da escola e dos professores.</button>
+
+            <div id="quiz-feedback" class="feedback" style="display: none;"></div>
+        </section>
+
+        <section id="foco" class="section">
+            <h2>Cronômetro de Foco (Pomodoro)</h2>
+            <p>Utilize esta ferramenta para estudar sem se distrair com notificações:</p>
+            
+            <div class="timer-display" id="timer">25:00</div>
+            
+            <div class="timer-controls">
+                <button class="btn" onclick="startTimer()">Iniciar</button>
+                <button class="btn btn-secondary" onclick="resetTimer()">Resetar</button>
+            </div>
+        </section>
+
+        <section id="apps" class="section">
+            <h2>Aplicativos Recomendados</h2>
+            <p>Ferramentas gratuitas para potencializar seus estudos no smartphone:</p>
+            <div class="card-grid">
+                <div class="card">
+                    <h3>Duolingo</h3>
+                    <p>Aprendizado de idiomas de forma gamificada.</p>
+                </div>
+                <div class="card">
+                    <h3>Notion / Trello</h3>
+                    <p>Organização de horários de aulas e trabalhos escolares.</p>
+                </div>
+                <div class="card">
+                    <h3>Geogebra</h3>
+                    <p>Visualização e prática de conceitos matemáticos.</p>
+                </div>
+                <div class="card">
+                    <h3>Canva</h3>
+                    <p>Criação de apresentações e resumos visuais.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        function showTab(tabId) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+            
+            document.getElementById(tabId).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        function checkQuiz(isCorrect) {
+            const feedback = document.getElementById('quiz-feedback');
+            feedback.style.display = 'block';
+            if(isCorrect) {
+                feedback.textContent = 'Correcto! 🎉 O smartphone amplia as possibilidades de pesquisa e métodos de aprendizagem.';
+                feedback.className = 'feedback correct';
+            } else {
+                feedback.textContent = 'Incorreto. Tente novamente!';
+                feedback.className = 'feedback wrong';
+            }
+        }
+
+        // Timer JS
+        let timeLeft = 25 * 60;
+        let timerId = null;
+
+        function updateTimer() {
+            let minutes = Math.floor(timeLeft / 60);
+            let seconds = timeLeft % 60;
+            document.getElementById('timer').textContent = 
+                `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        function startTimer() {
+            if (timerId !== null) return;
+            timerId = setInterval(() => {
+                if (timeLeft > 0) {
+                    timeLeft--;
+                    updateTimer();
+                } else {
+                    clearInterval(timerId);
+                    alert("Tempo de foco concluído! Faça uma pausa.");
+                }
+            }, 1000);
+        }
+
+        function resetTimer() {
+            clearInterval(timerId);
+            timerId = null;
+            timeLeft = 25 * 60;
+            updateTimer();
+        }
+    </script>
+</body>
+</html>
+
