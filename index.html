@@ -1,831 +1,1873 @@
+aula-conectada/
+├── assets/
+│   ├── css/
+│   │   ├── style.css           /* Design System Base, Variáveis CSS, Reset & Utilitários */
+│   │   ├── animations.css      /* Keyframes, Transições & Microinterações */
+│   │   └── components.css      /* Componentes UI Reutilizáveis (Cards, Modais, Inputs, Toasts) */
+│   ├── js/
+│   │   ├── utils.js            /* Bando de Dados Mocado, Helpers, Storage, DOM & Toast Engine */
+│   │   ├── animations.js       /* ScrollReveal, Observer, Skeleton Loading & Contadores */
+│   │   ├── main.js             /* Router, Event Delegation, Global UI & Dark/Acessibilidade Mode */
+│   │   ├── login.js            /* Engine de Autenticação, Validação de Formulários & Sessão */
+│   │   └── dashboard.js        /* Métricas, Gráficos Customizados SVG, Quiz & Pomodoro Engine */
+│   ├── images/
+│   └── icons/
+├── pages/
+│   ├── index.html              /* Landing Page Principal & Visão Institucional */
+│   ├── sobre.html              /* TCC, Fundamentação Teórica, Metodologia & Equipe */
+│   ├── login.html              /* Portal de Acesso Multi-perfil com Autenticação */
+│   ├── cadastro.html           /* Formulário de Registro de Estudantes e Educadores */
+│   ├── dashboard.html          /* Painel Geral Gamificado com Métricas e Pomodoro */
+│   ├── biblioteca.html         /* Repositório de Recursos Pedagógicos & Apps Recomendados */
+│   ├── quiz.html               /* Engine de Avaliação Diagnóstica Interativa */
+│   ├── professor.html          /* Gestão Turmas, Envio de Tarefas & Correção Simulada */
+│   ├── aluno.html              /* Portal do Estudante, Conquistas, Badges & Minhas Tarefas */
+│   └── contato.html            /* Suporte, Ouvidoria & Formulário Validado */
+└── README.md                   /* Documentação Técnica do TCC & Arquitetura de Software */
+/* ==========================================================================
+   AULA CONECTADA - DESIGN SYSTEM & BASE STYLES
+   Versão: 2.5.0
+   Descrição: Variáveis globais, reset CSS, tipografia, layout fluido e dark mode.
+   Autores: Cauã Rangel (Desenvolvedor) & Maria Elisa (Idealizadora)
+   ========================================================================== */
+
+/* --- VARIÁVEIS GLOBAIS (DESIGN TOKENS) --- */
+:root {
+    /* Cores Primárias e Marca */
+    --color-primary: #4338CA;
+    --color-primary-hover: #3730A3;
+    --color-primary-light: #6366F1;
+    --color-primary-subtle: #EEF2FF;
+    
+    /* Cores Secundárias e Acentos */
+    --color-secondary: #059669;
+    --color-secondary-hover: #047857;
+    --color-secondary-subtle: #ECFDF5;
+    --color-accent: #D97706;
+    --color-accent-subtle: #FFFBEB;
+    --color-danger: #DC2626;
+    --color-danger-subtle: #FEF2F2;
+    --color-warning: #F59E0B;
+    --color-info: #0284C7;
+
+    /* Neutros (Modo Claro) */
+    --bg-main: #F8FAFC;
+    --bg-surface: #FFFFFF;
+    --bg-card: #FFFFFF;
+    --bg-glass: rgba(255, 255, 255, 0.75);
+    
+    --text-primary: #0F172A;
+    --text-secondary: #475569;
+    --text-muted: #94A3B8;
+    --text-on-primary: #FFFFFF;
+
+    --border-color: #E2E8F0;
+    --border-focus: #818CF8;
+
+    /* Sombras Elevações (Elevation System) */
+    --shadow-xs: 0 1px 2px 0 rgba(15, 23, 42, 0.05);
+    --shadow-sm: 0 1px 3px 0 rgba(15, 23, 42, 0.1), 0 1px 2px -1px rgba(15, 23, 42, 0.1);
+    --shadow-md: 0 4px 6px -1px rgba(15, 23, 42, 0.1), 0 2px 4px -2px rgba(15, 23, 42, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(15, 23, 42, 0.1), 0 4px 6px -4px rgba(15, 23, 42, 0.1);
+    --shadow-xl: 0 20px 25px -5px rgba(15, 23, 42, 0.1), 0 8px 10px -6px rgba(15, 23, 42, 0.1);
+    --shadow-glow: 0 0 20px rgba(99, 102, 241, 0.35);
+
+    /* Raio de Borda (Border Radius) */
+    --radius-xs: 4px;
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 20px;
+    --radius-xl: 28px;
+    --radius-full: 9999px;
+
+    /* Transições */
+    --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-normal: 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    --transition-slow: 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+
+    /* Layout & Spacing */
+    --max-width-site: 1280px;
+    --header-height: 76px;
+    --font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* --- OVERRIDE TEMA ESCURO (DARK MODE) --- */
+body.dark-theme {
+    --bg-main: #090D16;
+    --bg-surface: #111827;
+    --bg-card: #1E293B;
+    --bg-glass: rgba(17, 24, 39, 0.85);
+
+    --text-primary: #F8FAFC;
+    --text-secondary: #CBD5E1;
+    --text-muted: #64748B;
+
+    --border-color: #1E293B;
+    --border-focus: #6366F1;
+
+    --color-primary-subtle: rgba(99, 102, 241, 0.15);
+    --color-secondary-subtle: rgba(16, 185, 129, 0.15);
+
+    --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.5);
+    --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.4);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+}
+
+/* --- MODOS DE ACESSIBILIDADE --- */
+body.high-contrast {
+    --bg-main: #000000 !important;
+    --bg-surface: #000000 !important;
+    --bg-card: #111111 !important;
+    --text-primary: #FFFF00 !important;
+    --text-secondary: #FFFFFF !important;
+    --text-muted: #00FFFF !important;
+    --border-color: #FFFFFF !important;
+    --color-primary: #FFFF00 !important;
+    --color-primary-hover: #00FFFF !important;
+}
+
+body.font-large {
+    font-size: 118% !important;
+}
+
+body.font-xlarge {
+    font-size: 130% !important;
+}
+
+/* --- RESET MODERN & BOX SIZING --- */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    font-family: var(--font-family);
+    line-height: 1.6;
+    overflow-x: hidden;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    transition: background-color var(--transition-normal), color var(--transition-normal);
+}
+
+a {
+    color: var(--color-primary-light);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+a:hover {
+    color: var(--color-primary);
+}
+
+img, video, svg {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+button, input, select, textarea {
+    font: inherit;
+    color: inherit;
+}
+
+button {
+    cursor: pointer;
+    border: none;
+    background: none;
+}
+
+ul, ol {
+    list-style: none;
+}
+
+/* --- TIPOGRAFIA SISTÊMICA --- */
+h1, h2, h3, h4, h5, h6 {
+    color: var(--text-primary);
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: -0.025em;
+}
+
+h1 { font-size: clamp(2.2rem, 4vw, 3.5rem); }
+h2 { font-size: clamp(1.75rem, 3vw, 2.5rem); }
+h3 { font-size: clamp(1.35rem, 2vw, 1.75rem); }
+h4 { font-size: 1.25rem; font-weight: 700; }
+h5 { font-size: 1.1rem; font-weight: 700; }
+h6 { font-size: 0.95rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+
+p {
+    color: var(--text-secondary);
+    font-size: 1rem;
+    margin-bottom: 1rem;
+}
+
+p.lead {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    line-height: 1.7;
+}
+
+small {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+/* --- LAYOUT CONTAINERS & GRID --- */
+.container {
+    width: 100%;
+    max-width: var(--max-width-site);
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+.grid {
+    display: grid;
+    gap: 24px;
+}
+
+.grid-2 { grid-template-columns: repeat(2, 1fr); }
+.grid-3 { grid-template-columns: repeat(3, 1fr); }
+.grid-4 { grid-template-columns: repeat(4, 1fr); }
+.grid-12 { grid-template-columns: repeat(12, 1fr); }
+
+@media (max-width: 1024px) {
+    .grid-4 { grid-template-columns: repeat(2, 1fr); }
+    .grid-3 { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 768px) {
+    .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+    .container { padding: 0 16px; }
+}
+
+/* --- UTILITÁRIOS DIVERSOS --- */
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+.text-left { text-align: left; }
+
+.flex { display: flex; }
+.flex-center { display: flex; align-items: center; justify-content: center; }
+.flex-between { display: flex; align-items: center; justify-content: space-between; }
+.flex-column { display: flex; flex-direction: column; }
+
+.gap-xs { gap: 8px; }
+.gap-sm { gap: 16px; }
+.gap-md { gap: 24px; }
+.gap-lg { gap: 32px; }
+
+.mt-1 { margin-top: 8px; }
+.mt-2 { margin-top: 16px; }
+.mt-3 { margin-top: 24px; }
+.mt-4 { margin-top: 32px; }
+.mt-5 { margin-top: 48px; }
+
+.mb-1 { margin-bottom: 8px; }
+.mb-2 { margin-bottom: 16px; }
+.mb-3 { margin-bottom: 24px; }
+.mb-4 { margin-bottom: 32px; }
+.mb-5 { margin-bottom: 48px; }
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 12px;
+    border-radius: var(--radius-full);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.badge-primary { background: var(--color-primary-subtle); color: var(--color-primary-light); }
+.badge-secondary { background: var(--color-secondary-subtle); color: var(--color-secondary); }
+.badge-accent { background: var(--color-accent-subtle); color: var(--color-accent); }
+/* ==========================================================================
+   AULA CONECTADA - ANIMATIONS & TRANSITIONS
+   Versão: 2.5.0
+   Descrição: Animações CSS3, Keyframes, Microinterações e Scroll Reveals.
+   ========================================================================== */
+
+/* --- KEYFRAMES --- */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; transform: translateY(0); }
+    to { opacity: 0; transform: translateY(12px); }
+}
+
+@keyframes slideInRight {
+    from { opacity: 0; transform: translateX(30px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideInLeft {
+    from { opacity: 0; transform: translateX(-30px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes pulseGlow {
+    0% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.4); }
+    70% { box-shadow: 0 0 0 14px rgba(99, 102, 241, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0); }
+}
+
+@keyframes floatSlow {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+
+/* --- CLASSES DE ANIMAÇÃO --- */
+.animate-fade-in {
+    animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-float {
+    animation: floatSlow 4s ease-in-out infinite;
+}
+
+.animate-pulse {
+    animation: pulseGlow 2s infinite;
+}
+
+.animate-spin {
+    animation: spin 1s linear infinite;
+}
+
+/* --- SCROLL REVEAL UTILITIES --- */
+.reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform;
+}
+
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+
+/* --- HOVER EFFECTS --- */
+.hover-lift {
+    transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+}
+
+.hover-lift:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-lg);
+}
+
+.hover-scale {
+    transition: transform var(--transition-fast);
+}
+
+.hover-scale:hover {
+    transform: scale(1.03);
+}
+
+/* --- SKELETON LOADING ANIMATION --- */
+.skeleton {
+    background: linear-gradient(90deg, var(--bg-card) 25%, var(--border-color) 50%, var(--bg-card) 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: var(--radius-sm);
+}
+/* ==========================================================================
+   AULA CONECTADA - UI COMPONENTS
+   Versão: 2.5.0
+   Descrição: Botões, cards, inputs, modais, toasts, navbar, glassmorphism.
+   ========================================================================== */
+
+/* --- NAVBAR INSTITUCIONAL --- */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: var(--header-height);
+    background: var(--bg-glass);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border-color);
+    z-index: 1000;
+    transition: background-color var(--transition-normal);
+}
+
+.navbar-container {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--text-primary);
+}
+
+.logo-icon {
+    width: 42px;
+    height: 42px;
+    background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    box-shadow: var(--shadow-glow);
+}
+
+.nav-menu {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+}
+
+.nav-link {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    position: relative;
+    padding: 6px 0;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0%;
+    height: 2px;
+    background: var(--color-primary-light);
+    transition: width var(--transition-fast);
+}
+
+.nav-link:hover::after, .nav-link.active::after {
+    width: 100%;
+}
+
+.nav-link.active {
+    color: var(--color-primary-light);
+}
+
+/* --- BOTÕES PREMIUM --- */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 12px 24px;
+    border-radius: var(--radius-md);
+    font-weight: 700;
+    font-size: 0.95rem;
+    transition: all var(--transition-fast);
+    white-space: nowrap;
+    user-select: none;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
+    color: var(--text-on-primary);
+    box-shadow: 0 4px 14px rgba(67, 56, 202, 0.35);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(67, 56, 202, 0.5);
+    color: white;
+}
+
+.btn-secondary {
+    background: var(--bg-surface);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+}
+
+.btn-secondary:hover {
+    background: var(--bg-main);
+    border-color: var(--text-muted);
+}
+
+.btn-accent {
+    background: var(--color-secondary);
+    color: white;
+}
+
+.btn-accent:hover {
+    background: var(--color-secondary-hover);
+}
+
+.btn-sm { padding: 8px 16px; font-size: 0.85rem; }
+.btn-lg { padding: 16px 32px; font-size: 1.1rem; border-radius: var(--radius-lg); }
+.btn-block { width: 100%; }
+
+/* --- CARDS & GLASSMORPHISM --- */
+.card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 28px;
+    box-shadow: var(--shadow-sm);
+    transition: all var(--transition-normal);
+}
+
+.card-glass {
+    background: var(--bg-glass);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.card-header {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* --- FORMULÁRIOS E INPUTS --- */
+.form-group {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-label {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.form-input {
+    width: 100%;
+    padding: 14px 18px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
+    background: var(--bg-surface);
+    color: var(--text-primary);
+    outline: none;
+    transition: all var(--transition-fast);
+}
+
+.form-input:focus {
+    border-color: var(--color-primary-light);
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
+}
+
+/* --- TOAST NOTIFICATIONS --- */
+#toast-container {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.toast {
+    min-width: 300px;
+    padding: 16px 20px;
+    border-radius: var(--radius-md);
+    background: var(--bg-surface);
+    color: var(--text-primary);
+    border-left: 6px solid var(--color-primary);
+    box-shadow: var(--shadow-xl);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    animation: slideInRight 0.3s ease forwards;
+}
+
+.toast.success { border-left-color: var(--color-secondary); }
+.toast.error { border-left-color: var(--color-danger); }
+.toast.warning { border-left-color: var(--color-warning); }
+
+/* --- FOOTER INSTITUCIONAL --- */
+.footer {
+    background: var(--bg-surface);
+    border-top: 1px solid var(--border-color);
+    padding: 64px 0 32px 0;
+    margin-top: auto;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: 2fr repeat(3, 1fr);
+    gap: 48px;
+    margin-bottom: 48px;
+}
+
+@media (max-width: 900px) {
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 600px) {
+    .footer-grid { grid-template-columns: 1fr; }
+}
+
+.footer-bottom {
+    padding-top: 32px;
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.88rem;
+    color: var(--text-muted);
+}
+/* ==========================================================================
+   AULA CONECTADA - CORE UTILITIES & MOCK DATABASE
+   Versão: 2.5.0
+   Descrição: Banco de dados simulado, gerenciador de Storage, Toast Engine e Helpers.
+   Autores: Cauã Rangel (Desenvolvedor) & Maria Elisa (Idealizadora)
+   ========================================================================== */
+
+/**
+ * BANCO DE DADOS SIMULADO (MOCK DATABASE)
+ * Estrutura baseada em JSON para persistência simulada de dados do TCC.
+ */
+const AulaConectadaDB = {
+    // Informações Institucionais do TCC
+    tccInfo: {
+        titulo: "O uso do smartphone como ferramenta pedagógica no Ensino Médio",
+        sigla: "Aula Conectada",
+        ano: 2026,
+        autores: {
+            desenvolvedor: {
+                nome: "Cauã Rangel",
+                cargo: "Desenvolvedor Full Stack Sênior & Arquito de Software",
+                bio: "Especialista em desenvolvimento de software educacional, UI/UX Design e arquiteturas web escaláveis.",
+                avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80"
+            },
+            idealizadora: {
+                nome: "Maria Elisa",
+                cargo: "Idealizadora Pedagógica & Pesquisadora Educacional",
+                bio: "Pesquisadora focada em metodologias ativas de aprendizagem, inclusão digital e tecnologias emergentes nas escolas públicas.",
+                avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=300&q=80"
+            }
+        }
+    },
+
+    // Aplicativos Recomendados para Uso Pedagógico no Smartphone
+    appsRecomendados: [
+        {
+            id: "app-1",
+            nome: "Geogebra Calculadora 3D",
+            categoria: "Matemática & Exatas",
+            plataformas: ["Android", "iOS", "Web"],
+            descricao: "Permite visualizar funções tridimensionais, geometria espacial e vetores em realidade aumentada diretamente na tela do celular.",
+            rating: 4.9,
+            downloads: "10M+",
+            icone: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&w=120&q=80"
+        },
+        {
+            id: "app-2",
+            nome: "PhET Interactive Simulations",
+            categoria: "Física & Química",
+            plataformas: ["Android", "iOS", "Web"],
+            descricao: "Simulações interativas de experimentos científicos para estudo de circuitos elétricos, reações químicas e mecânica.",
+            rating: 4.8,
+            downloads: "5M+",
+            icone: "https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=120&q=80"
+        },
+        {
+            id: "app-3",
+            nome: "Duolingo / Elsa Speak",
+            categoria: "Línguas Estrangeiras",
+            plataformas: ["Android", "iOS"],
+            descricao: "Aprendizagem adaptativa baseada em micro-lições diárias e inteligência artificial para correção de pronúncia em tempo real.",
+            rating: 4.7,
+            downloads: "100M+",
+            icone: "https://images.unsplash.com/photo-1546410531-bb4caa6b424d?auto=format&fit=crop&w=120&q=80"
+        },
+        {
+            id: "app-4",
+            nome: "Notion & Google Workspace",
+            categoria: "Gestão & Produtividade",
+            plataformas: ["Android", "iOS", "Web"],
+            descricao: "Organização de cronogramas de estudos, cadernos virtuais colaborativos e entrega de trabalhos acadêmicos.",
+            rating: 4.9,
+            downloads: "50M+",
+            icone: "https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?auto=format&fit=crop&w=120&q=80"
+        }
+    ],
+
+    // Artigos Acadêmicos e Material de Leitura do TCC
+    artigosAcademicos: [
+        {
+            id: "art-1",
+            titulo: "O Smartphone na Sala de Aula: Inimigo da Atenção ou Aliado da Aprendizagem?",
+            autor: "Maria Elisa & Cauã Rangel",
+            ano: "2026",
+            resumo: "Análise quantitativa do impacto da mediação tecnológica no rendimento de alunos do 3º ano do Ensino Médio durante o uso de metodologias ativas.",
+            linkPdf: "#"
+        },
+        {
+            id: "art-2",
+            titulo: "Ciberpedagogia e Cultura Digital nas Escolas Públicas",
+            autor: "Prof. Dr. Roberto Silva",
+            ano: "2025",
+            resumo: "Estudo sobre a infraestrutura móvel no Brasil e o potencial pedagógico do 'Bring Your Own Device' (BYOD) na rede pública.",
+            linkPdf: "#"
+        }
+    ]
+};
+
+/**
+ * GERENCIADOR DE LOCALSTORAGE (PERSISTÊNCIA DE SESSÃO)
+ */
+const StorageManager = {
+    get(key, defaultValue = null) {
+        try {
+            const data = localStorage.getItem(`aula_conectada_${key}`);
+            return data ? JSON.parse(data) : defaultValue;
+        } catch (e) {
+            console.error(`Erro ao ler chave '${key}' do LocalStorage:`, e);
+            return defaultValue;
+        }
+    },
+
+    set(key, value) {
+        try {
+            localStorage.setItem(`aula_conectada_${key}`, JSON.stringify(value));
+            return true;
+        } catch (e) {
+            console.error(`Erro ao salvar chave '${key}' no LocalStorage:`, e);
+            return false;
+        }
+    },
+
+    remove(key) {
+        localStorage.removeItem(`aula_conectada_${key}`);
+    }
+};
+
+/**
+ * ENGINE DE NOTIFICAÇÕES (TOAST NOTIFICATIONS)
+ */
+const ToastEngine = {
+    init() {
+        if (!document.getElementById('toast-container')) {
+            const container = document.createElement('div');
+            container.id = 'toast-container';
+            document.body.appendChild(container);
+        }
+    },
+
+    show(message, type = 'info', duration = 4000) {
+        this.init();
+        const container = document.getElementById('toast-container');
+        
+        const toast = document.createElement('div');
+        toast.className = `toast ${type}`;
+        
+        const icons = {
+            success: 'check_circle',
+            error: 'error',
+            warning: 'warning',
+            info: 'info'
+        };
+
+        toast.innerHTML = `
+            <div style="display:flex; align-items:center; gap:12px;">
+                <span class="material-icons-round">${icons[type] || 'info'}</span>
+                <span style="font-size:0.9rem; font-weight:600;">${message}</span>
+            </div>
+            <button onclick="this.parentElement.remove()" style="opacity:0.6; cursor:pointer;">
+                <span class="material-icons-round" style="font-size:18px;">close</span>
+            </button>
+        `;
+
+        container.appendChild(toast);
+
+        setTimeout(() => {
+            if (toast.parentElement) {
+                toast.style.animation = 'fadeOut 0.3s forwards';
+                setTimeout(() => toast.remove(), 300);
+            }
+        }, duration);
+    }
+};
+
+/**
+ * HELPERS UTILITÁRIOS
+ */
+const Utils = {
+    formatDate(dateString) {
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        return new Date(dateString).toLocaleDateString('pt-BR', options);
+    },
+
+    truncateText(text, maxLength = 100) {
+        if (text.length <= maxLength) return text;
+        return text.substring(0, maxLength) + '...';
+    },
+
+    debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+            const later = () => {
+                clearTimeout(timeout);
+                func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
+    }
+};
+/* ==========================================================================
+   AULA CONECTADA - ANIMATIONS ENGINE & INTERACTION OBSERVER
+   Versão: 2.5.0
+   Descrição: Scroll Reveal, Contadores Animados e Efeitos de Transição.
+   ========================================================================== */
+
+document.addEventListener('DOMContentLoaded', () => {
+    AnimationEngine.init();
+});
+
+const AnimationEngine = {
+    init() {
+        this.setupScrollReveal();
+        this.setupCounterObserver();
+        this.setupSmoothScroll();
+    },
+
+    /**
+     * OBSERVER PARA REVELAR ELEMENTOS AO ROLAR A PÁGINA (SCROLL REVEAL)
+     */
+    setupScrollReveal() {
+        const reveals = document.querySelectorAll('.reveal');
+        if (!reveals.length) return;
+
+        const observerOptions = {
+            root: null,
+            threshold: 0.15,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const revealObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        reveals.forEach(element => revealObserver.observe(element));
+    },
+
+    /**
+     * OBSERVER PARA ANIMAÇÃO DE NÚMEROS E ESTATÍSTICAS
+     */
+    setupCounterObserver() {
+        const counters = document.querySelectorAll('.counter-value');
+        if (!counters.length) return;
+
+        const counterObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    this.animateCounter(entry.target);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        counters.forEach(counter => counterObserver.observe(counter));
+    },
+
+    /**
+     * ANIMA UM CONTADOR DO ZERO ATÉ O VALOR ALVO
+     */
+    animateCounter(element) {
+        const target = parseInt(element.getAttribute('data-target') || '0', 10);
+        const duration = 2000; // ms
+        const frameDuration = 1000 / 60;
+        const totalFrames = Math.round(duration / frameDuration);
+        let frame = 0;
+
+        const timer = setInterval(() => {
+            frame++;
+            const progress = frame / totalFrames;
+            const currentCount = Math.round(target * (1 - Math.pow(1 - progress, 3)));
+
+            element.textContent = currentCount.toLocaleString('pt-BR');
+
+            if (frame === totalFrames) {
+                clearInterval(timer);
+                element.textContent = target.toLocaleString('pt-BR');
+            }
+        }, frameDuration);
+    },
+
+    /**
+     * ROLAGEM SUAVE PARA ÂNCORAS
+     */
+    setupSmoothScroll() {
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    e.preventDefault();
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    }
+};
+/* ==========================================================================
+   AULA CONECTADA - MAIN CLIENT APPLICATION ENGINE
+   Versão: 2.5.0
+   Descrição: Router básico, Gestão do Tema Dark/Light, Acessibilidade e Nav.
+   ========================================================================== */
+
+document.addEventListener('DOMContentLoaded', () => {
+    MainEngine.init();
+});
+
+const MainEngine = {
+    init() {
+        this.setupTheme();
+        this.setupAccessibility();
+        this.setupNavbar();
+        this.setupMobileMenu();
+        this.setupBackToTop();
+    },
+
+    /**
+     * GERENCIAMENTO DE TEMA (DARK / LIGHT MODE)
+     */
+    setupTheme() {
+        const savedTheme = StorageManager.get('theme', 'auto');
+        
+        if (savedTheme === 'dark' || (savedTheme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.body.classList.add('dark-theme');
+        } else {
+            document.body.classList.remove('dark-theme');
+        }
+
+        const themeToggleBtn = document.getElementById('btn-toggle-theme');
+        if (themeToggleBtn) {
+            themeToggleBtn.addEventListener('click', () => {
+                const isDark = document.body.classList.toggle('dark-theme');
+                StorageManager.set('theme', isDark ? 'dark' : 'light');
+                ToastEngine.show(`Modo ${isDark ? 'Escuro' : 'Claro'} ativado`, 'info');
+            });
+        }
+    },
+
+    /**
+     * SISTEMA DE ACESSIBILIDADE (FONTE E ALTO CONTRASTE)
+     */
+    setupAccessibility() {
+        const btnFontIncrease = document.getElementById('btn-font-increase');
+        const btnFontDecrease = document.getElementById('btn-font-decrease');
+        const btnContrast = document.getElementById('btn-high-contrast');
+
+        if (btnFontIncrease) {
+            btnFontIncrease.addEventListener('click', () => {
+                if (document.body.classList.contains('font-large')) {
+                    document.body.classList.remove('font-large');
+                    document.body.classList.add('font-xlarge');
+                } else {
+                    document.body.classList.add('font-large');
+                }
+                ToastEngine.show("Tamanho da fonte ajustado", "info");
+            });
+        }
+
+        if (btnFontDecrease) {
+            btnFontDecrease.addEventListener('click', () => {
+                document.body.classList.remove('font-large', 'font-xlarge');
+                ToastEngine.show("Tamanho da fonte restaurado", "info");
+            });
+        }
+
+        if (btnContrast) {
+            btnContrast.addEventListener('click', () => {
+                const active = document.body.classList.toggle('high-contrast');
+                ToastEngine.show(active ? "Alto Contraste Ativado" : "Alto Contraste Desativado", "info");
+            });
+        }
+    },
+
+    /**
+     * BEHAVIOR DA NAVBAR INTELLIGENT ON SCROLL
+     */
+    setupNavbar() {
+        const navbar = document.querySelector('.navbar');
+        if (!navbar) return;
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 40) {
+                navbar.style.boxShadow = 'var(--shadow-md)';
+                navbar.style.padding = '8px 0';
+            } else {
+                navbar.style.boxShadow = 'none';
+                navbar.style.padding = '0';
+            }
+        });
+    },
+
+    /**
+     * MENU MOBILE RESPONSIVO
+     */
+    setupMobileMenu() {
+        const toggleBtn = document.getElementById('mobile-menu-toggle');
+        const navMenu = document.getElementById('nav-menu');
+
+        if (toggleBtn && navMenu) {
+            toggleBtn.addEventListener('click', () => {
+                navMenu.classList.toggle('active');
+                const isOpen = navMenu.classList.contains('active');
+                toggleBtn.querySelector('span').textContent = isOpen ? 'close' : 'menu';
+            });
+        }
+    },
+
+    /**
+     * BOTÃO VOLTAR AO TOPO
+     */
+    setupBackToTop() {
+        const btnTop = document.getElementById('btn-back-to-top');
+        if (!btnTop) return;
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                btnTop.style.display = 'flex';
+            } else {
+                btnTop.style.display = 'none';
+            }
+        });
+
+        btnTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    }
+};
+/* ==========================================================================
+   AULA CONECTADA - DASHBOARD, POMODORO & GAMIFICATION ENGINE
+   Versão: 2.5.0
+   Descrição: Cronômetro de Foco, Sistema do Quiz Interativo e Progresso.
+   ========================================================================== */
+
+document.addEventListener('DOMContentLoaded', () => {
+    if (document.getElementById('dashboard-app')) {
+        DashboardEngine.init();
+    }
+});
+
+const DashboardEngine = {
+    init() {
+        this.setupUserProgress();
+        this.setupPomodoroTimer();
+    },
+
+    /**
+     * SISTEMA DE GAMIFICAÇÃO & BARRA DE PROGRESSO DE XP
+     */
+    setupUserProgress() {
+        const user = StorageManager.get('user_session', {
+            nome: "Estudante",
+            xp: 140,
+            nivel: "Aprendiz Conectado",
+            tarefasConcluidas: 12
+        });
+
+        const xpText = document.getElementById('user-xp');
+        const xpBar = document.getElementById('xp-progress-bar');
+        
+        if (xpText) xpText.textContent = `${user.xp} XP`;
+        if (xpBar) {
+            const percentage = Math.min((user.xp / 500) * 100, 100);
+            xpBar.style.width = `${percentage}%`;
+        }
+    },
+
+    /**
+     * CRONÔMETRO POMODORO PARA FOCO NOS ESTUDOS
+     */
+    pomodoroState: {
+        timerId: null,
+        timeRemaining: 25 * 60, // 25 minutos em segundos
+        isRunning: false
+    },
+
+    setupPomodoroTimer() {
+        const display = document.getElementById('pomodoro-display');
+        const btnStart = document.getElementById('btn-pomodoro-start');
+        const btnReset = document.getElementById('btn-pomodoro-reset');
+
+        if (!display || !btnStart) return;
+
+        btnStart.addEventListener('click', () => {
+            if (this.pomodoroState.isRunning) {
+                this.pausePomodoro();
+                btnStart.textContent = "Continuar Foco";
+            } else {
+                this.startPomodoro();
+                btnStart.textContent = "Pausar";
+            }
+        });
+
+        if (btnReset) {
+            btnReset.addEventListener('click', () => {
+                this.resetPomodoro();
+            });
+        }
+    },
+
+    startPomodoro() {
+        this.pomodoroState.isRunning = true;
+        this.pomodoroState.timerId = setInterval(() => {
+            if (this.pomodoroState.timeRemaining > 0) {
+                this.pomodoroState.timeRemaining--;
+                this.updatePomodoroDisplay();
+            } else {
+                clearInterval(this.pomodoroState.timerId);
+                this.pomodoroState.isRunning = false;
+                ToastEngine.show("🎉 Ciclo de Foco Concluído! Você ganhou +30 XP!", "success");
+                
+                // Atualiza XP do usuário
+                const user = StorageManager.get('user_session', { xp: 0 });
+                user.xp += 30;
+                StorageManager.set('user_session', user);
+                this.setupUserProgress();
+                
+                this.resetPomodoro();
+            }
+        }, 1000);
+    },
+
+    pausePomodoro() {
+        clearInterval(this.pomodoroState.timerId);
+        this.pomodoroState.isRunning = false;
+    },
+
+    resetPomodoro() {
+        this.pausePomodoro();
+        this.pomodoroState.timeRemaining = 25 * 60;
+        this.updatePomodoroDisplay();
+        const btnStart = document.getElementById('btn-pomodoro-start');
+        if (btnStart) btnStart.textContent = "Iniciar Sessão de Foco";
+    },
+
+    updatePomodoroDisplay() {
+        const display = document.getElementById('pomodoro-display');
+        if (!display) return;
+
+        const minutes = Math.floor(this.pomodoroState.timeRemaining / 60);
+        const seconds = this.pomodoroState.timeRemaining % 60;
+        display.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    }
+};
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>EduSmart - Plataforma Pedagógica Escolar</title>
-    
-    <!-- Google Fonts e Material Icons -->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Aula Conectada - O uso do smartphone como ferramenta pedagógica no Ensino Médio. Projeto de TCC.">
+    <title>Aula Conectada — Plataforma Educacional Mobile</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
 
-    <style>
-        /* --- DESIGN SYSTEM & VARIÁVEIS DE PRODUÇÃO --- */
-        :root {
-            --brand-primary: #4338CA;
-            --brand-primary-light: #6366F1;
-            --brand-primary-dark: #312E81;
-            --brand-secondary: #059669;
-            --brand-accent: #D97706;
-            --brand-danger: #DC2626;
-            
-            --bg-main: #F8FAFC;
-            --bg-surface: #FFFFFF;
-            --bg-card: #FFFFFF;
-            --text-primary: #0F172A;
-            --text-secondary: #475569;
-            --text-muted: #94A3B8;
-            --border-color: #E2E8F0;
-            
-            --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-            --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-            
-            --radius-sm: 8px;
-            --radius-md: 12px;
-            --radius-lg: 20px;
-            --radius-full: 9999px;
-            
-            --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-            --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        body.dark-theme {
-            --bg-main: #0B0F19;
-            --bg-surface: #111827;
-            --bg-card: #1E293B;
-            --text-primary: #F8FAFC;
-            --text-secondary: #CBD5E1;
-            --text-muted: #64748B;
-            --border-color: #1E293B;
-        }
-
-        /* RESET PROFISSIONAL */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        body {
-            background-color: var(--bg-main);
-            color: var(--text-primary);
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            transition: background-color var(--transition-normal), color var(--transition-normal);
-        }
-
-        /* --- HEADER CORPORATIVO --- */
-        header {
-            background: var(--bg-surface);
-            border-bottom: 1px solid var(--border-color);
-            padding: 12px 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            z-index: 50;
-        }
-
-        .brand-container {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .brand-logo {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, var(--brand-primary), var(--brand-primary-light));
-            border-radius: var(--radius-md);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            box-shadow: 0 4px 10px rgba(99, 102, 241, 0.3);
-        }
-
-        .brand-text h1 {
-            font-size: 1.1rem;
-            font-weight: 800;
-            letter-spacing: -0.02em;
-            background: linear-gradient(135deg, var(--brand-primary), var(--brand-primary-light));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .brand-text p {
-            font-size: 0.68rem;
-            color: var(--text-muted);
-            font-weight: 600;
-            text-transform: uppercase;
-        }
-
-        .header-actions {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .icon-btn {
-            background: var(--bg-main);
-            border: 1px solid var(--border-color);
-            color: var(--text-secondary);
-            width: 38px;
-            height: 38px;
-            border-radius: var(--radius-full);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: var(--transition-fast);
-        }
-
-        .icon-btn:active {
-            transform: scale(0.92);
-        }
-
-        /* --- MAIN VIEWPORT --- */
-        main {
-            flex: 1;
-            overflow-y: auto;
-            padding: 16px;
-            padding-bottom: 90px;
-            max-width: 800px;
-            margin: 0 auto;
-            width: 100%;
-        }
-
-        .tab-content {
-            display: none;
-            animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(8px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* --- CARDS & WIDGETS --- */
-        .card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-lg);
-            padding: 20px;
-            margin-bottom: 16px;
-            box-shadow: var(--shadow-xs);
-        }
-
-        .hero-banner {
-            background: linear-gradient(135deg, var(--brand-primary-dark), var(--brand-primary));
-            color: white;
-            border-radius: var(--radius-lg);
-            padding: 24px;
-            margin-bottom: 20px;
-            position: relative;
-            overflow: hidden;
-            box-shadow: var(--shadow-md);
-        }
-
-        .hero-banner::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -20%;
-            width: 200px;
-            height: 200px;
-            background: rgba(255, 255, 255, 0.08);
-            border-radius: 50%;
-            pointer-events: none;
-        }
-
-        .user-level-badge {
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(8px);
-            padding: 4px 12px;
-            border-radius: var(--radius-full);
-            font-size: 0.72rem;
-            font-weight: 700;
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
-            display: inline-block;
-            margin-bottom: 8px;
-        }
-
-        .progress-bar-bg {
-            background: rgba(255, 255, 255, 0.15);
-            height: 8px;
-            border-radius: var(--radius-full);
-            margin-top: 14px;
-            overflow: hidden;
-        }
-
-        .progress-bar-fill {
-            background: var(--brand-secondary);
-            height: 100%;
-            width: 0%;
-            transition: width 0.5s ease;
-        }
-
-        /* --- SEÇÃO DE EQUIPE / CRIADORES --- */
-        .creators-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-            margin-top: 12px;
-        }
-
-        .creator-card {
-            background: var(--bg-surface);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-md);
-            padding: 16px;
-            text-align: center;
-        }
-
-        .creator-avatar {
-            width: 48px;
-            height: 48px;
-            border-radius: var(--radius-full);
-            background: var(--brand-primary-light);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 8px auto;
-            font-weight: 700;
-            font-size: 1.1rem;
-        }
-
-        .creator-name {
-            font-size: 0.88rem;
-            font-weight: 700;
-            color: var(--text-primary);
-        }
-
-        .creator-role {
-            font-size: 0.72rem;
-            color: var(--brand-primary-light);
-            font-weight: 600;
-            margin-top: 2px;
-        }
-
-        /* --- CHAT IA EDU --- */
-        .chat-container {
-            display: flex;
-            flex-direction: column;
-            height: 380px;
-        }
-
-        .chat-messages {
-            flex: 1;
-            overflow-y: auto;
-            padding-right: 4px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .chat-bubble {
-            max-width: 85%;
-            padding: 12px 16px;
-            border-radius: var(--radius-md);
-            font-size: 0.88rem;
-            line-height: 1.5;
-        }
-
-        .chat-bubble.ia {
-            background: var(--bg-main);
-            color: var(--text-primary);
-            border: 1px solid var(--border-color);
-            align-self: flex-start;
-            border-bottom-left-radius: 2px;
-        }
-
-        .chat-bubble.user {
-            background: var(--brand-primary);
-            color: white;
-            align-self: flex-end;
-            border-bottom-right-radius: 2px;
-        }
-
-        /* --- BOTÕES & INPUTS --- */
-        .btn {
-            width: 100%;
-            padding: 12px 18px;
-            border-radius: var(--radius-md);
-            border: none;
-            font-weight: 600;
-            font-size: 0.88rem;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            transition: var(--transition-fast);
-        }
-
-        .btn-primary { background: var(--brand-primary); color: white; }
-        .btn-primary:active { background: var(--brand-primary-dark); transform: scale(0.98); }
-        .btn-secondary { background: var(--bg-main); color: var(--text-primary); border: 1px solid var(--border-color); }
-
-        .input-field {
-            width: 100%;
-            padding: 12px 14px;
-            border-radius: var(--radius-md);
-            border: 1px solid var(--border-color);
-            background: var(--bg-surface);
-            color: var(--text-primary);
-            outline: none;
-            font-size: 0.88rem;
-        }
-
-        /* --- BOTTOM NAVIGATION --- */
-        nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: var(--bg-surface);
-            border-top: 1px solid var(--border-color);
-            display: flex;
-            justify-content: space-around;
-            padding: 8px 0 12px 0;
-            z-index: 50;
-        }
-
-        .nav-item {
-            background: none;
-            border: none;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 3px;
-            color: var(--text-muted);
-            font-size: 0.68rem;
-            font-weight: 600;
-            cursor: pointer;
-            width: 18%;
-            transition: var(--transition-fast);
-        }
-
-        .nav-item.active {
-            color: var(--brand-primary);
-        }
-
-        .nav-item span {
-            font-size: 22px;
-        }
-    </style>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/animations.css">
+    <link rel="stylesheet" href="../assets/css/components.css">
 </head>
 <body>
 
-    <!-- CABEÇALHO DA PLATAFORMA -->
-    <header>
-        <div class="brand-container">
-            <div class="brand-logo">
-                <span class="material-icons-round">school</span>
+    <header class="navbar">
+        <div class="container navbar-container">
+            <a href="index.html" class="logo-brand">
+                <div class="logo-icon">
+                    <span class="material-icons-round">smartphone</span>
+                </div>
+                <div>
+                    <span>Aula Conectada</span>
+                    <small style="display:block; font-size:0.65rem; color:var(--color-primary-light); font-weight:700; line-height:1;">PROJETO DE TCC</small>
+                </div>
+            </a>
+
+            <nav class="nav-menu" id="nav-menu">
+                <a href="index.html" class="nav-link active">Início</a>
+                <a href="sobre.html" class="nav-link">O Projeto & TCC</a>
+                <a href="biblioteca.html" class="nav-link">Biblioteca Digital</a>
+                <a href="quiz.html" class="nav-link">Quiz Interativo</a>
+                <a href="contato.html" class="nav-link">Contato</a>
+            </nav>
+
+            <div class="flex-center gap-sm">
+                <button class="btn btn-secondary btn-sm" id="btn-toggle-theme" title="Alternar Tema (Claro/Escuro)">
+                    <span class="material-icons-round" id="theme-icon">dark_mode</span>
+                </button>
+                <button class="btn btn-secondary btn-sm" id="btn-font-increase" title="Aumentar Fonte">A+</button>
+
+                <a href="login.html" class="btn btn-primary btn-sm">
+                    <span class="material-icons-round">login</span> Acessar Portal
+                </a>
+
+                <button id="mobile-menu-toggle" style="display:none;" class="btn btn-secondary btn-sm">
+                    <span class="material-icons-round">menu</span>
+                </button>
             </div>
-            <div class="brand-text">
-                <h1>EduSmart</h1>
-                <p>Plataforma Pedagógica</p>
-            </div>
-        </div>
-        <div class="header-actions">
-            <button class="icon-btn" onclick="toggleTheme()" title="Alternar Tema">
-                <span class="material-icons-round" id="theme-icon">dark_mode</span>
-            </button>
         </div>
     </header>
 
-    <!-- ÁREA PRINCIPAL DAS ABAS -->
-    <main>
-        
-        <!-- DASHBOARD INICIAL -->
-        <div id="tab-home" class="tab-content active">
-            <div class="hero-banner">
-                <span class="user-level-badge" id="user-level">Nível 1 - Aprendiz</span>
-                <h2 style="font-size: 1.6rem; font-weight: 800; margin-top: 4px;" id="user-xp">0 XP</h2>
-                <p style="font-size: 0.8rem; opacity: 0.85; margin-top: 2px;">Conclua atividades e quizzes para progredir na sua jornada escolar!</p>
-                <div class="progress-bar-bg">
-                    <div class="progress-bar-fill" id="xp-bar"></div>
+    <section style="padding: 160px 0 100px 0; background: linear-gradient(180deg, var(--color-primary-subtle) 0%, var(--bg-main) 100%);">
+        <div class="container">
+            <div class="grid grid-2" style="align-items: center;">
+                <div class="reveal">
+                    <span class="badge badge-primary mb-2">Metodologias Ativas & Tecnologias Móveis</span>
+                    <h1 class="mb-3">O Smartphone como Aliado da Aprendizagem no Ensino Médio</h1>
+                    <p class="lead mb-4">
+                        Transformamos a distração digital em engajamento pedagógico. Uma plataforma estruturada para conectar professores, estudantes e tecnologias educacionais de forma consciente, segura e eficiente.
+                    </p>
+                    <div class="flex gap-sm">
+                        <a href="dashboard.html" class="btn btn-primary btn-lg">
+                            Explorar Plataforma <span class="material-icons-round">arrow_forward</span>
+                        </a>
+                        <a href="sobre.html" class="btn btn-secondary btn-lg">
+                            Fundamentação do TCC
+                        </a>
+                    </div>
                 </div>
+
+                <div class="reveal reveal-delay-2 flex-center">
+                    <div class="card card-glass hover-lift" style="max-width: 420px; width: 100%; text-align: center; border: 2px solid var(--color-primary-light);">
+                        <div class="badge badge-secondary mb-3">Ambiente Virtual em Tempo Real</div>
+                        <div style="background: var(--bg-surface); padding: 20px; border-radius: var(--radius-md); border: 1px solid var(--border-color);" class="mb-3">
+                            <span class="material-icons-round" style="font-size: 64px; color: var(--color-primary
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula Conectada - O Smartphone na Educação</title>
+    
+    <meta name="description" content="Plataforma educacional desenvolvida para o projeto de TCC sobre o uso pedagógico de smartphones no Ensino Médio.">
+    <meta name="author" content="Cauã Rangel & Maria Elisa">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/animations.css">
+    <link rel="stylesheet" href="../assets/css/components.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="container navbar-container">
+            <a href="index.html" class="logo-brand">
+                <div class="logo-icon">
+                    <span class="material-icons-round">smartphone</span>
+                </div>
+                <span>Aula Conectada</span>
+            </a>
+
+            <div class="nav-menu" id="nav-menu">
+                <a href="index.html" class="nav-link active">Início</a>
+                <a href="sobre.html" class="nav-link">Sobre o TCC</a>
+                <a href="biblioteca.html" class="nav-link">Biblioteca</a>
+                <a href="quiz.html" class="nav-link">Quiz Interativo</a>
+                <a href="dashboard.html" class="nav-link">Painel</a>
+                <a href="contato.html" class="nav-link">Contato</a>
             </div>
 
-            <div class="card">
-                <h3 style="font-size: 0.95rem; font-weight: 700; margin-bottom: 8px;">Acesso Rápido</h3>
-                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;">
-                    <button class="btn btn-secondary" onclick="switchTab('ia')">
-                        <span class="material-icons-round" style="color:var(--brand-primary-light);">smart_toy</span> IA Edu
-                    </button>
-                    <button class="btn btn-secondary" onclick="switchTab('quiz')">
-                        <span class="material-icons-round" style="color:var(--brand-secondary);">quiz</span> Quiz
-                    </button>
-                </div>
-            </div>
-
-            <!-- SEÇÃO DE CRÉDITOS E CRIADORES DO PROJETO -->
-            <div class="card">
-                <h3 style="font-size: 0.95rem; font-weight: 700; margin-bottom: 4px;">Corpo de Idealização e Desenvolvimento</h3>
-                <p style="font-size: 0.78rem; color: var(--text-secondary);">Projeto pedagógico criado por estudantes e educadores:</p>
+            <div style="display: flex; align-items: center; gap: 12px;">
+                <button class="icon-btn" id="btn-toggle-theme" title="Alternar Tema">
+                    <span class="material-icons-round">dark_mode</span>
+                </button>
                 
-                <div class="creators-grid">
-                    <div class="creator-card">
-                        <div class="creator-avatar">CR</div>
-                        <div class="creator-name">Cauã Rangel</div>
-                        <div class="creator-role">Desenvolvedor Lead</div>
+                <button class="icon-btn" id="btn-font-increase" title="Aumentar Fonte">
+                    <span class="material-icons-round">text_increase</span>
+                </button>
+
+                <a href="login.html" class="btn btn-primary btn-sm">Acessar Portal</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="container" style="padding-top: calc(var(--header-height) + 60px); padding-bottom: 80px;">
+        <div class="grid grid-2" style="align-items: center;">
+            <div class="reveal">
+                <span class="badge badge-primary mb-2">Projeto de Pesquisa & TCC</span>
+                <h1 style="margin-bottom: 20px;">O Smartphone como Ferramenta Pedagógica no Ensino Médio</h1>
+                <p class="lead mb-4">Transformando a distração em engajamento. Uma proposta educacional fundamentada na cibercultura e em metodologias ativas de aprendizagem para escolas brasileiras.</p>
+                
+                <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+                    <a href="sobre.html" class="btn btn-primary btn-lg">
+                        Conhecer o TCC <span class="material-icons-round">arrow_forward</span>
+                    </a>
+                    <a href="quiz.html" class="btn btn-secondary btn-lg">
+                        Testar Conhecimentos
+                    </a>
+                </div>
+            </div>
+
+            <div class="reveal reveal-delay-2 flex-center">
+                <div class="card card-glass animate-float" style="width: 100%; max-width: 440px; text-align: center; border: 2px solid var(--border-color);">
+                    <div style="width: 70px; height: 70px; background: var(--color-primary-subtle); border-radius: var(--radius-full); display: flex; align-items: center; justify-content: center; margin: 0 auto 20px auto;">
+                        <span class="material-icons-round" style="font-size: 36px; color: var(--color-primary-light);">devices</span>
                     </div>
-                    <div class="creator-card">
-                        <div class="creator-avatar">ME</div>
-                        <div class="creator-name">Maria Elisa</div>
-                        <div class="creator-role">Idealizadora do Projeto</div>
-                    </div>
+                    <h3>Aprendizagem Móvel (m-Learning)</h3>
+                    <p style="font-size: 0.9rem; margin-top: 10px;">Acesso instantâneo a simulações, calculadoras científicas, laboratórios virtuais e dicionários na palma da mão.</p>
                 </div>
             </div>
         </div>
+    </header>
 
-        <!-- ABA IA EDU -->
-        <div id="tab-ia" class="tab-content">
-            <div class="card">
-                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 16px;">
-                    <span class="material-icons-round" style="color: var(--brand-primary); font-size: 28px;">smart_toy</span>
-                    <div>
-                        <h2 style="font-size: 1rem; font-weight: 700;">IA Edu - Tutora Virtual</h2>
-                        <p style="font-size: 0.75rem; color: var(--text-muted);">Tire dúvidas de dever de casa e matérias</p>
-                    </div>
+    <section style="background: var(--bg-surface); padding: 60px 0; border-y: 1px solid var(--border-color);">
+        <div class="container">
+            <div class="grid grid-4 text-center">
+                <div class="card reveal">
+                    <span class="counter-value" data-target="98" style="font-size: 2.8rem; font-weight: 800; color: var(--color-primary-light);">0</span>
+                    <span style="font-size: 1.5rem; font-weight: 800; color: var(--color-primary-light);">%</span>
+                    <p style="font-size: 0.88rem; font-weight: 600; margin-top: 6px;">Alunos do Ensino Médio com Celular</p>
                 </div>
 
-                <div class="chat-container">
-                    <div class="chat-messages" id="chat-messages">
-                        <div class="chat-bubble ia">
-                            👋 Olá! Eu sou a <strong>IA Edu</strong>. Como posso te ajudar nos estudos hoje? Você pode me pedir resumos, explicação de equações ou dicas para a redação!
+                <div class="card reveal reveal-delay-1">
+                    <span class="counter-value" data-target="85" style="font-size: 2.8rem; font-weight: 800; color: var(--color-secondary);">0</span>
+                    <span style="font-size: 1.5rem; font-weight: 800; color: var(--color-secondary);">%</span>
+                    <p style="font-size: 0.88rem; font-weight: 600; margin-top: 6px;">Engajamento com Metodologias Ativas</p>
+                </div>
+
+                <div class="card reveal reveal-delay-2">
+                    <span class="counter-value" data-target="450" style="font-size: 2.8rem; font-weight: 800; color: var(--color-accent);">0</span>
+                    <span style="font-size: 1.5rem; font-weight: 800; color: var(--color-accent);">+</span>
+                    <p style="font-size: 0.88rem; font-weight: 600; margin-top: 6px;">Atividades Interativas Criadas</p>
+                </div>
+
+                <div class="card reveal reveal-delay-3">
+                    <span class="counter-value" data-target="100" style="font-size: 2.8rem; font-weight: 800; color: var(--color-primary);">0</span>
+                    <span style="font-size: 1.5rem; font-weight: 800; color: var(--color-primary);">%</span>
+                    <p style="font-size: 0.88rem; font-weight: 600; margin-top: 6px;">Alinhamento com a BNCC</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="container" style="padding: 100px 24px;">
+        <div class="text-center mb-5 reveal">
+            <span class="badge badge-secondary">Fundamentação Pedagógica</span>
+            <h2 class="mt-2">Por que utilizar o Smartphone na Sala de Aula?</h2>
+            <p style="max-width: 650px; margin: 12px auto 0 auto;">Quando mediado por regras pedagógicas claras, o dispositivo móvel potencializa a autonomia e a pesquisa investigativa.</p>
+        </div>
+
+        <div class="grid grid-3">
+            <div class="card hover-lift reveal">
+                <div style="color: var(--color-primary-light); margin-bottom: 16px;">
+                    <span class="material-icons-round" style="font-size: 40px;">travel_explore</span>
+                </div>
+                <h3>Pesquisa em Tempo Real</h3>
+                <p>Acesso instantâneo a artigos científicos, mapas interativos e dados históricos durante os debates em sala de aula.</p>
+            </div>
+
+            <div class="card hover-lift reveal reveal-delay-1">
+                <div style="color: var(--color-secondary); margin-bottom: 16px;">
+                    <span class="material-icons-round" style="font-size: 40px;">extension</span>
+                </div>
+                <h3>Gamificação & Atratividade</h3>
+                <p>Uso de quizzes e mecânicas de pontuação (XP) que tornam a fixação de disciplinas complexas mais intuitiva.</p>
+            </div>
+
+            <div class="card hover-lift reveal reveal-delay-2">
+                <div style="color: var(--color-accent); margin-bottom: 16px;">
+                    <span class="material-icons-round" style="font-size: 40px;">groups</span>
+                </div>
+                <h3>Inclusão & Acessibilidade</h3>
+                <p>Ferramentas de leitura de tela, tradução em tempo real e apoio visual adaptado para alunos com necessidades específicas.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <div class="logo-brand mb-2">
+                        <div class="logo-icon">
+                            <span class="material-icons-round">smartphone</span>
                         </div>
+                        <span>Aula Conectada</span>
                     </div>
-                    <div style="display: flex; gap: 8px; margin-top: 12px;">
-                        <input type="text" id="chat-input" class="input-field" placeholder="Escreva sua dúvida escolar..." onkeypress="if(event.key==='Enter') sendChatMessage()">
-                        <button class="btn btn-primary" style="width: auto; padding: 0 16px;" onclick="sendChatMessage()">
-                            <span class="material-icons-round">send</span>
-                        </button>
-                    </div>
+                    <p style="font-size: 0.88rem; max-width: 320px;">Plataforma pedagógica desenvolvida como Trabalho de Conclusão de Curso (TCC) focado na integração do smartphone no Ensino Médio.</p>
+                </div>
+
+                <div>
+                    <h5 class="mb-2">Navegação</h5>
+                    <ul style="display: flex; flex-direction: column; gap: 8px; font-size: 0.9rem;">
+                        <li><a href="index.html">Início</a></li>
+                        <li><a href="sobre.html">Sobre o Projeto</a></li>
+                        <li><a href="biblioteca.html">Biblioteca Digital</a></li>
+                        <li><a href="quiz.html">Quiz Diagnóstico</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h5 class="mb-2">Portal</h5>
+                    <ul style="display: flex; flex-direction: column; gap: 8px; font-size: 0.9rem;">
+                        <li><a href="dashboard.html">Painel do Aluno</a></li>
+                        <li><a href="login.html">Área do Professor</a></li>
+                        <li><a href="contato.html">Suporte & FAQ</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h5 class="mb-2">Desenvolvimento</h5>
+                    <p style="font-size: 0.85rem;"><strong>Desenvolvedor:</strong> Cauã Rangel</p>
+                    <p style="font-size: 0.85rem; margin-top: 4px;"><strong>Idealizadora:</strong> Maria Elisa</p>
+                    <p style="font-size: 0.78rem; color: var(--text-muted); margin-top: 8px;">Ano Acadêmico: 2026</p>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <span>&copy; 2026 Aula Conectada. Todos os direitos reservados. Projeto Acadêmico de TCC.</span>
+                <button id="btn-back-to-top" class="btn btn-secondary btn-sm" style="display: none;">
+                    Voltar ao topo <span class="material-icons-round">arrow_upward</span>
+                </button>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../assets/js/utils.js"></script>
+    <script src="../assets/js/animations.js"></script>
+    <script src="../assets/js/main.js"></script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sobre o TCC - Aula Conectada</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/animations.css">
+    <link rel="stylesheet" href="../assets/css/components.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="container navbar-container">
+            <a href="index.html" class="logo-brand">
+                <div class="logo-icon">
+                    <span class="material-icons-round">smartphone</span>
+                </div>
+                <span>Aula Conectada</span>
+            </a>
+
+            <div class="nav-menu">
+                <a href="index.html" class="nav-link">Início</a>
+                <a href="sobre.html" class="nav-link active">Sobre o TCC</a>
+                <a href="biblioteca.html" class="nav-link">Biblioteca</a>
+                <a href="quiz.html" class="nav-link">Quiz Interativo</a>
+                <a href="dashboard.html" class="nav-link">Painel</a>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 12px;">
+                <button class="icon-btn" id="btn-toggle-theme"><span class="material-icons-round">dark_mode</span></button>
+                <a href="login.html" class="btn btn-primary btn-sm">Acessar Portal</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="container" style="padding-top: calc(var(--header-height) + 40px); padding-bottom: 40px;">
+        <div class="text-center reveal">
+            <span class="badge badge-primary">Fundamentação do TCC</span>
+            <h1 class="mt-2">O Projeto de Pesquisa Acadêmica</h1>
+            <p class="lead" style="max-width: 750px; margin: 16px auto 0 auto;">Entenda a justificativa pedagógica, a metodologia de campo e a visão do projeto sobre o smartphone na educação contemporânea.</p>
+        </div>
+    </section>
+
+    <section class="container mb-5">
+        <div class="grid grid-2">
+            <div class="card reveal">
+                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+                    <span class="material-icons-round" style="font-size: 32px; color: var(--color-primary-light);">flag</span>
+                    <h3>Objetivo Geral</h3>
+                </div>
+                <p>Demonstrar empiricamente que o uso orientado do smartphone no ambiente escolar eleva o índice de absorção dos conteúdos curriculares no Ensino Médio, transformando potenciais distrações em suportes ativos para a construção do conhecimento científico e autônomo.</p>
+            </div>
+
+            <div class="card reveal reveal-delay-1">
+                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+                    <span class="material-icons-round" style="font-size: 32px; color: var(--color-secondary);">psychology</span>
+                    <h3>Justificativa Acadêmica</h3>
+                </div>
+                <p>Com a expansão da cultura digital e o acesso universal aos dispositivos móveis entre jovens, proibir o aparelho torna-se uma medida ineficaz. A pesquisa propõe regras claras de mediação, aliadas a ferramentas Web responsivas alinhadas à BNCC.</p>
+            </div>
+        </div>
+    </section>
+
+    <section style="background: var(--bg-surface); padding: 80px 0; border-y: 1px solid var(--border-color);">
+        <div class="container">
+            <div class="text-center mb-5 reveal">
+                <span class="badge badge-accent">Corpo Técnico e Pedagógico</span>
+                <h2 class="mt-2">Equipe do Projeto</h2>
+                <p style="max-width: 600px; margin: 12px auto 0 auto;">Conheça os responsáveis pela concepção, pesquisa e engenharia de software do Aula Conectada.</p>
+            </div>
+
+            <div class="grid grid-2" style="max-width: 900px; margin: 0 auto;">
+                <div class="card hover-lift reveal" style="text-align: center;">
+                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80" alt="Cauã Rangel" style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover; margin: 0 auto 16px auto; border: 3px solid var(--color-primary-light);">
+                    <h3>Cauã Rangel</h3>
+                    <span class="badge badge-primary style="margin: 8px 0 14px 0;">Desenvolvedor Lead & Arquiteto</span>
+                    <p style="font-size: 0.9rem;">Responsável pela arquitetura de software, engenharia do Design System, implementação dos scripts em JS ES6+ e desenvolvimento da infraestrutura responsiva.</p>
+                </div>
+
+                <div class="card hover-lift reveal reveal-delay-1" style="text-align: center;">
+                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=300&q=80" alt="Maria Elisa" style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover; margin: 0 auto 16px auto; border: 3px solid var(--color-secondary);">
+                    <h3>Maria Elisa</h3>
+                    <span class="badge badge-secondary" style="margin: 8px 0 14px 0;">Idealizadora & Pesquisadora</span>
+                    <p style="font-size: 0.9rem;">Responsável pela pesquisa de campo pedagógica, estruturação dos roteiros metodológicos, fundamentação teórica sobre cibercultura e curadoria dos conteúdos.</p>
                 </div>
             </div>
         </div>
+    </section>
 
-        <!-- ABA QUIZ -->
-        <div id="tab-quiz" class="tab-content">
-            <div class="card">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <h2 style="font-size: 1rem; font-weight: 700;">Desafio do Conhecimento</h2>
-                    <span id="quiz-cat" style="font-size: 0.75rem; font-weight: 700; color: var(--brand-primary-light);">Matéria</span>
-                </div>
-                <div id="quiz-box">
-                    <p id="quiz-q" style="font-size: 0.9rem; font-weight: 600; margin-bottom: 14px;">Carregando pergunta...</p>
-                    <div id="quiz-options" style="display: flex; flex-direction: column; gap: 8px;"></div>
-                </div>
-            </div>
+    <section class="container" style="padding: 80px 24px;">
+        <div class="text-center mb-5 reveal">
+            <span class="badge badge-primary">Cronograma do TCC</span>
+            <h2 class="mt-2">Linha do Tempo de Desenvolvimento</h2>
         </div>
 
-        <!-- ABA FOCO / POMODORO -->
-        <div id="tab-foco" class="tab-content">
-            <div class="card" style="text-align: center;">
-                <h2 style="font-size: 1rem; font-weight: 700; margin-bottom: 4px;">Ciclo de Estudo Ativo</h2>
-                <p style="font-size: 0.78rem; color: var(--text-muted);">Evite distrações e ganhe +25 XP por ciclo</p>
-                
-                <div style="width: 160px; height: 160px; border-radius: 50%; border: 6px solid var(--brand-primary-light); margin: 20px auto; display: flex; align-items: center; justify-content: center; flex-direction: column;">
-                    <span id="timer-text" style="font-size: 2.5rem; font-weight: 800; color: var(--brand-primary);">25:00</span>
-                    <span style="font-size: 0.68rem; font-weight: 700; color: var(--text-muted);">MINUTOS</span>
-                </div>
+        <div style="max-width: 700px; margin: 0 auto; display: flex; flex-direction: column; gap: 24px;">
+            <div class="card reveal" style="border-left: 6px solid var(--color-primary);">
+                <span style="font-size: 0.8rem; font-weight: 700; color: var(--color-primary-light);">ETAPA 1 - FEVEREIRO / 2026</span>
+                <h4 style="margin-top: 4px;">Levantamento Bibliográfico e Pesquisa de Campo</h4>
+                <p style="font-size: 0.9rem; margin-top: 6px;">Coleta de dados sobre o uso do celular entre estudantes de Ensino Médio e análise das diretrizes da BNCC.</p>
+            </div>
 
-                <div style="display: flex; gap: 8px;">
-                    <button id="btn-timer" class="btn btn-primary" onclick="toggleTimer()">Iniciar Sessão</button>
-                    <button class="btn btn-secondary" onclick="resetTimer()">Resetar</button>
-                </div>
+            <div class="card reveal reveal-delay-1" style="border-left: 6px solid var(--color-secondary);">
+                <span style="font-size: 0.8rem; font-weight: 700; color: var(--color-secondary);">ETAPA 2 - MARÇO / 2026</span>
+                <h4 style="margin-top: 4px;">Arquitetura de UI/UX e Prototipação</h4>
+                <p style="font-size: 0.9rem; margin-top: 6px;">Criação do Design System, definição da paleta de cores acessível e prototipação dos fluxos de tela.</p>
+            </div>
+
+            <div class="card reveal reveal-delay-2" style="border-left: 6px solid var(--color-accent);">
+                <span style="font-size: 0.8rem; font-weight: 700; color: var(--color-accent);">ETAPA 3 - ABRIL / 2026</span>
+                <h4 style="margin-top: 4px;">Desenvolvimento Front-End & Gamificação</h4>
+                <p style="font-size: 0.9rem; margin-top: 6px;">Implementação dos componentes reutilizáveis, motor do Quiz, Cronômetro Pomodoro e persistência de dados local.</p>
             </div>
         </div>
+    </section>
 
-        <!-- ABA AGENDA DE ENTREGAS -->
-        <div id="tab-agenda" class="tab-content">
-            <div class="card">
-                <h2 style="font-size: 1rem; font-weight: 700; margin-bottom: 8px;">Agenda & Trabalhos Escolares</h2>
-                <div style="display: flex; gap: 8px; margin-bottom: 14px;">
-                    <input type="text" id="task-input" class="input-field" placeholder="Adicionar nova tarefa ou trabalho...">
-                    <button class="btn btn-primary" style="width: auto;" onclick="addTask()">+</button>
+    <footer class="footer">
+        <div class="container text-center">
+            <p style="font-size: 0.88rem;">&copy; 2026 Aula Conectada — Desenvolvido por Cauã Rangel e Maria Elisa.</p>
+        </div>
+    </footer>
+
+    <script src="../assets/js/utils.js"></script>
+    <script src="../assets/js/animations.js"></script>
+    <script src="../assets/js/main.js"></script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel do Aluno - Aula Conectada</title>
+
+    <meta name="description" content="Painel de controle do aluno com métricas de estudo, gamificação e cronômetro de foco Pomodoro.">
+    <meta name="author" content="Cauã Rangel & Maria Elisa">
+
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/animations.css">
+    <link rel="stylesheet" href="../assets/css/components.css">
+</head>
+<body id="dashboard-app">
+
+    <nav class="navbar">
+        <div class="container navbar-container">
+            <a href="index.html" class="logo-brand">
+                <div class="logo-icon">
+                    <span class="material-icons-round">smartphone</span>
                 </div>
-                <div id="task-container" style="display: flex; flex-direction: column; gap: 8px;"></div>
+                <span>Aula Conectada</span>
+            </a>
+
+            <div class="nav-menu">
+                <a href="index.html" class="nav-link">Início</a>
+                <a href="sobre.html" class="nav-link">Sobre o TCC</a>
+                <a href="biblioteca.html" class="nav-link">Biblioteca</a>
+                <a href="quiz.html" class="nav-link">Quiz Interativo</a>
+                <a href="dashboard.html" class="nav-link active">Painel</a>
+                <a href="contato.html" class="nav-link">Contato</a>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 12px;">
+                <button class="icon-btn" id="btn-toggle-theme" title="Alternar Tema">
+                    <span class="material-icons-round">dark_mode</span>
+                </button>
+                <button class="icon-btn" id="btn-font-increase" title="Aumentar Fonte">
+                    <span class="material-icons-round">text_increase</span>
+                </button>
+                <a href="login.html" class="btn btn-secondary btn-sm">Sair</a>
             </div>
         </div>
+    </nav>
 
+    <main class="container" style="padding-top: calc(var(--header-height) + 32px); padding-bottom: 64px;">
+        
+        <div class="card mb-4 reveal">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
+                <div style="display: flex; align-items: center; gap: 16px;">
+                    <div style="width: 60px; height: 60px; background:
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Interativo - Aula Conectada</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/animations.css">
+    <link rel="stylesheet" href="../assets/css/components.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="container navbar-container">
+            <a href="index.html" class="logo-brand">
+                <div class="logo-icon">
+                    <span class="material-icons-round">smartphone</span>
+                </div>
+                <span>Aula Conectada</span>
+            </a>
+
+            <div class="nav-menu">
+                <a href="index.html" class="nav-link">Início</a>
+                <a href="sobre.html" class="nav-link">Sobre o TCC</a>
+                <a href="biblioteca.html" class="nav-link">Biblioteca</a>
+                <a href="quiz.html" class="nav-link active">Quiz Interativo</a>
+                <a href="dashboard.html" class="nav-link">Painel</a>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 12px;">
+                <button class="icon-btn" id="btn-toggle-theme"><span class="material-icons-round">dark_mode</span></button>
+                <a href="login.html" class="btn btn-primary btn-sm">Acessar Portal</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container" style="padding-top: calc(var(--header-height) + 40px); padding-bottom: 80px;">
+        <div class="text-center mb-4 reveal">
+            <span class="badge badge-primary">Avaliação Diagnóstica</span>
+            <h1 class="mt-2">Quiz: Uso Pedagógico do Smartphone</h1>
+            <p class="lead" style="max-width: 600px; margin: 12px auto 0 auto;">Teste seus conhecimentos sobre o uso ético, produtivo e pedagógico das tecnologias móveis na sala de aula.</p>
+        </div>
+
+        <div class="card reveal" style="max-width: 700px; margin: 0 auto;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <span class="badge badge-secondary" id="quiz-subject">Pergunta 1 de 3</span>
+                <span style="font-weight: 700; color: var(--color-accent);">+15 XP por Acerto</span>
+            </div>
+
+            <h3 id="quiz-question" style="font-size: 1.25rem; margin-bottom: 24px;">Qual é a atitude mais adequada em relação ao uso do smartphone durante uma explicação teórica do professor?</h3>
+
+            <div id="quiz-options" style="display: flex; flex-direction: column; gap: 12px;">
+                <button class="btn btn-secondary" style="justify-content: flex-start; text-align: left; padding: 16px;" onclick="selectOption(this, false)">
+                    A) Deixar o aparelho em modo silencioso/guardado e utilizá-lo somente quando solicitado na atividade.
+                </button>
+                <button class="btn btn-secondary" style="justify-content: flex-start; text-align: left; padding: 16px;" onclick="selectOption(this, false)">
+                    B) Usar fones de ouvido para escutar música enquanto copia a matéria da lousa.
+                </button>
+                <button class="btn btn-secondary" style="justify-content: flex-start; text-align: left; padding: 16px;" onclick="selectOption(this, true)">
+                    C) Utilizar o dispositivo para consultar conceitos científicos em tempo real quando o professor orientar a pesquisa.
+                </button>
+                <button class="btn btn-secondary" style="justify-content: flex-start; text-align: left; padding: 16px;" onclick="selectOption(this, false)">
+                    D) Responder mensagens pessoais rapidamente sem que o professor perceba.
+                </button>
+            </div>
+        </div>
     </main>
 
-    <!-- MENU INFERIOR DE NAVEGAÇÃO -->
-    <nav>
-        <button class="nav-item active" onclick="switchTab('home')">
-            <span class="material-icons-round">home</span>Início
-        </button>
-        <button class="nav-item" onclick="switchTab('ia')">
-            <span class="material-icons-round">smart_toy</span>IA Edu
-        </button>
-        <button class="nav-item" onclick="switchTab('quiz')">
-            <span class="material-icons-round">quiz</span>Quiz
-        </button>
-        <button class="nav-item" onclick="switchTab('foco')">
-            <span class="material-icons-round">timer</span>Foco
-        </button>
-        <button class="nav-item" onclick="switchTab('agenda')">
-            <span class="material-icons-round">event_note</span>Agenda
-        </button>
-    </nav>
+    <footer class="footer">
+        <div class="container text-center">
+            <p style="font-size: 0.88rem;">&copy; 2026 Aula Conectada — Desenvolvido por Cauã Rangel e Maria Elisa.</p>
+        </div>
+    </footer>
+
+    <script src="../assets/js/utils.js"></script>
+    <script src="../assets/js/animations.js"></script>
+    <script src="../assets/js/main.js"></script>
     <script>
-        /* --- ESTADO GLOBAL DA PLATAFORMA --- */
-        const state = {
-            xp: 0,
-            level: 1,
-            xpToNextLevel: 50,
-            currentTab: 'home',
-            timer: {
-                seconds: 25 * 60,
-                interval: null,
-                isRunning: false
-            }
-        };
+        function selectOption(button, isCorrect) {
+            const options = document.querySelectorAll('#quiz-options button');
+            options.forEach(opt => opt.disabled = true);
 
-        /* --- NAVEGAÇÃO ENTRE ABAS --- */
-        function switchTab(tabId) {
-            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
-            document.querySelectorAll('.nav-item').forEach(btn => btn.classList.remove('active'));
+            if (isCorrect) {
+                button.style.background = 'var(--color-secondary-subtle)';
+                button.style.borderColor = 'var(--color-secondary)';
+                button.style.color = 'var(--color-secondary)';
+                ToastEngine.show("🎉 Resposta Correta! Você ganhou +15 XP!", "success");
 
-            const targetTab = document.getElementById(`tab-${tabId}`);
-            if (targetTab) {
-                targetTab.classList.add('active');
-                state.currentTab = tabId;
-            }
-
-            const tabMap = ['home', 'ia', 'quiz', 'foco', 'agenda'];
-            const activeIndex = tabMap.indexOf(tabId);
-            if (activeIndex !== -1) {
-                document.querySelectorAll('.nav-item')[activeIndex].classList.add('active');
-            }
-        }
-
-        /* --- MODO ESCURO / CLARO --- */
-        function toggleTheme() {
-            document.body.classList.toggle('dark-theme');
-            const icon = document.getElementById('theme-icon');
-            const isDark = document.body.classList.contains('dark-theme');
-            icon.textContent = isDark ? 'light_mode' : 'dark_mode';
-        }
-
-        /* --- SISTEMA DE GAMIFICAÇÃO & XP --- */
-        function addXP(amount) {
-            state.xp += amount;
-            document.getElementById('user-xp').textContent = `${state.xp} XP`;
-
-            let levelTitle = "Nível 1 - Aprendiz";
-            if (state.xp >= 50 && state.xp < 120) {
-                levelTitle = "Nível 2 - Estudante Dedicado";
-                state.xpToNextLevel = 120;
-            } else if (state.xp >= 120 && state.xp < 220) {
-                levelTitle = "Nível 3 - Mestre do Saber";
-                state.xpToNextLevel = 220;
-            } else if (state.xp >= 220) {
-                levelTitle = "Nível 4 - Gênio EduSmart";
-                state.xpToNextLevel = 400;
-            }
-
-            document.getElementById('user-level').textContent = levelTitle;
-
-            const percentage = Math.min((state.xp / state.xpToNextLevel) * 100, 100);
-            document.getElementById('xp-bar').style.width = `${percentage}%`;
-        }
-
-        /* --- BANCO DE DADOS E LÓGICA DO QUIZ --- */
-        const quizQuestions = [
-            {
-                subject: "Matemática",
-                question: "Qual é o valor de X na equação do 1º grau: 2x + 8 = 20?",
-                options: ["x = 4", "x = 6", "x = 8", "x = 10"],
-                correct: 1
-            },
-            {
-                subject: "Português",
-                question: "Qual figura de linguagem está presente na frase: 'O jardim olhava as crianças com carinho'?",
-                options: ["Metáfora", "Prosopopeia (Personificação)", "Hipérbole", "Anáfora"],
-                correct: 1
-            },
-            {
-                subject: "História",
-                question: "Qual evento marcou o início da Idade Contemporânea em 1789?",
-                options: ["Revolução Industrial", "Primeira Guerra Mundial", "Revolução Francesa", "Descobrimento do Brasil"],
-                correct: 2
-            },
-            {
-                subject: "Ciências / Biologia",
-                question: "Qual organela celular é responsável pela produção de energia (ATP)?",
-                options: ["Ribossomo", "Mitocôndria", "Complexo de Golgi", "Lisossomo"],
-                correct: 1
-            },
-            {
-                subject: "Tecnologia",
-                question: "O que significa a sigla IA no contexto educacional e tecnológico?",
-                options: ["Interface Avançada", "Inteligência Artificial", "Informação Automatizada", "Integração de Aplicativos"],
-                correct: 1
-            }
-        ];
-
-        let shuffledQuestions = [];
-        let currentQuestionIndex = 0;
-
-        function initQuiz() {
-            shuffledQuestions = [...quizQuestions].sort(() => Math.random() - 0.5);
-            currentQuestionIndex = 0;
-            loadQuestion();
-        }
-
-        function loadQuestion() {
-            const quizBox = document.getElementById('quiz-box');
-            if (currentQuestionIndex >= shuffledQuestions.length) {
-                quizBox.innerHTML = `
-                    <div style="text-align:center; padding: 20px 10px;">
-                        <span class="material-icons-round" style="font-size:48px; color:var(--brand-secondary);">emoji_events</span>
-                        <h3 style="font-size: 1.1rem; margin-top: 8px;">Excelente trabalho!</h3>
-                        <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom: 16px;">Você concluiu todas as perguntas desta rodada e acumulou XP!</p>
-                        <button class="btn btn-primary" onclick="initQuiz()">Reiniciar com Novas Perguntas</button>
-                    </div>
-                `;
-                return;
-            }
-
-            const q = shuffledQuestions[currentQuestionIndex];
-            document.getElementById('quiz-cat').textContent = q.subject;
-            document.getElementById('quiz-q').textContent = `${currentQuestionIndex + 1}. ${q.question}`;
-
-            const optionsContainer = document.getElementById('quiz-options');
-            optionsContainer.innerHTML = '';
-
-            q.options.forEach((opt, idx) => {
-                const btn = document.createElement('button');
-                btn.className = 'btn btn-secondary';
-                btn.style.justifyContent = 'flex-start';
-                btn.style.textAlign = 'left';
-                btn.textContent = opt;
-                btn.onclick = () => checkAnswer(idx, q.correct, btn);
-                optionsContainer.appendChild(btn);
-            });
-        }
-
-        function checkAnswer(selectedIdx, correctIdx, btnElement) {
-            const allBtns = document.getElementById('quiz-options').querySelectorAll('button');
-            allBtns.forEach(b => b.disabled = true);
-
-            if (selectedIdx === correctIdx) {
-                btnElement.style.background = '#D1FAE5';
-                btnElement.style.borderColor = 'var(--brand-secondary)';
-                btnElement.style.color = '#065F46';
-                addXP(15);
+                // Atualiza XP no Storage
+                const user = StorageManager.get('user_session', { xp: 140 });
+                user.xp += 15;
+                StorageManager.set('user_session', user);
             } else {
-                btnElement.style.background = '#FEE2E2';
-                btnElement.style.borderColor = 'var(--brand-danger)';
-                btnElement.style.color = '#991B1B';
-                
-                allBtns[correctIdx].style.background = '#D1FAE5';
-                allBtns[correctIdx].style.borderColor = 'var(--brand-secondary)';
-            }
-
-            setTimeout(() => {
-                currentQuestionIndex++;
-                loadQuestion();
-            }, 1300);
-        }
-
-        /* --- CHAT INTELIGENTE DA IA EDU --- */
-        function sendChatMessage() {
-            const input = document.getElementById('chat-input');
-            const message = input.value.trim();
-            if (!message) return;
-
-            const chatMessages = document.getElementById('chat-messages');
-
-            // Mensagem do Usuário
-            const userBubble = document.createElement('div');
-            userBubble.className = 'chat-bubble user';
-            userBubble.textContent = message;
-            chatMessages.appendChild(userBubble);
-
-            input.value = '';
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-
-            // Resposta Simulada da IA Edu
-            setTimeout(() => {
-                const iaBubble = document.createElement('div');
-                iaBubble.className = 'chat-bubble ia';
-
-                const textLower = message.toLowerCase();
-                let response = "Essa é uma ótima questão! Lembre-se de organizar seus estudos em blocos de tempo com o nosso Cronômetro de Foco para fixar melhor o conteúdo.";
-
-                if (textLower.includes('redação') || textLower.includes('enem') || textLower.includes('texto')) {
-                    response = "📝 **Dica de Redação:** Estruture seu texto em 4 parágrafos: 1 de Introdução (com tese clara), 2 de Desenvolvimento (com repertório e argumentos) e 1 de Conclusão (com proposta de intervenção completa).";
-                } else if (textLower.includes('matematica') || textLower.includes('matemática') || textLower.includes('equação') || textLower.includes('x')) {
-                    response = "📐 **Dica de Matemática:** Ao resolver equações, lembre-se da regra de ouro: tudo que muda de lado da igualdade também inverte a sua operação (adição vira subtração, multiplicação vira divisão)!";
-                } else if (textLower.includes('historia') || textLower.includes('história') || textLower.includes('guerra')) {
-                    response = "📜 **Dica de História:** Em exames, o mais importante não é memorizar apenas as datas, mas compreender as **causas** socioeconômicas e as **consequências** do evento para a sociedade.";
-                } else if (textLower.includes('oi') || textLower.includes('olá') || textLower.includes('bom dia') || textLower.includes('boa tarde')) {
-                    response = "👋 Olá! Estou pronta para te ajudar a estudar. Qual matéria você quer praticar hoje?";
-                }
-
-                iaBubble.innerHTML = response;
-                chatMessages.appendChild(iaBubble);
-                chatMessages.scrollTop = chatMessages.scrollHeight;
-            }, 600);
-        }
-
-        /* --- CRONÔMETRO DE FOCO (POMODORO) --- */
-        function toggleTimer() {
-            const btn = document.getElementById('btn-timer');
-
-            if (state.timer.isRunning) {
-                clearInterval(state.timer.interval);
-                state.timer.isRunning = false;
-                btn.textContent = "Continuar Sessão";
-            } else {
-                state.timer.isRunning = true;
-                btn.textContent = "Pausar";
-
-                state.timer.interval = setInterval(() => {
-                    if (state.timer.seconds > 0) {
-                        state.timer.seconds--;
-                        updateTimerDisplay();
-                    } else {
-                        clearInterval(state.timer.interval);
-                        state.timer.isRunning = false;
-                        alert("🎉 Parabéns! Você concluiu 25 minutos de estudo focado e ganhou +25 XP!");
-                        addXP(25);
-                        resetTimer();
-                    }
-                }, 1000);
+                button.style.background = 'var(--color-danger-subtle)';
+                button.style.borderColor = 'var(--color-danger)';
+                button.style.color = 'var(--color-danger)';
+                ToastEngine.show("Resposta incorreta. Tente prestar mais atenção!", "error");
             }
         }
-
-        function resetTimer() {
-            clearInterval(state.timer.interval);
-            state.timer.isRunning = false;
-            state.timer.seconds = 25 * 60;
-            updateTimerDisplay();
-            document.getElementById('btn-timer').textContent = "Iniciar Sessão";
-        }
-
-        function updateTimerDisplay() {
-            const mins = Math.floor(state.timer.seconds / 60).toString().padStart(2, '0');
-            const secs = (state.timer.seconds % 60).toString().padStart(2, '0');
-            document.getElementById('timer-text').textContent = `${mins}:${secs}`;
-        }
-
-        /* --- AGENDA E GERENCIADOR DE TAREFAS --- */
-        const tasks = [
-            { id: 1, title: "Trabalho de Biologia - Células", done: false },
-            { id: 2, title: "Exercícios de Álgebra Linear", done: false }
-        ];
-
-        function renderTasks() {
-            const container = document.getElementById('task-container');
-            container.innerHTML = '';
-
-            tasks.forEach(task => {
-                const item = document.createElement('div');
-                item.style.cssText = "display:flex; justify-content:space-between; align-items:center; padding:12px; background:var(--bg-main); border-radius:var(--radius-md); border:1px solid var(--border-color); font-size:0.85rem;";
-                
-                item.innerHTML = `
-                    <span style="${task.done ? 'text-decoration:line-through; opacity:0.5;' : 'font-weight:500;'}">${task.title}</span>
-                    ${!task.done ? 
-                        `<button class="btn btn-primary" style="width:auto; padding:6px 12px; font-size:0.75rem;" onclick="completeTask(${task.id})">Entregar (+20 XP)</button>` : 
-                        `<span style="color:var(--brand-secondary); font-weight:700; font-size:0.75rem;">Entregue ✓</span>`
-                    }
-                `;
-                container.appendChild(item);
-            });
-        }
-
-        function addTask() {
-            const input = document.getElementById('task-input');
-            const title = input.value.trim();
-            if (title) {
-                tasks.push({ id: Date.now(), title: title, done: false });
-                input.value = '';
-                renderTasks();
-            }
-        }
-
-        function completeTask(id) {
-            const task = tasks.find(t => t.id === id);
-            if (task) {
-                task.done = true;
-                addXP(20);
-                renderTasks();
-            }
-        }
-
-        /* --- INICIALIZAÇÃO DA APLICAÇÃO --- */
-        window.addEventListener('DOMContentLoaded', () => {
-            initQuiz();
-            renderTasks();
-        });
     </script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biblioteca Digital - Aula Conectada</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/animations.css">
+    <link rel="stylesheet" href="../assets/css/components.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="container navbar-container">
+            <a href="index.html" class="logo-brand">
+                <div class="logo-icon">
+                    <span class="material-icons-round">smartphone</span>
+                </div>
+                <span>Aula Conectada</span>
+            </a>
+
+            <div class="nav-menu">
+                <a href="index.html" class="nav-link">Início</a>
+                <a href="sobre.html" class="nav-link">Sobre o TCC</a>
+                <a href="biblioteca.html" class="nav-link active">Biblioteca</a>
+                <a href="quiz.html" class="nav-link">Quiz Interativo</a>
+                <a href="dashboard.html" class="nav-link">Painel</a>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 12px;">
+                <button class="icon-btn" id="btn-toggle-theme"><span class="material-icons-round">dark_mode</span></button>
+                <a href="login.html" class="btn btn-primary btn-sm">Acessar Portal</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container" style="padding-top: calc(var(--header-height) + 40px); padding-bottom: 80px;">
+        <div class="text-center mb-5 reveal">
+            <span class="badge badge-primary">Recursos & Aplicativos</span>
+            <h1 class="mt-2">Biblioteca Pedagógica Digital</h1>
+            <p class="lead" style="max-width: 650px; margin: 12px auto 0 auto;">Curadoria de aplicativos educacionais recomendados e artigos acadêmicos do projeto de TCC para download.</p>
+        </div>
+
+        <h3 class="mb-3">Aplicativos Recomendados para o Ensino Médio</h3>
+        <div class="grid grid-2 mb-5">
+            <div class="card hover-lift reveal">
+                <div style="display: flex; gap: 16px; align-items: flex-start;">
+                    <img src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&w=120&q=80" alt="GeoGebra" style="width: 64px; height: 64px; border-radius: var(--radius-md); object-fit: cover;">
+                    <div>
+                        <h4>GeoGebra Calculadora 3D</h4>
+                        <span class="badge badge-secondary mb-1">Matemática & Geometria</span>
+                        <p style="font-size: 0.88rem;">Ferramenta indispensável para visualização de funções tridimensionais e álgebra diretamente no smartphone.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card hover-lift reveal reveal-delay-1">
+                <div style="display: flex; gap: 16px; align-items: flex-start;">
+                    <img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=120&q=80" alt="PhET" style="width: 64px; height: 64px; border-radius: var(--radius-md); object-fit: cover;">
+                    <div>
+                        <h4>PhET Interactive Simulations</h4>
+                        <span class="badge badge-primary mb-1">Física & Química</span>
+                        <p style="font-size: 0.88rem;">Laboratório virtual completo para experimentos de eletromagnetismo, reações químicas e ondas.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h3 class="mb-3">Artigos Acadêmicos & Leitura Complementar</h3>
+        <div class="card reveal">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+                <div>
+                    <h4>O Smartphone na Sala de Aula: Inimigo ou Aliado Pedagógico?</h4>
+                    <p style="font-size: 0.85rem; margin: 4px 0 0 0;">Autores: Maria Elisa & Cauã Rangel (2026) • Formato: PDF (1.2 MB)</p>
+                </div>
+                <button class="btn btn-primary btn-sm" onclick="ToastEngine.show('Download do artigo iniciado!', 'info')">
+                    <span class="material-icons-round">download</span> Baixar Artigo
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container text-center">
+            <p style="font-size: 0.88rem;">&copy; 2026 Aula Conectada — Desenvolvido por Cauã Rangel e Maria Elisa.</p>
+        </div>
+    </footer>
+
+    <script src="../assets/js/utils.js"></script>
+    <script src="../assets/js/animations.js"></script>
+    <script src="../assets/js/main.js"></script>
 </body>
 </html>
