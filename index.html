@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>EduSmart - Plataforma Pedagógica Móvel</title>
+    <title>EduSmart - Plataforma Pedagógica Móvel com IA</title>
     
     <!-- Ícones do Google e Fonte Inter -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
@@ -31,6 +31,15 @@
             --radius: 16px;
         }
 
+        /* --- MODO ESCURO (DARK MODE) --- */
+        body.dark-theme {
+            --bg: #0F172A;
+            --surface: #1E293B;
+            --text-main: #F8FAFC;
+            --text-muted: #94A3B8;
+            --border: #334155;
+        }
+
         /* RESET PROFISSIONAL */
         * {
             box-sizing: border-box;
@@ -48,6 +57,7 @@
             display: flex;
             flex-direction: column;
             overflow: hidden;
+            transition: background-color 0.3s, color 0.3s;
         }
 
         /* --- CABEÇALHO DO APP --- */
@@ -83,12 +93,21 @@
             letter-spacing: -0.5px;
         }
 
-        .badge-ver {
+        .theme-toggle {
             background: rgba(255, 255, 255, 0.2);
-            font-size: 0.7rem;
-            padding: 3px 8px;
-            border-radius: 20px;
-            font-weight: 600;
+            border: none;
+            color: white;
+            padding: 8px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+
+        .theme-toggle:active {
+            background: rgba(255, 255, 255, 0.4);
         }
 
         /* --- ÁREA PRINCIPAL (SCROLLABLE) --- */
@@ -113,6 +132,29 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
+        /* --- GAMIFICAÇÃO BANNER --- */
+        .gamify-banner {
+            background: linear-gradient(135deg, #6366F1, #8B5CF6);
+            color: white;
+            border-radius: var(--radius);
+            padding: 20px;
+            margin-bottom: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow-md);
+        }
+
+        .level-badge {
+            background: rgba(255, 255, 255, 0.25);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
         /* --- CARDS & COMPONENTES --- */
         .card {
             background: var(--surface);
@@ -121,7 +163,7 @@
             margin-bottom: 16px;
             box-shadow: var(--shadow-sm);
             border: 1px solid var(--border);
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: transform 0.2s, box-shadow 0.2s, background-color 0.3s;
         }
 
         .card-header {
@@ -179,7 +221,7 @@
         .btn-primary:active { transform: scale(0.98); background: var(--primary-dark); }
 
         .btn-secondary { background: var(--bg); color: var(--text-main); border: 1px solid var(--border); }
-        .btn-secondary:active { background: #E5E7EB; }
+        .btn-secondary:active { opacity: 0.8; }
 
         .btn-danger { background: var(--danger); color: white; }
 
@@ -192,11 +234,17 @@
         }
 
         .grid-item {
-            background: var(--bg);
-            padding: 14px;
+            background: var(--surface);
+            padding: 16px;
             border-radius: 12px;
             text-align: center;
             border: 1px solid var(--border);
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .grid-item:active {
+            transform: scale(0.95);
         }
 
         .grid-item span {
@@ -210,9 +258,44 @@
             color: var(--text-main);
         }
 
+        /* --- CHAT IA EDU --- */
+        .chat-box {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-height: 350px;
+            overflow-y: auto;
+            margin-bottom: 12px;
+            padding-right: 4px;
+        }
+
+        .chat-msg {
+            padding: 12px 16px;
+            border-radius: 14px;
+            font-size: 0.9rem;
+            max-width: 85%;
+            line-height: 1.4;
+        }
+
+        .chat-msg.ia {
+            background: var(--bg);
+            color: var(--text-main);
+            border: 1px solid var(--border);
+            align-self: flex-start;
+            border-bottom-left-radius: 2px;
+        }
+
+        .chat-msg.user {
+            background: var(--primary);
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 2px;
+        }
+
         /* --- COMPONENTE: QUIZ INTERATIVO --- */
         .quiz-option {
             background: var(--bg);
+            color: var(--text-main);
             border: 2px solid var(--border);
             border-radius: 12px;
             padding: 14px;
@@ -240,9 +323,10 @@
         .score-box {
             text-align: center;
             padding: 20px;
-            background: linear-gradient(135deg, #EEF2FF, #E0E7FF);
+            background: var(--bg);
             border-radius: 12px;
             margin-bottom: 15px;
+            border: 1px solid var(--border);
         }
 
         /* --- COMPONENTE: CRONÔMETRO POMODORO --- */
@@ -263,7 +347,7 @@
         .timer-time {
             font-size: 2.8rem;
             font-weight: 800;
-            color: var(--primary-dark);
+            color: var(--primary);
             letter-spacing: -1px;
         }
 
@@ -286,6 +370,8 @@
             padding: 12px;
             border-radius: 10px;
             border: 1px solid var(--border);
+            background: var(--surface);
+            color: var(--text-main);
             outline: none;
             font-size: 0.9rem;
         }
@@ -327,15 +413,15 @@
             flex-direction: column;
             align-items: center;
             color: var(--text-muted);
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             font-weight: 600;
             gap: 2px;
             cursor: pointer;
-            width: 20%;
+            width: 18%;
             transition: color 0.2s;
         }
 
-        .nav-btn span { font-size: 24px; }
+        .nav-btn span { font-size: 22px; }
 
         .nav-btn.active {
             color: var(--primary);
@@ -348,20 +434,32 @@
     <header>
         <div class="header-title">
             <div class="logo-icon">
-                <span class="material-icons-round">smartphone</span>
+                <span class="material-icons-round">smart_toy</span>
             </div>
             <div>
-                <h1>EduSmart</h1>
+                <h1>EduSmart IA</h1>
             </div>
         </div>
-        <span class="badge-ver">v2.0 PRO</span>
+        <button class="theme-toggle" onclick="toggleTheme()" title="Alternar Tema">
+            <span class="material-icons-round" id="theme-icon">dark_mode</span>
+        </button>
     </header>
 
-    <!-- CONTEÚDO PRINCIPAL (MUDANÇA DE ABAS) -->
+    <!-- ÁREA PRINCIPAL -->
     <main>
         
-        <!-- ABA 1: INÍCIO / DASHBOARD -->
+        <!-- ABA 1: INÍCIO / DASHBOARD GAMIFICADO -->
         <div id="tab-home" class="tab-content active">
+            
+            <div class="gamify-banner">
+                <div>
+                    <span class="level-badge" id="user-level">Nível 1 - Aprendiz</span>
+                    <h2 style="font-size: 1.6rem; margin-top: 6px;" id="user-xp">0 XP</h2>
+                    <p style="font-size: 0.8rem; opacity: 0.9;">Conclua atividades para evoluir!</p>
+                </div>
+                <span class="material-icons-round" style="font-size: 52px; opacity: 0.85;">emoji_events</span>
+            </div>
+
             <div class="card">
                 <div class="card-header">
                     <div class="card-icon bg-indigo">
@@ -369,28 +467,28 @@
                     </div>
                     <div>
                         <h2>O Celular na Escola</h2>
-                        <p>Ferramenta Pedagógica</p>
+                        <p>Ferramenta Pedagógica & IA</p>
                     </div>
                 </div>
-                <p>Bem-vindo ao <strong>EduSmart</strong>! Esta plataforma demonstra na prática como o smartphone pode transformar o ambiente escolar em uma experiência interativa e focada.</p>
+                <p>O <strong>EduSmart</strong> combina Inteligência Artificial, método Pomodoro e gamificação para transformar o smartphone em uma potente ferramenta de aprendizado.</p>
             </div>
 
             <div class="grid-2">
+                <div class="grid-item" onclick="switchTab('ia')">
+                    <span>🤖</span>
+                    <h4>IA Edu</h4>
+                </div>
                 <div class="grid-item" onclick="switchTab('quiz')">
                     <span>💡</span>
-                    <h4>Quiz Rápido</h4>
+                    <h4>Quiz (+10 XP)</h4>
                 </div>
                 <div class="grid-item" onclick="switchTab('pomodoro')">
                     <span>⏱️</span>
-                    <h4>Modo Foco</h4>
+                    <h4>Foco (+25 XP)</h4>
                 </div>
                 <div class="grid-item" onclick="switchTab('agenda')">
                     <span>📅</span>
                     <h4>Minha Agenda</h4>
-                </div>
-                <div class="grid-item" onclick="switchTab('library')">
-                    <span>📚</span>
-                    <h4>Biblioteca</h4>
                 </div>
             </div>
 
@@ -400,14 +498,42 @@
                         <span class="material-icons-round">star</span>
                     </div>
                     <div>
-                        <h2>Dica do Dia</h2>
+                        <h2>Dica de Estudo</h2>
                     </div>
                 </div>
-                <p>Desative as notificações de redes sociais durante o horário de aula para aumentar sua retenção de conteúdo em até 40%!</p>
+                <p>Use a nossa **IA Edu** para tirar dúvidas difíceis de sala de aula e crie resumos rápidos em segundos!</p>
             </div>
         </div>
 
-        <!-- ABA 2: QUIZ INTERATIVO -->
+        <!-- ABA 2: IA EDU ASSISTENTE (INOVAÇÃO) -->
+        <div id="tab-ia" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon bg-indigo">
+                        <span class="material-icons-round">smart_toy</span>
+                    </div>
+                    <div>
+                        <h2>IA Edu - Assistente Escolar</h2>
+                        <p>Tire dúvidas instantâneas de matérias</p>
+                    </div>
+                </div>
+
+                <div class="chat-box" id="chat-box">
+                    <div class="chat-msg ia">
+                        👋 Olá! Eu sou a <strong>IA Edu</strong>. Como posso ajudar nos seus estudos hoje? Me pergunte sobre fórmulas, conceitos de história, dicas de redação ou resumos!
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <input type="text" id="chat-input" placeholder="Pergunte algo para a IA Edu...">
+                    <button class="btn btn-primary" style="width: auto; margin-top: 0; padding: 12px 16px;" onclick="sendChatMessage()">
+                        <span class="material-icons-round">send</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ABA 3: QUIZ INTERATIVO -->
         <div id="tab-quiz" class="tab-content">
             <div class="card">
                 <div class="card-header">
@@ -416,7 +542,7 @@
                     </div>
                     <div>
                         <h2>Quiz Pedagógico</h2>
-                        <p>Testes seus conhecimentos</p>
+                        <p>Teste seus conhecimentos e ganhe XP</p>
                     </div>
                 </div>
 
@@ -434,7 +560,7 @@
             </div>
         </div>
 
-        <!-- ABA 3: CRONÔMETRO POMODORO -->
+        <!-- ABA 4: CRONÔMETRO POMODORO -->
         <div id="tab-pomodoro" class="tab-content">
             <div class="card" style="text-align: center;">
                 <div class="card-header" style="justify-content: center;">
@@ -462,7 +588,7 @@
             </div>
         </div>
 
-        <!-- ABA 4: AGENDA DE ESTUDOS -->
+        <!-- ABA 5: AGENDA DE ESTUDOS -->
         <div id="tab-agenda" class="tab-content">
             <div class="card">
                 <div class="card-header">
@@ -483,12 +609,12 @@
                 </div>
 
                 <ul id="task-list" class="task-list">
-                    <!-- Tarefas serão geradas via JS -->
+                    <!-- Tarefas geradas dinamicamente -->
                 </ul>
             </div>
         </div>
 
-        <!-- ABA 5: BIBLIOTECA DIGITAL -->
+        <!-- ABA 6: BIBLIOTECA DIGITAL -->
         <div id="tab-library" class="tab-content">
             <div class="card">
                 <div class="card-header">
@@ -529,6 +655,10 @@
             <span class="material-icons-round">home</span>
             Início
         </button>
+        <button class="nav-btn" onclick="switchTab('ia')">
+            <span class="material-icons-round">smart_toy</span>
+            IA Edu
+        </button>
         <button class="nav-btn" onclick="switchTab('quiz')">
             <span class="material-icons-round">extension</span>
             Quiz
@@ -541,13 +671,9 @@
             <span class="material-icons-round">event_note</span>
             Agenda
         </button>
-        <button class="nav-btn" onclick="switchTab('library')">
-            <span class="material-icons-round">collections_bookmark</span>
-            Livros
-        </button>
     </nav>
 
-    <!-- JAVASCRIPT COM LÓGICA E INTERATIVIDADE -->
+    <!-- JAVASCRIPT COM TODAS AS FUNCIONALIDADES -->
     <script>
         // --- NAVEGAÇÃO ENTRE ABAS ---
         function switchTab(tabName) {
@@ -556,9 +682,69 @@
 
             document.getElementById(`tab-${tabName}`).classList.add('active');
             
-            // Ativar ícone correto no menu
-            const navIndex = ['home', 'quiz', 'pomodoro', 'agenda', 'library'].indexOf(tabName);
-            document.querySelectorAll('.nav-btn')[navIndex].classList.add('active');
+            const navTabs = ['home', 'ia', 'quiz', 'pomodoro', 'agenda'];
+            const navIndex = navTabs.indexOf(tabName);
+            if(navIndex !== -1) {
+                document.querySelectorAll('.nav-btn')[navIndex].classList.add('active');
+            }
+        }
+
+        // --- MODO ESCURO (DARK MODE) ---
+        function toggleTheme() {
+            document.body.classList.toggle('dark-theme');
+            const icon = document.getElementById('theme-icon');
+            if(document.body.classList.contains('dark-theme')) {
+                icon.textContent = 'light_mode';
+            } else {
+                icon.textContent = 'dark_mode';
+            }
+        }
+
+        // --- SISTEMA DE GAMIFICAÇÃO (XP & NÍVEIS) ---
+        let xp = 0;
+        function addXP(amount) {
+            xp += amount;
+            document.getElementById('user-xp').textContent = `${xp} XP`;
+            
+            let level = "Nível 1 - Aprendiz";
+            if(xp >= 30) level = "Nível 2 - Estudante Focado";
+            if(xp >= 70) level = "Nível 3 - Mestre do Saber";
+            if(xp >= 120) level = "Nível 4 - Gênio EduSmart";
+            
+            document.getElementById('user-level').textContent = level;
+        }
+
+        // --- IA EDU (CHAT INTELIGENTE) ---
+        function sendChatMessage() {
+            const input = document.getElementById('chat-input');
+            const text = input.value.trim();
+            if(!text) return;
+
+            const chatBox = document.getElementById('chat-box');
+            
+            // Adiciona mensagem do usuário
+            chatBox.innerHTML += `<div class="chat-msg user">${text}</div>`;
+            input.value = '';
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            // Resposta inteligente simulada
+            setTimeout(() => {
+                let reply = "Essa é uma excelente dúvida! Recomendo consultar também os conteúdos na aba Biblioteca para aprofundar no assunto.";
+                const q = text.toLowerCase();
+
+                if(q.includes('redação') || q.includes('enem') || q.includes('texto')) {
+                    reply = "💡 **Dica de Redação:** Lembre-se da estrutura em 4 parágrafos: Introdução (com tese), Desenvolvimento 1 e 2 (com repertórios) e Conclusão com Proposta de Intervenção detalhada!";
+                } else if(q.includes('matematica') || q.includes('matemática') || q.includes('formula') || q.includes('fórmula')) {
+                    reply = "📐 **Fórmula Rápida:** Para a equação de segundo grau ($ax^2 + bx + c = 0$), use Bhaskara: x = (-b ± √Δ) / (2a), onde Δ = b² - 4ac.";
+                } else if(q.includes('historia') || q.includes('história')) {
+                    reply = "📜 **Dica de História:** Ao estudar guerras e revoluções, analise sempre as **causas socioeconômicas** e os impactos no povo, não apenas as datas!";
+                } else if(q.includes('foco') || q.includes('estudar') || q.includes('concentrar')) {
+                    reply = "⏱️ **Técnica Recomendada:** Utilize nosso **Cronômetro de Foco (Pomodoro)**! Estude por 25 minutos seguidos e descanse 5 minutos.";
+                }
+
+                chatBox.innerHTML += `<div class="chat-msg ia">${reply}</div>`;
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }, 700);
         }
 
         // --- LÓGICA DO QUIZ ---
@@ -574,8 +760,8 @@
                 correct: 1
             },
             {
-                q: "Como o celular ajuda na organização escolar?",
-                options: ["Com agendas digitais e lembretes", "Não ajuda em nada", "Apenas para jogar na aula"],
+                q: "Como a IA Edu pode te ajudar na escola?",
+                options: ["Resumindo matérias e tirando dúvidas", "Fazendo você parar de estudar", "Jogando online"],
                 correct: 0
             }
         ];
@@ -588,7 +774,7 @@
                 document.getElementById('quiz-container').innerHTML = `
                     <div style="text-align:center; padding: 20px;">
                         <h3>🎉 Parabéns!</h3>
-                        <p>Você concluiu o quiz pedagógico!</p>
+                        <p style="margin-top: 8px;">Você concluiu o quiz pedagógico!</p>
                         <button class="btn btn-primary" onclick="restartQuiz()">Refazer Quiz</button>
                     </div>
                 `;
@@ -617,6 +803,7 @@
             if(selected === correct) {
                 btnElement.classList.add('correct');
                 score += 10;
+                addXP(10); // Recompensa em XP
                 document.getElementById('score-display').textContent = `${score} Pontos`;
             } else {
                 btnElement.classList.add('wrong');
@@ -626,7 +813,7 @@
             setTimeout(() => {
                 currentQ++;
                 loadQuiz();
-            }, 1500);
+            }, 1400);
         }
 
         function restartQuiz() {
@@ -662,7 +849,8 @@
                         updateTimerDisplay();
                     } else {
                         clearInterval(timerInterval);
-                        alert("Tempo de foco encerrado! Faça uma pausa.");
+                        alert("Sessão de foco encerrada! Você ganhou +25 XP!");
+                        addXP(25);
                         resetTimer();
                     }
                 }, 1000);
@@ -707,7 +895,7 @@
             renderTasks();
         }
 
-        // Inicializar funções ao carregar
+        // Inicialização
         loadQuiz();
         renderTasks();
     </script>
