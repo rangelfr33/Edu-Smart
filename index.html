@@ -3,41 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>EduSmart - Plataforma Pedagógica Móvel com IA</title>
+    <title>EduSmart - Plataforma Pedagógica Escolar</title>
     
-    <!-- Ícones do Google e Fonte Inter -->
+    <!-- Google Fonts e Material Icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
     <style>
-        /* --- VARIÁVEIS DE CORES & DESIGN SYSTEM --- */
+        /* --- DESIGN SYSTEM & VARIÁVEIS DE PRODUÇÃO --- */
         :root {
-            --primary: #4F46E5;       /* Indigo Vibrante */
-            --primary-light: #818CF8;
-            --primary-dark: #3730A3;
-            --secondary: #10B981;     /* Esmeralda */
-            --accent: #F59E0B;        /* Âmbar */
-            --danger: #EF4444;        /* Vermelho */
+            --brand-primary: #4338CA;
+            --brand-primary-light: #6366F1;
+            --brand-primary-dark: #312E81;
+            --brand-secondary: #059669;
+            --brand-accent: #D97706;
+            --brand-danger: #DC2626;
             
-            --bg: #F3F4F6;
-            --surface: #FFFFFF;
-            --text-main: #111827;
-            --text-muted: #6B7280;
-            --border: #E5E7EB;
+            --bg-main: #F8FAFC;
+            --bg-surface: #FFFFFF;
+            --bg-card: #FFFFFF;
+            --text-primary: #0F172A;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border-color: #E2E8F0;
             
-            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            --radius: 16px;
+            --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 20px;
+            --radius-full: 9999px;
+            
+            --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* --- MODO ESCURO (DARK MODE) --- */
         body.dark-theme {
-            --bg: #0F172A;
-            --surface: #1E293B;
-            --text-main: #F8FAFC;
-            --text-muted: #94A3B8;
-            --border: #334155;
+            --bg-main: #0B0F19;
+            --bg-surface: #111827;
+            --bg-card: #1E293B;
+            --text-primary: #F8FAFC;
+            --text-secondary: #CBD5E1;
+            --text-muted: #64748B;
+            --border-color: #1E293B;
         }
 
         /* RESET PROFISSIONAL */
@@ -45,605 +56,460 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
             -webkit-tap-highlight-color: transparent;
-            user-select: none;
         }
 
         body {
-            background-color: var(--bg);
-            color: var(--text-main);
+            background-color: var(--bg-main);
+            color: var(--text-primary);
             height: 100vh;
             display: flex;
             flex-direction: column;
             overflow: hidden;
-            transition: background-color 0.3s, color 0.3s;
+            transition: background-color var(--transition-normal), color var(--transition-normal);
         }
 
-        /* --- CABEÇALHO DO APP --- */
+        /* --- HEADER CORPORATIVO --- */
         header {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: white;
-            padding: 18px 20px 15px 20px;
+            background: var(--bg-surface);
+            border-bottom: 1px solid var(--border-color);
+            padding: 12px 20px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            box-shadow: var(--shadow-md);
-            z-index: 10;
+            z-index: 50;
         }
 
-        .header-title {
+        .brand-container {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
         }
 
-        .header-title .logo-icon {
-            background: rgba(255, 255, 255, 0.2);
-            padding: 8px;
-            border-radius: 12px;
+        .brand-logo {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--brand-primary), var(--brand-primary-light));
+            border-radius: var(--radius-md);
             display: flex;
             align-items: center;
             justify-content: center;
-        }
-
-        .header-title h1 {
-            font-size: 1.3rem;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-        }
-
-        .theme-toggle {
-            background: rgba(255, 255, 255, 0.2);
-            border: none;
             color: white;
-            padding: 8px;
-            border-radius: 50%;
-            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(99, 102, 241, 0.3);
+        }
+
+        .brand-text h1 {
+            font-size: 1.1rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, var(--brand-primary), var(--brand-primary-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .brand-text p {
+            font-size: 0.68rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .icon-btn {
+            background: var(--bg-main);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            width: 38px;
+            height: 38px;
+            border-radius: var(--radius-full);
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: background 0.2s;
+            cursor: pointer;
+            transition: var(--transition-fast);
         }
 
-        .theme-toggle:active {
-            background: rgba(255, 255, 255, 0.4);
+        .icon-btn:active {
+            transform: scale(0.92);
         }
 
-        /* --- ÁREA PRINCIPAL (SCROLLABLE) --- */
+        /* --- MAIN VIEWPORT --- */
         main {
             flex: 1;
             overflow-y: auto;
             padding: 16px;
             padding-bottom: 90px;
+            max-width: 800px;
+            margin: 0 auto;
+            width: 100%;
         }
 
         .tab-content {
             display: none;
-            animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .tab-content.active {
             display: block;
         }
 
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(15px); }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* --- GAMIFICAÇÃO BANNER --- */
-        .gamify-banner {
-            background: linear-gradient(135deg, #6366F1, #8B5CF6);
-            color: white;
-            border-radius: var(--radius);
+        /* --- CARDS & WIDGETS --- */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
             padding: 20px;
             margin-bottom: 16px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            box-shadow: var(--shadow-xs);
+        }
+
+        .hero-banner {
+            background: linear-gradient(135deg, var(--brand-primary-dark), var(--brand-primary));
+            color: white;
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
             box-shadow: var(--shadow-md);
         }
 
-        .level-badge {
-            background: rgba(255, 255, 255, 0.25);
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 0.8rem;
+        .hero-banner::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .user-level-badge {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(8px);
+            padding: 4px 12px;
+            border-radius: var(--radius-full);
+            font-size: 0.72rem;
             font-weight: 700;
+            letter-spacing: 0.05em;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            display: inline-block;
+            margin-bottom: 8px;
         }
 
-        /* --- CARDS & COMPONENTES --- */
-        .card {
-            background: var(--surface);
-            border-radius: var(--radius);
-            padding: 20px;
-            margin-bottom: 16px;
-            box-shadow: var(--shadow-sm);
-            border: 1px solid var(--border);
-            transition: transform 0.2s, box-shadow 0.2s, background-color 0.3s;
+        .progress-bar-bg {
+            background: rgba(255, 255, 255, 0.15);
+            height: 8px;
+            border-radius: var(--radius-full);
+            margin-top: 14px;
+            overflow: hidden;
         }
 
-        .card-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 12px;
+        .progress-bar-fill {
+            background: var(--brand-secondary);
+            height: 100%;
+            width: 0%;
+            transition: width 0.5s ease;
         }
 
-        .card-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-        }
-
-        .bg-indigo { background: var(--primary); }
-        .bg-emerald { background: var(--secondary); }
-        .bg-amber { background: var(--accent); }
-        .bg-rose { background: var(--danger); }
-
-        .card h2 {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: var(--text-main);
-        }
-
-        .card p {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            line-height: 1.5;
-        }
-
-        /* BOTÕES INTERATIVOS */
-        .btn {
-            width: 100%;
-            padding: 14px;
-            border-radius: 12px;
-            border: none;
-            font-weight: 600;
-            font-size: 0.95rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            transition: all 0.2s;
-            margin-top: 12px;
-        }
-
-        .btn-primary { background: var(--primary); color: white; box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3); }
-        .btn-primary:active { transform: scale(0.98); background: var(--primary-dark); }
-
-        .btn-secondary { background: var(--bg); color: var(--text-main); border: 1px solid var(--border); }
-        .btn-secondary:active { opacity: 0.8; }
-
-        .btn-danger { background: var(--danger); color: white; }
-
-        /* GRID DE RECURSOS */
-        .grid-2 {
+        /* --- SEÇÃO DE EQUIPE / CRIADORES --- */
+        .creators-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: repeat(2, 1fr);
             gap: 12px;
             margin-top: 12px;
         }
 
-        .grid-item {
-            background: var(--surface);
+        .creator-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
             padding: 16px;
-            border-radius: 12px;
             text-align: center;
-            border: 1px solid var(--border);
-            cursor: pointer;
-            transition: transform 0.2s;
         }
 
-        .grid-item:active {
-            transform: scale(0.95);
+        .creator-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: var(--radius-full);
+            background: var(--brand-primary-light);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 8px auto;
+            font-weight: 700;
+            font-size: 1.1rem;
         }
 
-        .grid-item span {
-            font-size: 1.8rem;
-            display: block;
-            margin-bottom: 4px;
+        .creator-name {
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: var(--text-primary);
         }
 
-        .grid-item h4 {
-            font-size: 0.85rem;
-            color: var(--text-main);
+        .creator-role {
+            font-size: 0.72rem;
+            color: var(--brand-primary-light);
+            font-weight: 600;
+            margin-top: 2px;
         }
 
         /* --- CHAT IA EDU --- */
-        .chat-box {
+        .chat-container {
+            display: flex;
+            flex-direction: column;
+            height: 380px;
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding-right: 4px;
             display: flex;
             flex-direction: column;
             gap: 12px;
-            max-height: 350px;
-            overflow-y: auto;
-            margin-bottom: 12px;
-            padding-right: 4px;
         }
 
-        .chat-msg {
-            padding: 12px 16px;
-            border-radius: 14px;
-            font-size: 0.9rem;
+        .chat-bubble {
             max-width: 85%;
-            line-height: 1.4;
+            padding: 12px 16px;
+            border-radius: var(--radius-md);
+            font-size: 0.88rem;
+            line-height: 1.5;
         }
 
-        .chat-msg.ia {
-            background: var(--bg);
-            color: var(--text-main);
-            border: 1px solid var(--border);
+        .chat-bubble.ia {
+            background: var(--bg-main);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
             align-self: flex-start;
             border-bottom-left-radius: 2px;
         }
 
-        .chat-msg.user {
-            background: var(--primary);
+        .chat-bubble.user {
+            background: var(--brand-primary);
             color: white;
             align-self: flex-end;
             border-bottom-right-radius: 2px;
         }
 
-        /* --- COMPONENTE: QUIZ INTERATIVO --- */
-        .quiz-option {
-            background: var(--bg);
-            color: var(--text-main);
-            border: 2px solid var(--border);
-            border-radius: 12px;
-            padding: 14px;
-            margin-top: 10px;
-            cursor: pointer;
-            font-weight: 500;
-            font-size: 0.9rem;
-            text-align: left;
+        /* --- BOTÕES & INPUTS --- */
+        .btn {
             width: 100%;
-            transition: all 0.2s;
-        }
-
-        .quiz-option.correct {
-            background: #D1FAE5;
-            border-color: var(--secondary);
-            color: #065F46;
-        }
-
-        .quiz-option.wrong {
-            background: #FEE2E2;
-            border-color: var(--danger);
-            color: #991B1B;
-        }
-
-        .score-box {
-            text-align: center;
-            padding: 20px;
-            background: var(--bg);
-            border-radius: 12px;
-            margin-bottom: 15px;
-            border: 1px solid var(--border);
-        }
-
-        /* --- COMPONENTE: CRONÔMETRO POMODORO --- */
-        .timer-circle {
-            width: 180px;
-            height: 180px;
-            border-radius: 50%;
-            border: 8px solid var(--primary-light);
-            margin: 20px auto;
-            display: flex;
-            flex-direction: column;
+            padding: 12px 18px;
+            border-radius: var(--radius-md);
+            border: none;
+            font-weight: 600;
+            font-size: 0.88rem;
+            cursor: pointer;
+            display: inline-flex;
             align-items: center;
             justify-content: center;
-            background: var(--surface);
-            box-shadow: var(--shadow-md);
-        }
-
-        .timer-time {
-            font-size: 2.8rem;
-            font-weight: 800;
-            color: var(--primary);
-            letter-spacing: -1px;
-        }
-
-        .timer-status {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            font-weight: 700;
-        }
-
-        /* --- COMPONENTE: GERENCIADOR DE TAREFAS --- */
-        .input-group {
-            display: flex;
             gap: 8px;
-            margin-bottom: 12px;
+            transition: var(--transition-fast);
         }
 
-        .input-group input {
-            flex: 1;
-            padding: 12px;
-            border-radius: 10px;
-            border: 1px solid var(--border);
-            background: var(--surface);
-            color: var(--text-main);
+        .btn-primary { background: var(--brand-primary); color: white; }
+        .btn-primary:active { background: var(--brand-primary-dark); transform: scale(0.98); }
+        .btn-secondary { background: var(--bg-main); color: var(--text-primary); border: 1px solid var(--border-color); }
+
+        .input-field {
+            width: 100%;
+            padding: 12px 14px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            background: var(--bg-surface);
+            color: var(--text-primary);
             outline: none;
-            font-size: 0.9rem;
+            font-size: 0.88rem;
         }
 
-        .task-list {
-            list-style: none;
-        }
-
-        .task-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 12px;
-            background: var(--bg);
-            border-radius: 10px;
-            margin-bottom: 8px;
-            font-size: 0.9rem;
-        }
-
-        /* --- MENU DE NAVEGAÇÃO INFERIOR --- */
+        /* --- BOTTOM NAVIGATION --- */
         nav {
             position: fixed;
             bottom: 0;
             left: 0;
             right: 0;
-            background: var(--surface);
+            background: var(--bg-surface);
+            border-top: 1px solid var(--border-color);
             display: flex;
             justify-content: space-around;
             padding: 8px 0 12px 0;
-            border-top: 1px solid var(--border);
-            box-shadow: 0 -4px 10px rgba(0,0,0,0.05);
-            z-index: 100;
+            z-index: 50;
         }
 
-        .nav-btn {
+        .nav-item {
             background: none;
             border: none;
             display: flex;
             flex-direction: column;
             align-items: center;
+            gap: 3px;
             color: var(--text-muted);
-            font-size: 0.65rem;
+            font-size: 0.68rem;
             font-weight: 600;
-            gap: 2px;
             cursor: pointer;
             width: 18%;
-            transition: color 0.2s;
+            transition: var(--transition-fast);
         }
 
-        .nav-btn span { font-size: 22px; }
+        .nav-item.active {
+            color: var(--brand-primary);
+        }
 
-        .nav-btn.active {
-            color: var(--primary);
+        .nav-item span {
+            font-size: 22px;
         }
     </style>
 </head>
 <body>
 
-    <!-- CABEÇALHO -->
+    <!-- CABEÇALHO DA PLATAFORMA -->
     <header>
-        <div class="header-title">
-            <div class="logo-icon">
-                <span class="material-icons-round">smart_toy</span>
+        <div class="brand-container">
+            <div class="brand-logo">
+                <span class="material-icons-round">school</span>
             </div>
-            <div>
-                <h1>EduSmart IA</h1>
+            <div class="brand-text">
+                <h1>EduSmart</h1>
+                <p>Plataforma Pedagógica</p>
             </div>
         </div>
-        <button class="theme-toggle" onclick="toggleTheme()" title="Alternar Tema">
-            <span class="material-icons-round" id="theme-icon">dark_mode</span>
-        </button>
+        <div class="header-actions">
+            <button class="icon-btn" onclick="toggleTheme()" title="Alternar Tema">
+                <span class="material-icons-round" id="theme-icon">dark_mode</span>
+            </button>
+        </div>
     </header>
 
-    <!-- ÁREA PRINCIPAL -->
+    <!-- ÁREA PRINCIPAL DAS ABAS -->
     <main>
         
-        <!-- ABA 1: INÍCIO / DASHBOARD GAMIFICADO -->
+        <!-- DASHBOARD INICIAL -->
         <div id="tab-home" class="tab-content active">
-            
-            <div class="gamify-banner">
-                <div>
-                    <span class="level-badge" id="user-level">Nível 1 - Aprendiz</span>
-                    <h2 style="font-size: 1.6rem; margin-top: 6px;" id="user-xp">0 XP</h2>
-                    <p style="font-size: 0.8rem; opacity: 0.9;">Conclua atividades para evoluir!</p>
+            <div class="hero-banner">
+                <span class="user-level-badge" id="user-level">Nível 1 - Aprendiz</span>
+                <h2 style="font-size: 1.6rem; font-weight: 800; margin-top: 4px;" id="user-xp">0 XP</h2>
+                <p style="font-size: 0.8rem; opacity: 0.85; margin-top: 2px;">Conclua atividades e quizzes para progredir na sua jornada escolar!</p>
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" id="xp-bar"></div>
                 </div>
-                <span class="material-icons-round" style="font-size: 52px; opacity: 0.85;">emoji_events</span>
             </div>
 
             <div class="card">
-                <div class="card-header">
-                    <div class="card-icon bg-indigo">
-                        <span class="material-icons-round">school</span>
-                    </div>
-                    <div>
-                        <h2>O Celular na Escola</h2>
-                        <p>Ferramenta Pedagógica & IA</p>
-                    </div>
-                </div>
-                <p>O <strong>EduSmart</strong> combina Inteligência Artificial, método Pomodoro e gamificação para transformar o smartphone em uma potente ferramenta de aprendizado.</p>
-            </div>
-
-            <div class="grid-2">
-                <div class="grid-item" onclick="switchTab('ia')">
-                    <span>🤖</span>
-                    <h4>IA Edu</h4>
-                </div>
-                <div class="grid-item" onclick="switchTab('quiz')">
-                    <span>💡</span>
-                    <h4>Quiz (+10 XP)</h4>
-                </div>
-                <div class="grid-item" onclick="switchTab('pomodoro')">
-                    <span>⏱️</span>
-                    <h4>Foco (+25 XP)</h4>
-                </div>
-                <div class="grid-item" onclick="switchTab('agenda')">
-                    <span>📅</span>
-                    <h4>Minha Agenda</h4>
+                <h3 style="font-size: 0.95rem; font-weight: 700; margin-bottom: 8px;">Acesso Rápido</h3>
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;">
+                    <button class="btn btn-secondary" onclick="switchTab('ia')">
+                        <span class="material-icons-round" style="color:var(--brand-primary-light);">smart_toy</span> IA Edu
+                    </button>
+                    <button class="btn btn-secondary" onclick="switchTab('quiz')">
+                        <span class="material-icons-round" style="color:var(--brand-secondary);">quiz</span> Quiz
+                    </button>
                 </div>
             </div>
 
-            <div class="card" style="margin-top: 16px;">
-                <div class="card-header">
-                    <div class="card-icon bg-amber">
-                        <span class="material-icons-round">star</span>
+            <!-- SEÇÃO DE CRÉDITOS E CRIADORES DO PROJETO -->
+            <div class="card">
+                <h3 style="font-size: 0.95rem; font-weight: 700; margin-bottom: 4px;">Corpo de Idealização e Desenvolvimento</h3>
+                <p style="font-size: 0.78rem; color: var(--text-secondary);">Projeto pedagógico criado por estudantes e educadores:</p>
+                
+                <div class="creators-grid">
+                    <div class="creator-card">
+                        <div class="creator-avatar">CR</div>
+                        <div class="creator-name">Cauã Rangel</div>
+                        <div class="creator-role">Desenvolvedor Lead</div>
                     </div>
-                    <div>
-                        <h2>Dica de Estudo</h2>
+                    <div class="creator-card">
+                        <div class="creator-avatar">ME</div>
+                        <div class="creator-name">Maria Elisa</div>
+                        <div class="creator-role">Idealizadora do Projeto</div>
                     </div>
                 </div>
-                <p>Use a nossa **IA Edu** para tirar dúvidas difíceis de sala de aula e crie resumos rápidos em segundos!</p>
             </div>
         </div>
 
-        <!-- ABA 2: IA EDU ASSISTENTE (INOVAÇÃO) -->
+        <!-- ABA IA EDU -->
         <div id="tab-ia" class="tab-content">
             <div class="card">
-                <div class="card-header">
-                    <div class="card-icon bg-indigo">
-                        <span class="material-icons-round">smart_toy</span>
-                    </div>
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 16px;">
+                    <span class="material-icons-round" style="color: var(--brand-primary); font-size: 28px;">smart_toy</span>
                     <div>
-                        <h2>IA Edu - Assistente Escolar</h2>
-                        <p>Tire dúvidas instantâneas de matérias</p>
+                        <h2 style="font-size: 1rem; font-weight: 700;">IA Edu - Tutora Virtual</h2>
+                        <p style="font-size: 0.75rem; color: var(--text-muted);">Tire dúvidas de dever de casa e matérias</p>
                     </div>
                 </div>
 
-                <div class="chat-box" id="chat-box">
-                    <div class="chat-msg ia">
-                        👋 Olá! Eu sou a <strong>IA Edu</strong>. Como posso ajudar nos seus estudos hoje? Me pergunte sobre fórmulas, conceitos de história, dicas de redação ou resumos!
+                <div class="chat-container">
+                    <div class="chat-messages" id="chat-messages">
+                        <div class="chat-bubble ia">
+                            👋 Olá! Eu sou a <strong>IA Edu</strong>. Como posso te ajudar nos estudos hoje? Você pode me pedir resumos, explicação de equações ou dicas para a redação!
+                        </div>
                     </div>
-                </div>
-
-                <div class="input-group">
-                    <input type="text" id="chat-input" placeholder="Pergunte algo para a IA Edu...">
-                    <button class="btn btn-primary" style="width: auto; margin-top: 0; padding: 12px 16px;" onclick="sendChatMessage()">
-                        <span class="material-icons-round">send</span>
-                    </button>
+                    <div style="display: flex; gap: 8px; margin-top: 12px;">
+                        <input type="text" id="chat-input" class="input-field" placeholder="Escreva sua dúvida escolar..." onkeypress="if(event.key==='Enter') sendChatMessage()">
+                        <button class="btn btn-primary" style="width: auto; padding: 0 16px;" onclick="sendChatMessage()">
+                            <span class="material-icons-round">send</span>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- ABA 3: QUIZ INTERATIVO -->
+        <!-- ABA QUIZ -->
         <div id="tab-quiz" class="tab-content">
             <div class="card">
-                <div class="card-header">
-                    <div class="card-icon bg-emerald">
-                        <span class="material-icons-round">psychology</span>
-                    </div>
-                    <div>
-                        <h2>Quiz Pedagógico</h2>
-                        <p>Teste seus conhecimentos e ganhe XP</p>
-                    </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                    <h2 style="font-size: 1rem; font-weight: 700;">Desafio do Conhecimento</h2>
+                    <span id="quiz-cat" style="font-size: 0.75rem; font-weight: 700; color: var(--brand-primary-light);">Matéria</span>
                 </div>
-
-                <div class="score-box">
-                    <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 700;">SUA PONTUAÇÃO</span>
-                    <h2 id="score-display" style="font-size: 2rem; color: var(--primary);">0 Pontos</h2>
-                </div>
-
-                <div id="quiz-container">
-                    <p id="quiz-question" style="font-weight: 600; font-size: 1rem; margin-bottom: 10px;">
-                        Carregando pergunta...
-                    </p>
-                    <div id="quiz-options"></div>
+                <div id="quiz-box">
+                    <p id="quiz-q" style="font-size: 0.9rem; font-weight: 600; margin-bottom: 14px;">Carregando pergunta...</p>
+                    <div id="quiz-options" style="display: flex; flex-direction: column; gap: 8px;"></div>
                 </div>
             </div>
         </div>
 
-        <!-- ABA 4: CRONÔMETRO POMODORO -->
-        <div id="tab-pomodoro" class="tab-content">
+        <!-- ABA FOCO / POMODORO -->
+        <div id="tab-foco" class="tab-content">
             <div class="card" style="text-align: center;">
-                <div class="card-header" style="justify-content: center;">
-                    <div class="card-icon bg-rose">
-                        <span class="material-icons-round">timer</span>
-                    </div>
-                    <div>
-                        <h2>Cronômetro de Foco</h2>
-                    </div>
-                </div>
+                <h2 style="font-size: 1rem; font-weight: 700; margin-bottom: 4px;">Ciclo de Estudo Ativo</h2>
+                <p style="font-size: 0.78rem; color: var(--text-muted);">Evite distrações e ganhe +25 XP por ciclo</p>
                 
-                <p>Método Pomodoro: Estude com foco total sem mexer em redes sociais.</p>
-
-                <div class="timer-circle">
-                    <span id="timer-display" class="timer-time">25:00</span>
-                    <span id="timer-label" class="timer-status">FOCO</span>
+                <div style="width: 160px; height: 160px; border-radius: 50%; border: 6px solid var(--brand-primary-light); margin: 20px auto; display: flex; align-items: center; justify-content: center; flex-direction: column;">
+                    <span id="timer-text" style="font-size: 2.5rem; font-weight: 800; color: var(--brand-primary);">25:00</span>
+                    <span style="font-size: 0.68rem; font-weight: 700; color: var(--text-muted);">MINUTOS</span>
                 </div>
 
-                <button id="btn-timer-start" class="btn btn-primary" onclick="toggleTimer()">
-                    <span class="material-icons-round">play_arrow</span> Iniciar Foco
-                </button>
-                <button class="btn btn-secondary" onclick="resetTimer()">
-                    <span class="material-icons-round">restart_alt</span> Resetar
-                </button>
+                <div style="display: flex; gap: 8px;">
+                    <button id="btn-timer" class="btn btn-primary" onclick="toggleTimer()">Iniciar Sessão</button>
+                    <button class="btn btn-secondary" onclick="resetTimer()">Resetar</button>
+                </div>
             </div>
         </div>
 
-        <!-- ABA 5: AGENDA DE ESTUDOS -->
+        <!-- ABA AGENDA DE ENTREGAS -->
         <div id="tab-agenda" class="tab-content">
             <div class="card">
-                <div class="card-header">
-                    <div class="card-icon bg-indigo">
-                        <span class="material-icons-round">checklist</span>
-                    </div>
-                    <div>
-                        <h2>Agenda de Tarefas</h2>
-                        <p>Anote suas provas e trabalhos</p>
-                    </div>
+                <h2 style="font-size: 1rem; font-weight: 700; margin-bottom: 8px;">Agenda & Trabalhos Escolares</h2>
+                <div style="display: flex; gap: 8px; margin-bottom: 14px;">
+                    <input type="text" id="task-input" class="input-field" placeholder="Adicionar nova tarefa ou trabalho...">
+                    <button class="btn btn-primary" style="width: auto;" onclick="addTask()">+</button>
                 </div>
-
-                <div class="input-group">
-                    <input type="text" id="task-input" placeholder="Ex: Trabalho de História...">
-                    <button class="btn btn-primary" style="width: auto; margin-top: 0; padding: 12px 16px;" onclick="addTask()">
-                        <span class="material-icons-round">add</span>
-                    </button>
-                </div>
-
-                <ul id="task-list" class="task-list">
-                    <!-- Tarefas geradas dinamicamente -->
-                </ul>
-            </div>
-        </div>
-
-        <!-- ABA 6: BIBLIOTECA DIGITAL -->
-        <div id="tab-library" class="tab-content">
-            <div class="card">
-                <div class="card-header">
-                    <div class="card-icon bg-amber">
-                        <span class="material-icons-round">local_library</span>
-                    </div>
-                    <div>
-                        <h2>Biblioteca & Conteúdos</h2>
-                        <p>Materiais de apoio do Ensino Médio</p>
-                    </div>
-                </div>
-
-                <div class="card" style="border-left: 4px solid var(--primary); margin-bottom: 10px;">
-                    <h3>📐 Matemática</h3>
-                    <p>Geometria, Funções e Estatística para o ENEM.</p>
-                    <button class="btn btn-secondary" onclick="alert('Abrindo material de Matemática...')">Acessar PDF</button>
-                </div>
-
-                <div class="card" style="border-left: 4px solid var(--secondary); margin-bottom: 10px;">
-                    <h3>📝 Língua Portuguesa</h3>
-                    <p>Redação Dissertativa-Argumentativa e Gramática.</p>
-                    <button class="btn btn-secondary" onclick="alert('Abrindo guias de Redação...')">Acessar Guia</button>
-                </div>
-
-                <div class="card" style="border-left: 4px solid var(--accent);">
-                    <h3>💻 Informática & Tecnologia</h3>
-                    <p>Algoritmos, Programação Web e Cultura Digital.</p>
-                    <button class="btn btn-secondary" onclick="alert('Abrindo curso básico de códigos...')">Acessar Aula</button>
-                </div>
+                <div id="task-container" style="display: flex; flex-direction: column; gap: 8px;"></div>
             </div>
         </div>
 
@@ -651,205 +517,245 @@
 
     <!-- MENU INFERIOR DE NAVEGAÇÃO -->
     <nav>
-        <button class="nav-btn active" onclick="switchTab('home')">
-            <span class="material-icons-round">home</span>
-            Início
+        <button class="nav-item active" onclick="switchTab('home')">
+            <span class="material-icons-round">home</span>Início
         </button>
-        <button class="nav-btn" onclick="switchTab('ia')">
-            <span class="material-icons-round">smart_toy</span>
-            IA Edu
+        <button class="nav-item" onclick="switchTab('ia')">
+            <span class="material-icons-round">smart_toy</span>IA Edu
         </button>
-        <button class="nav-btn" onclick="switchTab('quiz')">
-            <span class="material-icons-round">extension</span>
-            Quiz
+        <button class="nav-item" onclick="switchTab('quiz')">
+            <span class="material-icons-round">quiz</span>Quiz
         </button>
-        <button class="nav-btn" onclick="switchTab('pomodoro')">
-            <span class="material-icons-round">timer</span>
-            Foco
+        <button class="nav-item" onclick="switchTab('foco')">
+            <span class="material-icons-round">timer</span>Foco
         </button>
-        <button class="nav-btn" onclick="switchTab('agenda')">
-            <span class="material-icons-round">event_note</span>
-            Agenda
+        <button class="nav-item" onclick="switchTab('agenda')">
+            <span class="material-icons-round">event_note</span>Agenda
         </button>
     </nav>
-
-    <!-- JAVASCRIPT COM TODAS AS FUNCIONALIDADES -->
     <script>
-        // --- NAVEGAÇÃO ENTRE ABAS ---
-        function switchTab(tabName) {
-            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
-            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+        /* --- ESTADO GLOBAL DA PLATAFORMA --- */
+        const state = {
+            xp: 0,
+            level: 1,
+            xpToNextLevel: 50,
+            currentTab: 'home',
+            timer: {
+                seconds: 25 * 60,
+                interval: null,
+                isRunning: false
+            }
+        };
 
-            document.getElementById(`tab-${tabName}`).classList.add('active');
-            
-            const navTabs = ['home', 'ia', 'quiz', 'pomodoro', 'agenda'];
-            const navIndex = navTabs.indexOf(tabName);
-            if(navIndex !== -1) {
-                document.querySelectorAll('.nav-btn')[navIndex].classList.add('active');
+        /* --- NAVEGAÇÃO ENTRE ABAS --- */
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(btn => btn.classList.remove('active'));
+
+            const targetTab = document.getElementById(`tab-${tabId}`);
+            if (targetTab) {
+                targetTab.classList.add('active');
+                state.currentTab = tabId;
+            }
+
+            const tabMap = ['home', 'ia', 'quiz', 'foco', 'agenda'];
+            const activeIndex = tabMap.indexOf(tabId);
+            if (activeIndex !== -1) {
+                document.querySelectorAll('.nav-item')[activeIndex].classList.add('active');
             }
         }
 
-        // --- MODO ESCURO (DARK MODE) ---
+        /* --- MODO ESCURO / CLARO --- */
         function toggleTheme() {
             document.body.classList.toggle('dark-theme');
             const icon = document.getElementById('theme-icon');
-            if(document.body.classList.contains('dark-theme')) {
-                icon.textContent = 'light_mode';
-            } else {
-                icon.textContent = 'dark_mode';
-            }
+            const isDark = document.body.classList.contains('dark-theme');
+            icon.textContent = isDark ? 'light_mode' : 'dark_mode';
         }
 
-        // --- SISTEMA DE GAMIFICAÇÃO (XP & NÍVEIS) ---
-        let xp = 0;
+        /* --- SISTEMA DE GAMIFICAÇÃO & XP --- */
         function addXP(amount) {
-            xp += amount;
-            document.getElementById('user-xp').textContent = `${xp} XP`;
-            
-            let level = "Nível 1 - Aprendiz";
-            if(xp >= 30) level = "Nível 2 - Estudante Focado";
-            if(xp >= 70) level = "Nível 3 - Mestre do Saber";
-            if(xp >= 120) level = "Nível 4 - Gênio EduSmart";
-            
-            document.getElementById('user-level').textContent = level;
+            state.xp += amount;
+            document.getElementById('user-xp').textContent = `${state.xp} XP`;
+
+            let levelTitle = "Nível 1 - Aprendiz";
+            if (state.xp >= 50 && state.xp < 120) {
+                levelTitle = "Nível 2 - Estudante Dedicado";
+                state.xpToNextLevel = 120;
+            } else if (state.xp >= 120 && state.xp < 220) {
+                levelTitle = "Nível 3 - Mestre do Saber";
+                state.xpToNextLevel = 220;
+            } else if (state.xp >= 220) {
+                levelTitle = "Nível 4 - Gênio EduSmart";
+                state.xpToNextLevel = 400;
+            }
+
+            document.getElementById('user-level').textContent = levelTitle;
+
+            const percentage = Math.min((state.xp / state.xpToNextLevel) * 100, 100);
+            document.getElementById('xp-bar').style.width = `${percentage}%`;
         }
 
-        // --- IA EDU (CHAT INTELIGENTE) ---
-        function sendChatMessage() {
-            const input = document.getElementById('chat-input');
-            const text = input.value.trim();
-            if(!text) return;
-
-            const chatBox = document.getElementById('chat-box');
-            
-            // Adiciona mensagem do usuário
-            chatBox.innerHTML += `<div class="chat-msg user">${text}</div>`;
-            input.value = '';
-            chatBox.scrollTop = chatBox.scrollHeight;
-
-            // Resposta inteligente simulada
-            setTimeout(() => {
-                let reply = "Essa é uma excelente dúvida! Recomendo consultar também os conteúdos na aba Biblioteca para aprofundar no assunto.";
-                const q = text.toLowerCase();
-
-                if(q.includes('redação') || q.includes('enem') || q.includes('texto')) {
-                    reply = "💡 **Dica de Redação:** Lembre-se da estrutura em 4 parágrafos: Introdução (com tese), Desenvolvimento 1 e 2 (com repertórios) e Conclusão com Proposta de Intervenção detalhada!";
-                } else if(q.includes('matematica') || q.includes('matemática') || q.includes('formula') || q.includes('fórmula')) {
-                    reply = "📐 **Fórmula Rápida:** Para a equação de segundo grau ($ax^2 + bx + c = 0$), use Bhaskara: x = (-b ± √Δ) / (2a), onde Δ = b² - 4ac.";
-                } else if(q.includes('historia') || q.includes('história')) {
-                    reply = "📜 **Dica de História:** Ao estudar guerras e revoluções, analise sempre as **causas socioeconômicas** e os impactos no povo, não apenas as datas!";
-                } else if(q.includes('foco') || q.includes('estudar') || q.includes('concentrar')) {
-                    reply = "⏱️ **Técnica Recomendada:** Utilize nosso **Cronômetro de Foco (Pomodoro)**! Estude por 25 minutos seguidos e descanse 5 minutos.";
-                }
-
-                chatBox.innerHTML += `<div class="chat-msg ia">${reply}</div>`;
-                chatBox.scrollTop = chatBox.scrollHeight;
-            }, 700);
-        }
-
-        // --- LÓGICA DO QUIZ ---
-        const questions = [
+        /* --- BANCO DE DADOS E LÓGICA DO QUIZ --- */
+        const quizQuestions = [
             {
-                q: "Qual a principal vantagem pedagógica do smartphone?",
-                options: ["Distração contínua", "Acesso rápido a pesquisas e mídias", "Substituir o professor"],
+                subject: "Matemática",
+                question: "Qual é o valor de X na equação do 1º grau: 2x + 8 = 20?",
+                options: ["x = 4", "x = 6", "x = 8", "x = 10"],
                 correct: 1
             },
             {
-                q: "O que é a técnica Pomodoro?",
-                options: ["Um app de receitas", "Método de divisão de tempo de estudo e foco", "Um tipo de código de programação"],
+                subject: "Português",
+                question: "Qual figura de linguagem está presente na frase: 'O jardim olhava as crianças com carinho'?",
+                options: ["Metáfora", "Prosopopeia (Personificação)", "Hipérbole", "Anáfora"],
                 correct: 1
             },
             {
-                q: "Como a IA Edu pode te ajudar na escola?",
-                options: ["Resumindo matérias e tirando dúvidas", "Fazendo você parar de estudar", "Jogando online"],
-                correct: 0
+                subject: "História",
+                question: "Qual evento marcou o início da Idade Contemporânea em 1789?",
+                options: ["Revolução Industrial", "Primeira Guerra Mundial", "Revolução Francesa", "Descobrimento do Brasil"],
+                correct: 2
+            },
+            {
+                subject: "Ciências / Biologia",
+                question: "Qual organela celular é responsável pela produção de energia (ATP)?",
+                options: ["Ribossomo", "Mitocôndria", "Complexo de Golgi", "Lisossomo"],
+                correct: 1
+            },
+            {
+                subject: "Tecnologia",
+                question: "O que significa a sigla IA no contexto educacional e tecnológico?",
+                options: ["Interface Avançada", "Inteligência Artificial", "Informação Automatizada", "Integração de Aplicativos"],
+                correct: 1
             }
         ];
 
-        let currentQ = 0;
-        let score = 0;
+        let shuffledQuestions = [];
+        let currentQuestionIndex = 0;
 
-        function loadQuiz() {
-            if(currentQ >= questions.length) {
-                document.getElementById('quiz-container').innerHTML = `
-                    <div style="text-align:center; padding: 20px;">
-                        <h3>🎉 Parabéns!</h3>
-                        <p style="margin-top: 8px;">Você concluiu o quiz pedagógico!</p>
-                        <button class="btn btn-primary" onclick="restartQuiz()">Refazer Quiz</button>
+        function initQuiz() {
+            shuffledQuestions = [...quizQuestions].sort(() => Math.random() - 0.5);
+            currentQuestionIndex = 0;
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            const quizBox = document.getElementById('quiz-box');
+            if (currentQuestionIndex >= shuffledQuestions.length) {
+                quizBox.innerHTML = `
+                    <div style="text-align:center; padding: 20px 10px;">
+                        <span class="material-icons-round" style="font-size:48px; color:var(--brand-secondary);">emoji_events</span>
+                        <h3 style="font-size: 1.1rem; margin-top: 8px;">Excelente trabalho!</h3>
+                        <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom: 16px;">Você concluiu todas as perguntas desta rodada e acumulou XP!</p>
+                        <button class="btn btn-primary" onclick="initQuiz()">Reiniciar com Novas Perguntas</button>
                     </div>
                 `;
                 return;
             }
 
-            const qData = questions[currentQ];
-            document.getElementById('quiz-question').textContent = `${currentQ + 1}. ${qData.q}`;
-            
-            const optionsDiv = document.getElementById('quiz-options');
-            optionsDiv.innerHTML = '';
+            const q = shuffledQuestions[currentQuestionIndex];
+            document.getElementById('quiz-cat').textContent = q.subject;
+            document.getElementById('quiz-q').textContent = `${currentQuestionIndex + 1}. ${q.question}`;
 
-            qData.options.forEach((opt, idx) => {
+            const optionsContainer = document.getElementById('quiz-options');
+            optionsContainer.innerHTML = '';
+
+            q.options.forEach((opt, idx) => {
                 const btn = document.createElement('button');
-                btn.className = 'quiz-option';
+                btn.className = 'btn btn-secondary';
+                btn.style.justifyContent = 'flex-start';
+                btn.style.textAlign = 'left';
                 btn.textContent = opt;
-                btn.onclick = () => answerQuiz(idx, qData.correct, btn);
-                optionsDiv.appendChild(btn);
+                btn.onclick = () => checkAnswer(idx, q.correct, btn);
+                optionsContainer.appendChild(btn);
             });
         }
 
-        function answerQuiz(selected, correct, btnElement) {
-            const allBtns = document.querySelectorAll('.quiz-option');
+        function checkAnswer(selectedIdx, correctIdx, btnElement) {
+            const allBtns = document.getElementById('quiz-options').querySelectorAll('button');
             allBtns.forEach(b => b.disabled = true);
 
-            if(selected === correct) {
-                btnElement.classList.add('correct');
-                score += 10;
-                addXP(10); // Recompensa em XP
-                document.getElementById('score-display').textContent = `${score} Pontos`;
+            if (selectedIdx === correctIdx) {
+                btnElement.style.background = '#D1FAE5';
+                btnElement.style.borderColor = 'var(--brand-secondary)';
+                btnElement.style.color = '#065F46';
+                addXP(15);
             } else {
-                btnElement.classList.add('wrong');
-                allBtns[correct].classList.add('correct');
+                btnElement.style.background = '#FEE2E2';
+                btnElement.style.borderColor = 'var(--brand-danger)';
+                btnElement.style.color = '#991B1B';
+                
+                allBtns[correctIdx].style.background = '#D1FAE5';
+                allBtns[correctIdx].style.borderColor = 'var(--brand-secondary)';
             }
 
             setTimeout(() => {
-                currentQ++;
-                loadQuiz();
-            }, 1400);
+                currentQuestionIndex++;
+                loadQuestion();
+            }, 1300);
         }
 
-        function restartQuiz() {
-            currentQ = 0;
-            score = 0;
-            document.getElementById('score-display').textContent = `0 Pontos`;
-            loadQuiz();
+        /* --- CHAT INTELIGENTE DA IA EDU --- */
+        function sendChatMessage() {
+            const input = document.getElementById('chat-input');
+            const message = input.value.trim();
+            if (!message) return;
+
+            const chatMessages = document.getElementById('chat-messages');
+
+            // Mensagem do Usuário
+            const userBubble = document.createElement('div');
+            userBubble.className = 'chat-bubble user';
+            userBubble.textContent = message;
+            chatMessages.appendChild(userBubble);
+
+            input.value = '';
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            // Resposta Simulada da IA Edu
+            setTimeout(() => {
+                const iaBubble = document.createElement('div');
+                iaBubble.className = 'chat-bubble ia';
+
+                const textLower = message.toLowerCase();
+                let response = "Essa é uma ótima questão! Lembre-se de organizar seus estudos em blocos de tempo com o nosso Cronômetro de Foco para fixar melhor o conteúdo.";
+
+                if (textLower.includes('redação') || textLower.includes('enem') || textLower.includes('texto')) {
+                    response = "📝 **Dica de Redação:** Estruture seu texto em 4 parágrafos: 1 de Introdução (com tese clara), 2 de Desenvolvimento (com repertório e argumentos) e 1 de Conclusão (com proposta de intervenção completa).";
+                } else if (textLower.includes('matematica') || textLower.includes('matemática') || textLower.includes('equação') || textLower.includes('x')) {
+                    response = "📐 **Dica de Matemática:** Ao resolver equações, lembre-se da regra de ouro: tudo que muda de lado da igualdade também inverte a sua operação (adição vira subtração, multiplicação vira divisão)!";
+                } else if (textLower.includes('historia') || textLower.includes('história') || textLower.includes('guerra')) {
+                    response = "📜 **Dica de História:** Em exames, o mais importante não é memorizar apenas as datas, mas compreender as **causas** socioeconômicas e as **consequências** do evento para a sociedade.";
+                } else if (textLower.includes('oi') || textLower.includes('olá') || textLower.includes('bom dia') || textLower.includes('boa tarde')) {
+                    response = "👋 Olá! Estou pronta para te ajudar a estudar. Qual matéria você quer praticar hoje?";
+                }
+
+                iaBubble.innerHTML = response;
+                chatMessages.appendChild(iaBubble);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }, 600);
         }
 
-        // --- LÓGICA DO POMODORO ---
-        let timerSeconds = 25 * 60;
-        let timerInterval = null;
-        let isRunning = false;
-
-        function updateTimerDisplay() {
-            const m = Math.floor(timerSeconds / 60).toString().padStart(2, '0');
-            const s = (timerSeconds % 60).toString().padStart(2, '0');
-            document.getElementById('timer-display').textContent = `${m}:${s}`;
-        }
-
+        /* --- CRONÔMETRO DE FOCO (POMODORO) --- */
         function toggleTimer() {
-            const btn = document.getElementById('btn-timer-start');
-            if(isRunning) {
-                clearInterval(timerInterval);
-                isRunning = false;
-                btn.innerHTML = '<span class="material-icons-round">play_arrow</span> Continuar';
+            const btn = document.getElementById('btn-timer');
+
+            if (state.timer.isRunning) {
+                clearInterval(state.timer.interval);
+                state.timer.isRunning = false;
+                btn.textContent = "Continuar Sessão";
             } else {
-                isRunning = true;
-                btn.innerHTML = '<span class="material-icons-round">pause</span> Pausar';
-                timerInterval = setInterval(() => {
-                    if(timerSeconds > 0) {
-                        timerSeconds--;
+                state.timer.isRunning = true;
+                btn.textContent = "Pausar";
+
+                state.timer.interval = setInterval(() => {
+                    if (state.timer.seconds > 0) {
+                        state.timer.seconds--;
                         updateTimerDisplay();
                     } else {
-                        clearInterval(timerInterval);
-                        alert("Sessão de foco encerrada! Você ganhou +25 XP!");
+                        clearInterval(state.timer.interval);
+                        state.timer.isRunning = false;
+                        alert("🎉 Parabéns! Você concluiu 25 minutos de estudo focado e ganhou +25 XP!");
                         addXP(25);
                         resetTimer();
                     }
@@ -858,46 +764,68 @@
         }
 
         function resetTimer() {
-            clearInterval(timerInterval);
-            isRunning = false;
-            timerSeconds = 25 * 60;
+            clearInterval(state.timer.interval);
+            state.timer.isRunning = false;
+            state.timer.seconds = 25 * 60;
             updateTimerDisplay();
-            document.getElementById('btn-timer-start').innerHTML = '<span class="material-icons-round">play_arrow</span> Iniciar Foco';
+            document.getElementById('btn-timer').textContent = "Iniciar Sessão";
         }
 
-        // --- LÓGICA DA AGENDA/TAREFAS ---
-        const tasks = ["Trabalho de Biologia - Entrega Sexta", "Revisão de Matemática ENEM"];
+        function updateTimerDisplay() {
+            const mins = Math.floor(state.timer.seconds / 60).toString().padStart(2, '0');
+            const secs = (state.timer.seconds % 60).toString().padStart(2, '0');
+            document.getElementById('timer-text').textContent = `${mins}:${secs}`;
+        }
+
+        /* --- AGENDA E GERENCIADOR DE TAREFAS --- */
+        const tasks = [
+            { id: 1, title: "Trabalho de Biologia - Células", done: false },
+            { id: 2, title: "Exercícios de Álgebra Linear", done: false }
+        ];
 
         function renderTasks() {
-            const list = document.getElementById('task-list');
-            list.innerHTML = '';
-            tasks.forEach((t, i) => {
-                list.innerHTML += `
-                    <li class="task-item">
-                        <span>${t}</span>
-                        <span class="material-icons-round" style="color:var(--danger); cursor:pointer;" onclick="removeTask(${i})">delete</span>
-                    </li>
+            const container = document.getElementById('task-container');
+            container.innerHTML = '';
+
+            tasks.forEach(task => {
+                const item = document.createElement('div');
+                item.style.cssText = "display:flex; justify-content:space-between; align-items:center; padding:12px; background:var(--bg-main); border-radius:var(--radius-md); border:1px solid var(--border-color); font-size:0.85rem;";
+                
+                item.innerHTML = `
+                    <span style="${task.done ? 'text-decoration:line-through; opacity:0.5;' : 'font-weight:500;'}">${task.title}</span>
+                    ${!task.done ? 
+                        `<button class="btn btn-primary" style="width:auto; padding:6px 12px; font-size:0.75rem;" onclick="completeTask(${task.id})">Entregar (+20 XP)</button>` : 
+                        `<span style="color:var(--brand-secondary); font-weight:700; font-size:0.75rem;">Entregue ✓</span>`
+                    }
                 `;
+                container.appendChild(item);
             });
         }
 
         function addTask() {
             const input = document.getElementById('task-input');
-            if(input.value.trim() !== "") {
-                tasks.push(input.value.trim());
-                input.value = "";
+            const title = input.value.trim();
+            if (title) {
+                tasks.push({ id: Date.now(), title: title, done: false });
+                input.value = '';
                 renderTasks();
             }
         }
 
-        function removeTask(index) {
-            tasks.splice(index, 1);
-            renderTasks();
+        function completeTask(id) {
+            const task = tasks.find(t => t.id === id);
+            if (task) {
+                task.done = true;
+                addXP(20);
+                renderTasks();
+            }
         }
 
-        // Inicialização
-        loadQuiz();
-        renderTasks();
+        /* --- INICIALIZAÇÃO DA APLICAÇÃO --- */
+        window.addEventListener('DOMContentLoaded', () => {
+            initQuiz();
+            renderTasks();
+        });
     </script>
 </body>
 </html>
