@@ -2,362 +2,714 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EduSmart - Smartphone na Educação</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>EduSmart - Plataforma Pedagógica Móvel</title>
+    
+    <!-- Ícones do Google e Fonte Inter -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
     <style>
+        /* --- VARIÁVEIS DE CORES & DESIGN SYSTEM --- */
         :root {
-            --primary: #2563eb;
-            --primary-dark: #1d4ed8;
-            --secondary: #10b981;
-            --bg: #f8fafc;
-            --card-bg: #ffffff;
-            --text: #1e293b;
-            --text-light: #64748b;
-            --radius: 
+            --primary: #4F46E5;       /* Indigo Vibrante */
+            --primary-light: #818CF8;
+            --primary-dark: #3730A3;
+            --secondary: #10B981;     /* Esmeralda */
+            --accent: #F59E0B;        /* Âmbar */
+            --danger: #EF4444;        /* Vermelho */
+            
+            --bg: #F3F4F6;
+            --surface: #FFFFFF;
+            --text-main: #111827;
+            --text-muted: #6B7280;
+            --border: #E5E7EB;
+            
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --radius: 16px;
+        }
 
-
+        /* RESET PROFISSIONAL */
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
         }
 
         body {
             background-color: var(--bg);
-            color: var(--text);
-            line-height: 1.6;
-            padding-bottom: 40px;
+            color: var(--text-main);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
         }
 
+        /* --- CABEÇALHO DO APP --- */
         header {
             background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             color: white;
-            padding: 2.5rem 1rem;
-            text-align: center;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
-        }
-
-        header h1 {
-            font-size: 2.2rem;
-            margin-bottom: 0.5rem;
-        }
-
-        header p {
-            opacity: 0.9;
-            font-size: 1rem;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        nav {
+            padding: 18px 20px 15px 20px;
             display: flex;
-            justify-content: center;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: var(--shadow-md);
+            z-index: 10;
+        }
+
+        .header-title {
+            display: flex;
+            align-items: center;
             gap: 10px;
-            background: white;
-            padding: 10px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            overflow-x: auto;
         }
 
-        nav button {
-            background: none;
-            border: none;
-            padding: 8px 16px;
-            font-weight: 600;
-            color: var(--text-light);
-            cursor: pointer;
+        .header-title .logo-icon {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .header-title h1 {
+            font-size: 1.3rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .badge-ver {
+            background: rgba(255, 255, 255, 0.2);
+            font-size: 0.7rem;
+            padding: 3px 8px;
             border-radius: 20px;
-            transition: all 0.2s;
-            white-space: nowrap;
+            font-weight: 600;
         }
 
-        nav button.active, nav button:hover {
-            background: var(--primary);
-            color: white;
-        }
-
+        /* --- ÁREA PRINCIPAL (SCROLLABLE) --- */
         main {
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 0 15px;
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px;
+            padding-bottom: 90px;
         }
 
-        .section {
+        .tab-content {
             display: none;
-            background: var(--card-bg);
-            padding: 24px;
-            border-radius: var(--radius);
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
-            animation: fadeIn 0.3s ease-in-out;
+            animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .section.active {
+        .tab-content.active {
             display: block;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(15px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        h2 {
-            color: var(--primary);
-            margin-bottom: 15px;
-            font-size: 1.5rem;
-            border-bottom: 2px solid #e2e8f0;
-            padding-bottom: 8px;
-        }
-
-        /* Card list */
-        .card-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 15px;
-            margin-top: 15px;
-        }
-
+        /* --- CARDS & COMPONENTES --- */
         .card {
-            border: 1px solid #e2e8f0;
-            padding: 15px;
-            border-radius: 8px;
-            background: #fafafa;
+            background: var(--surface);
+            border-radius: var(--radius);
+            padding: 20px;
+            margin-bottom: 16px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border);
+            transition: transform 0.2s, box-shadow 0.2s;
         }
 
-        .card h3 {
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .card-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .bg-indigo { background: var(--primary); }
+        .bg-emerald { background: var(--secondary); }
+        .bg-amber { background: var(--accent); }
+        .bg-rose { background: var(--danger); }
+
+        .card h2 {
             font-size: 1.1rem;
-            margin-bottom: 5px;
-            color: var(--text);
+            font-weight: 700;
+            color: var(--text-main);
         }
 
         .card p {
             font-size: 0.9rem;
-            color: var(--text-light);
+            color: var(--text-muted);
+            line-height: 1.5;
         }
 
-        /* Quiz */
-        .quiz-option {
-            display: block;
-            width: 100%;
-            padding: 12px;
-            margin: 8px 0;
-            background: #f1f5f9;
-            border: 1px solid #cbd5e1;
-            border-radius: 8px;
-            text-align: left;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: 0.2s;
-        }
-
-        .quiz-option:hover {
-            background: #e2e8f0;
-        }
-
-        .feedback {
-            margin-top: 15px;
-            font-weight: bold;
-            padding: 10px;
-            border-radius: 6px;
-        }
-
-        .correct { background: #d1fae5; color: #065f46; }
-        .wrong { background: #fee2e2; color: #991b1b; }
-
-        /* Pomodoro Timer */
-        .timer-display {
-            font-size: 3.5rem;
-            font-weight: bold;
-            text-align: center;
-            color: var(--primary);
-            margin: 20px 0;
-        }
-
-        .timer-controls {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-        }
-
+        /* BOTÕES INTERATIVOS */
         .btn {
-            background: var(--primary);
-            color: white;
+            width: 100%;
+            padding: 14px;
+            border-radius: 12px;
             border: none;
-            padding: 10px 20px;
-            border-radius: 6px;
-            font-weight: bold;
+            font-weight: 600;
+            font-size: 0.95rem;
             cursor: pointer;
-            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s;
+            margin-top: 12px;
         }
 
-        .btn-secondary {
-            background: #64748b;
+        .btn-primary { background: var(--primary); color: white; box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3); }
+        .btn-primary:active { transform: scale(0.98); background: var(--primary-dark); }
+
+        .btn-secondary { background: var(--bg); color: var(--text-main); border: 1px solid var(--border); }
+        .btn-secondary:active { background: #E5E7EB; }
+
+        .btn-danger { background: var(--danger); color: white; }
+
+        /* GRID DE RECURSOS */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 12px;
         }
 
-        .btn:hover {
-            opacity: 0.9;
+        .grid-item {
+            background: var(--bg);
+            padding: 14px;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid var(--border);
+        }
+
+        .grid-item span {
+            font-size: 1.8rem;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .grid-item h4 {
+            font-size: 0.85rem;
+            color: var(--text-main);
+        }
+
+        /* --- COMPONENTE: QUIZ INTERATIVO --- */
+        .quiz-option {
+            background: var(--bg);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            padding: 14px;
+            margin-top: 10px;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 0.9rem;
+            text-align: left;
+            width: 100%;
+            transition: all 0.2s;
+        }
+
+        .quiz-option.correct {
+            background: #D1FAE5;
+            border-color: var(--secondary);
+            color: #065F46;
+        }
+
+        .quiz-option.wrong {
+            background: #FEE2E2;
+            border-color: var(--danger);
+            color: #991B1B;
+        }
+
+        .score-box {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #EEF2FF, #E0E7FF);
+            border-radius: 12px;
+            margin-bottom: 15px;
+        }
+
+        /* --- COMPONENTE: CRONÔMETRO POMODORO --- */
+        .timer-circle {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            border: 8px solid var(--primary-light);
+            margin: 20px auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: var(--surface);
+            box-shadow: var(--shadow-md);
+        }
+
+        .timer-time {
+            font-size: 2.8rem;
+            font-weight: 800;
+            color: var(--primary-dark);
+            letter-spacing: -1px;
+        }
+
+        .timer-status {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        /* --- COMPONENTE: GERENCIADOR DE TAREFAS --- */
+        .input-group {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .input-group input {
+            flex: 1;
+            padding: 12px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            outline: none;
+            font-size: 0.9rem;
+        }
+
+        .task-list {
+            list-style: none;
+        }
+
+        .task-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px;
+            background: var(--bg);
+            border-radius: 10px;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+
+        /* --- MENU DE NAVEGAÇÃO INFERIOR --- */
+        nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--surface);
+            display: flex;
+            justify-content: space-around;
+            padding: 8px 0 12px 0;
+            border-top: 1px solid var(--border);
+            box-shadow: 0 -4px 10px rgba(0,0,0,0.05);
+            z-index: 100;
+        }
+
+        .nav-btn {
+            background: none;
+            border: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--text-muted);
+            font-size: 0.7rem;
+            font-weight: 600;
+            gap: 2px;
+            cursor: pointer;
+            width: 20%;
+            transition: color 0.2s;
+        }
+
+        .nav-btn span { font-size: 24px; }
+
+        .nav-btn.active {
+            color: var(--primary);
         }
     </style>
 </head>
 <body>
 
+    <!-- CABEÇALHO -->
     <header>
-        <h1>EduSmart 📱</h1>
-        <p>O Smartphone como Ferramenta Pedagógica no Ensino Médio</p>
+        <div class="header-title">
+            <div class="logo-icon">
+                <span class="material-icons-round">smartphone</span>
+            </div>
+            <div>
+                <h1>EduSmart</h1>
+            </div>
+        </div>
+        <span class="badge-ver">v2.0 PRO</span>
     </header>
 
-    <nav>
-        <button class="active" onclick="showTab('inicio')">Início</button>
-        <button onclick="showTab('materiais')">Biblioteca</button>
-        <button onclick="showTab('quiz')">Quiz</button>
-        <button onclick="showTab('foco')">Cronômetro Foco</button>
-        <button onclick="showTab('apps')">Apps Indicados</button>
-    </nav>
-
+    <!-- CONTEÚDO PRINCIPAL (MUDANÇA DE ABAS) -->
     <main>
-        <section id="inicio" class="section active">
-            <h2>Bem-vindo ao EduSmart</h2>
-            <p>Esta plataforma web é um projeto pedagógico que visa transformar o celular em um grande aliado do aprendizado no Ensino Médio.</p>
-            <br>
-            <p>Acesse o menu acima para explorar a biblioteca de estudos, testar seus conhecimentos no quiz interativo, utilizar o método Pomodoro para foco ou conhecer aplicativos recomendados para suas disciplinas!</p>
-            
-            <div class="card-grid">
-                <div class="card">
-                    <h3>📚 Estudo Dirigido</h3>
-                    <p>Acesse resumos e guias de estudo otimizados para leitura mobile.</p>
+        
+        <!-- ABA 1: INÍCIO / DASHBOARD -->
+        <div id="tab-home" class="tab-content active">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon bg-indigo">
+                        <span class="material-icons-round">school</span>
+                    </div>
+                    <div>
+                        <h2>O Celular na Escola</h2>
+                        <p>Ferramenta Pedagógica</p>
+                    </div>
                 </div>
-                <div class="card">
-                    <h3>⏱️ Gestão do Tempo</h3>
-                    <p>Organize suas rotinas de estudos sem distrações do smartphone.</p>
+                <p>Bem-vindo ao <strong>EduSmart</strong>! Esta plataforma demonstra na prática como o smartphone pode transformar o ambiente escolar em uma experiência interativa e focada.</p>
+            </div>
+
+            <div class="grid-2">
+                <div class="grid-item" onclick="switchTab('quiz')">
+                    <span>💡</span>
+                    <h4>Quiz Rápido</h4>
+                </div>
+                <div class="grid-item" onclick="switchTab('pomodoro')">
+                    <span>⏱️</span>
+                    <h4>Modo Foco</h4>
+                </div>
+                <div class="grid-item" onclick="switchTab('agenda')">
+                    <span>📅</span>
+                    <h4>Minha Agenda</h4>
+                </div>
+                <div class="grid-item" onclick="switchTab('library')">
+                    <span>📚</span>
+                    <h4>Biblioteca</h4>
                 </div>
             </div>
-        </section>
 
-        <section id="materiais" class="section">
-            <h2>Biblioteca Digital</h2>
-            <p>Conteúdos essenciais para revisão rápida:</p>
-            <div class="card-grid">
-                <div class="card">
-                    <h3>Matemática</h3>
-                    <p>Funções, Geometria e Estatística para o ENEM.</p>
+            <div class="card" style="margin-top: 16px;">
+                <div class="card-header">
+                    <div class="card-icon bg-amber">
+                        <span class="material-icons-round">star</span>
+                    </div>
+                    <div>
+                        <h2>Dica do Dia</h2>
+                    </div>
                 </div>
-                <div class="card">
-                    <h3>Língua Portuguesa</h3>
-                    <p>Técnicas de Redação Dissertativa e Gramática Aplicada.</p>
+                <p>Desative as notificações de redes sociais durante o horário de aula para aumentar sua retenção de conteúdo em até 40%!</p>
+            </div>
+        </div>
+
+        <!-- ABA 2: QUIZ INTERATIVO -->
+        <div id="tab-quiz" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon bg-emerald">
+                        <span class="material-icons-round">psychology</span>
+                    </div>
+                    <div>
+                        <h2>Quiz Pedagógico</h2>
+                        <p>Testes seus conhecimentos</p>
+                    </div>
                 </div>
-                <div class="card">
-                    <h3>Informática / Tecnologia</h3>
-                    <p>Lógica de Programação, Algoritmos e Cultura Digital.</p>
+
+                <div class="score-box">
+                    <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 700;">SUA PONTUAÇÃO</span>
+                    <h2 id="score-display" style="font-size: 2rem; color: var(--primary);">0 Pontos</h2>
                 </div>
-                <div class="card">
-                    <h3>História & Ciências Humanas</h3>
-                    <p>Resumos e mapas mentais para fixação.</p>
+
+                <div id="quiz-container">
+                    <p id="quiz-question" style="font-weight: 600; font-size: 1rem; margin-bottom: 10px;">
+                        Carregando pergunta...
+                    </p>
+                    <div id="quiz-options"></div>
                 </div>
             </div>
-        </section>
+        </div>
 
-        <section id="quiz" class="section">
-            <h2>Quiz Rápido: Uso de Tecnologia</h2>
-            <p><strong>Pergunta:</strong> Qual é a principal vantagem de utilizar o smartphone como ferramenta pedagógica?</p>
-            
-            <button class="quiz-option" onclick="checkQuiz(false)">A) Subsidiar distrações e jogos durante o horário de aula.</button>
-            <button class="quiz-option" onclick="checkQuiz(true)">B) Permitir acesso rápido a informações, metodologias ativas e mídias interativas.</button>
-            <button class="quiz-option" onclick="checkQuiz(false)">C) Substituir completamente o papel da escola e dos professores.</button>
+        <!-- ABA 3: CRONÔMETRO POMODORO -->
+        <div id="tab-pomodoro" class="tab-content">
+            <div class="card" style="text-align: center;">
+                <div class="card-header" style="justify-content: center;">
+                    <div class="card-icon bg-rose">
+                        <span class="material-icons-round">timer</span>
+                    </div>
+                    <div>
+                        <h2>Cronômetro de Foco</h2>
+                    </div>
+                </div>
+                
+                <p>Método Pomodoro: Estude com foco total sem mexer em redes sociais.</p>
 
-            <div id="quiz-feedback" class="feedback" style="display: none;"></div>
-        </section>
+                <div class="timer-circle">
+                    <span id="timer-display" class="timer-time">25:00</span>
+                    <span id="timer-label" class="timer-status">FOCO</span>
+                </div>
 
-        <section id="foco" class="section">
-            <h2>Cronômetro de Foco (Pomodoro)</h2>
-            <p>Utilize esta ferramenta para estudar sem se distrair com notificações:</p>
-            
-            <div class="timer-display" id="timer">25:00</div>
-            
-            <div class="timer-controls">
-                <button class="btn" onclick="startTimer()">Iniciar</button>
-                <button class="btn btn-secondary" onclick="resetTimer()">Resetar</button>
+                <button id="btn-timer-start" class="btn btn-primary" onclick="toggleTimer()">
+                    <span class="material-icons-round">play_arrow</span> Iniciar Foco
+                </button>
+                <button class="btn btn-secondary" onclick="resetTimer()">
+                    <span class="material-icons-round">restart_alt</span> Resetar
+                </button>
             </div>
-        </section>
+        </div>
 
-        <section id="apps" class="section">
-            <h2>Aplicativos Recomendados</h2>
-            <p>Ferramentas gratuitas para potencializar seus estudos no smartphone:</p>
-            <div class="card-grid">
-                <div class="card">
-                    <h3>Duolingo</h3>
-                    <p>Aprendizado de idiomas de forma gamificada.</p>
+        <!-- ABA 4: AGENDA DE ESTUDOS -->
+        <div id="tab-agenda" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon bg-indigo">
+                        <span class="material-icons-round">checklist</span>
+                    </div>
+                    <div>
+                        <h2>Agenda de Tarefas</h2>
+                        <p>Anote suas provas e trabalhos</p>
+                    </div>
                 </div>
-                <div class="card">
-                    <h3>Notion / Trello</h3>
-                    <p>Organização de horários de aulas e trabalhos escolares.</p>
+
+                <div class="input-group">
+                    <input type="text" id="task-input" placeholder="Ex: Trabalho de História...">
+                    <button class="btn btn-primary" style="width: auto; margin-top: 0; padding: 12px 16px;" onclick="addTask()">
+                        <span class="material-icons-round">add</span>
+                    </button>
                 </div>
-                <div class="card">
-                    <h3>Geogebra</h3>
-                    <p>Visualização e prática de conceitos matemáticos.</p>
+
+                <ul id="task-list" class="task-list">
+                    <!-- Tarefas serão geradas via JS -->
+                </ul>
+            </div>
+        </div>
+
+        <!-- ABA 5: BIBLIOTECA DIGITAL -->
+        <div id="tab-library" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon bg-amber">
+                        <span class="material-icons-round">local_library</span>
+                    </div>
+                    <div>
+                        <h2>Biblioteca & Conteúdos</h2>
+                        <p>Materiais de apoio do Ensino Médio</p>
+                    </div>
                 </div>
-                <div class="card">
-                    <h3>Canva</h3>
-                    <p>Criação de apresentações e resumos visuais.</p>
+
+                <div class="card" style="border-left: 4px solid var(--primary); margin-bottom: 10px;">
+                    <h3>📐 Matemática</h3>
+                    <p>Geometria, Funções e Estatística para o ENEM.</p>
+                    <button class="btn btn-secondary" onclick="alert('Abrindo material de Matemática...')">Acessar PDF</button>
+                </div>
+
+                <div class="card" style="border-left: 4px solid var(--secondary); margin-bottom: 10px;">
+                    <h3>📝 Língua Portuguesa</h3>
+                    <p>Redação Dissertativa-Argumentativa e Gramática.</p>
+                    <button class="btn btn-secondary" onclick="alert('Abrindo guias de Redação...')">Acessar Guia</button>
+                </div>
+
+                <div class="card" style="border-left: 4px solid var(--accent);">
+                    <h3>💻 Informática & Tecnologia</h3>
+                    <p>Algoritmos, Programação Web e Cultura Digital.</p>
+                    <button class="btn btn-secondary" onclick="alert('Abrindo curso básico de códigos...')">Acessar Aula</button>
                 </div>
             </div>
-        </section>
+        </div>
+
     </main>
 
+    <!-- MENU INFERIOR DE NAVEGAÇÃO -->
+    <nav>
+        <button class="nav-btn active" onclick="switchTab('home')">
+            <span class="material-icons-round">home</span>
+            Início
+        </button>
+        <button class="nav-btn" onclick="switchTab('quiz')">
+            <span class="material-icons-round">extension</span>
+            Quiz
+        </button>
+        <button class="nav-btn" onclick="switchTab('pomodoro')">
+            <span class="material-icons-round">timer</span>
+            Foco
+        </button>
+        <button class="nav-btn" onclick="switchTab('agenda')">
+            <span class="material-icons-round">event_note</span>
+            Agenda
+        </button>
+        <button class="nav-btn" onclick="switchTab('library')">
+            <span class="material-icons-round">collections_bookmark</span>
+            Livros
+        </button>
+    </nav>
+
+    <!-- JAVASCRIPT COM LÓGICA E INTERATIVIDADE -->
     <script>
-        function showTab(tabId) {
-            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-            document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+        // --- NAVEGAÇÃO ENTRE ABAS ---
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+
+            document.getElementById(`tab-${tabName}`).classList.add('active');
             
-            document.getElementById(tabId).classList.add('active');
-            event.target.classList.add('active');
+            // Ativar ícone correto no menu
+            const navIndex = ['home', 'quiz', 'pomodoro', 'agenda', 'library'].indexOf(tabName);
+            document.querySelectorAll('.nav-btn')[navIndex].classList.add('active');
         }
 
-        function checkQuiz(isCorrect) {
-            const feedback = document.getElementById('quiz-feedback');
-            feedback.style.display = 'block';
-            if(isCorrect) {
-                feedback.textContent = 'Correcto! 🎉 O smartphone amplia as possibilidades de pesquisa e métodos de aprendizagem.';
-                feedback.className = 'feedback correct';
+        // --- LÓGICA DO QUIZ ---
+        const questions = [
+            {
+                q: "Qual a principal vantagem pedagógica do smartphone?",
+                options: ["Distração contínua", "Acesso rápido a pesquisas e mídias", "Substituir o professor"],
+                correct: 1
+            },
+            {
+                q: "O que é a técnica Pomodoro?",
+                options: ["Um app de receitas", "Método de divisão de tempo de estudo e foco", "Um tipo de código de programação"],
+                correct: 1
+            },
+            {
+                q: "Como o celular ajuda na organização escolar?",
+                options: ["Com agendas digitais e lembretes", "Não ajuda em nada", "Apenas para jogar na aula"],
+                correct: 0
+            }
+        ];
+
+        let currentQ = 0;
+        let score = 0;
+
+        function loadQuiz() {
+            if(currentQ >= questions.length) {
+                document.getElementById('quiz-container').innerHTML = `
+                    <div style="text-align:center; padding: 20px;">
+                        <h3>🎉 Parabéns!</h3>
+                        <p>Você concluiu o quiz pedagógico!</p>
+                        <button class="btn btn-primary" onclick="restartQuiz()">Refazer Quiz</button>
+                    </div>
+                `;
+                return;
+            }
+
+            const qData = questions[currentQ];
+            document.getElementById('quiz-question').textContent = `${currentQ + 1}. ${qData.q}`;
+            
+            const optionsDiv = document.getElementById('quiz-options');
+            optionsDiv.innerHTML = '';
+
+            qData.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = 'quiz-option';
+                btn.textContent = opt;
+                btn.onclick = () => answerQuiz(idx, qData.correct, btn);
+                optionsDiv.appendChild(btn);
+            });
+        }
+
+        function answerQuiz(selected, correct, btnElement) {
+            const allBtns = document.querySelectorAll('.quiz-option');
+            allBtns.forEach(b => b.disabled = true);
+
+            if(selected === correct) {
+                btnElement.classList.add('correct');
+                score += 10;
+                document.getElementById('score-display').textContent = `${score} Pontos`;
             } else {
-                feedback.textContent = 'Incorreto. Tente novamente!';
-                feedback.className = 'feedback wrong';
+                btnElement.classList.add('wrong');
+                allBtns[correct].classList.add('correct');
+            }
+
+            setTimeout(() => {
+                currentQ++;
+                loadQuiz();
+            }, 1500);
+        }
+
+        function restartQuiz() {
+            currentQ = 0;
+            score = 0;
+            document.getElementById('score-display').textContent = `0 Pontos`;
+            loadQuiz();
+        }
+
+        // --- LÓGICA DO POMODORO ---
+        let timerSeconds = 25 * 60;
+        let timerInterval = null;
+        let isRunning = false;
+
+        function updateTimerDisplay() {
+            const m = Math.floor(timerSeconds / 60).toString().padStart(2, '0');
+            const s = (timerSeconds % 60).toString().padStart(2, '0');
+            document.getElementById('timer-display').textContent = `${m}:${s}`;
+        }
+
+        function toggleTimer() {
+            const btn = document.getElementById('btn-timer-start');
+            if(isRunning) {
+                clearInterval(timerInterval);
+                isRunning = false;
+                btn.innerHTML = '<span class="material-icons-round">play_arrow</span> Continuar';
+            } else {
+                isRunning = true;
+                btn.innerHTML = '<span class="material-icons-round">pause</span> Pausar';
+                timerInterval = setInterval(() => {
+                    if(timerSeconds > 0) {
+                        timerSeconds--;
+                        updateTimerDisplay();
+                    } else {
+                        clearInterval(timerInterval);
+                        alert("Tempo de foco encerrado! Faça uma pausa.");
+                        resetTimer();
+                    }
+                }, 1000);
             }
         }
 
-        // Timer JS
-        let timeLeft = 25 * 60;
-        let timerId = null;
-
-        function updateTimer() {
-            let minutes = Math.floor(timeLeft / 60);
-            let seconds = timeLeft % 60;
-            document.getElementById('timer').textContent = 
-                `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-        }
-
-        function startTimer() {
-            if (timerId !== null) return;
-            timerId = setInterval(() => {
-                if (timeLeft > 0) {
-                    timeLeft--;
-                    updateTimer();
-                } else {
-                    clearInterval(timerId);
-                    alert("Tempo de foco concluído! Faça uma pausa.");
-                }
-            }, 1000);
-        }
-
         function resetTimer() {
-            clearInterval(timerId);
-            timerId = null;
-            timeLeft = 25 * 60;
-            updateTimer();
+            clearInterval(timerInterval);
+            isRunning = false;
+            timerSeconds = 25 * 60;
+            updateTimerDisplay();
+            document.getElementById('btn-timer-start').innerHTML = '<span class="material-icons-round">play_arrow</span> Iniciar Foco';
         }
+
+        // --- LÓGICA DA AGENDA/TAREFAS ---
+        const tasks = ["Trabalho de Biologia - Entrega Sexta", "Revisão de Matemática ENEM"];
+
+        function renderTasks() {
+            const list = document.getElementById('task-list');
+            list.innerHTML = '';
+            tasks.forEach((t, i) => {
+                list.innerHTML += `
+                    <li class="task-item">
+                        <span>${t}</span>
+                        <span class="material-icons-round" style="color:var(--danger); cursor:pointer;" onclick="removeTask(${i})">delete</span>
+                    </li>
+                `;
+            });
+        }
+
+        function addTask() {
+            const input = document.getElementById('task-input');
+            if(input.value.trim() !== "") {
+                tasks.push(input.value.trim());
+                input.value = "";
+                renderTasks();
+            }
+        }
+
+        function removeTask(index) {
+            tasks.splice(index, 1);
+            renderTasks();
+        }
+
+        // Inicializar funções ao carregar
+        loadQuiz();
+        renderTasks();
     </script>
 </body>
 </html>
-
