@@ -3,424 +3,291 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EduSmart AI — Plataforma Educacional Inteligente</title>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
-
+    <title>EduSmart - App Pedagógico</title>
+    <!-- Incluindo ícones do Google para parecer um app real -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <style>
+        /* --- ESTILOS GERAIS DE APLICATIVO (O segredo do visual) --- */
+        
         :root {
-            --bg-main: #0f172a;
-            --bg-surface: #1e293b;
-            --bg-card: rgba(30, 41, 59, 0.7);
-            --text-primary: #f8fafc;
-            --text-secondary: #94a3b8;
-            --color-primary: #38bdf8;
-            --color-primary-dark: #0284c7;
-            --color-primary-subtle: rgba(56, 189, 248, 0.12);
-            --color-ai: #a855f7;
-            --color-ai-subtle: rgba(168, 85, 247, 0.15);
-            --color-accent: #f59e0b;
-            --border-color: #334155;
-            --radius-md: 12px;
-            --radius-lg: 18px;
-            --shadow-md: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
-            --font-main: 'Plus Jakarta Sans', sans-serif;
+            --primary-color: #2563eb; /* Azul profissional moderno */
+            --primary-dark: #1d4ed8;
+            --bg-color: #f1f5f9; /* Fundo cinza muito claro, como apps nativos */
+            --text-color: #1e293b;
+            --text-light: #64748b;
+            --card-bg: #ffffff;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
         }
 
+        /* Reset completo para remover estilos padrão de navegador (como na image_4.png) */
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: var(--font-main);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; /* Fonte nativa do iOS/Android */
+            -webkit-tap-highlight-color: transparent; /* Remove o destaque de toque no mobile */
         }
 
         body {
-            background-color: var(--bg-main);
-            color: var(--text-primary);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
-
-        .container {
-            width: 90%;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        /* === NAVBAR === */
-        .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background: rgba(15, 23, 42, 0.85);
-            backdrop-filter: blur(16px);
-            border-bottom: 1px solid var(--border-color);
-            z-index: 1000;
-            padding: 1rem 0;
-        }
-
-        .navbar-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo-brand {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-weight: 800;
-            font-size: 1.3rem;
-            color: var(--text-primary);
-        }
-
-        .logo-icon {
-            background: linear-gradient(135deg, var(--color-primary), var(--color-ai));
-            padding: 10px;
-            border-radius: var(--radius-md);
-            display: flex;
-            color: #fff;
-        }
-
-        .nav-menu {
-            display: flex;
-            gap: 24px;
-        }
-
-        .nav-link {
-            font-weight: 600;
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-            transition: 0.2s;
-        }
-
-        .nav-link:hover, .nav-link.active {
-            color: var(--color-primary);
-        }
-
-        /* === COMPONENTES E BOTÕES === */
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 12px 24px;
-            border-radius: var(--radius-md);
-            font-weight: 700;
-            cursor: pointer;
-            border: none;
-            transition: all 0.2s ease;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
-            color: #ffffff;
-            box-shadow: 0 4px 14px rgba(56, 189, 248, 0.3);
-        }
-
-        .btn-ai {
-            background: linear-gradient(135deg, var(--color-ai), #7e22ce);
-            color: #ffffff;
-            box-shadow: 0 4px 14px rgba(168, 85, 247, 0.3);
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            filter: brightness(1.1);
-        }
-
-        .badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .badge-ai {
-            background-color: var(--color-ai-subtle);
-            color: var(--color-ai);
-            border: 1px solid rgba(168, 85, 247, 0.3);
-        }
-
-        .badge-primary {
-            background-color: var(--color-primary-subtle);
-            color: var(--color-primary);
-            border: 1px solid rgba(56, 189, 248, 0.3);
-        }
-
-        .card {
-            background: var(--bg-surface);
-            padding: 28px;
-            border-radius: var(--radius-lg);
-            border: 1px solid var(--border-color);
-            box-shadow: var(--shadow-md);
-            transition: 0.3s;
-        }
-
-        .card:hover {
-            border-color: rgba(56, 189, 248, 0.4);
-        }
-
-        .grid-2 {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px;
-            align-items: center;
-        }
-
-        .grid-3 {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 24px;
-        }
-
-        @media (max-width: 900px) {
-            .grid-2, .grid-3 { grid-template-columns: 1fr; }
-            .nav-menu { display: none; }
-        }
-
-        /* === SEÇÃO HERO === */
-        .hero {
-            padding: 170px 0 100px 0;
-            background: radial-gradient(circle at top right, rgba(168, 85, 247, 0.15), transparent 40%),
-                        radial-gradient(circle at top left, rgba(56, 189, 248, 0.15), transparent 40%);
-        }
-
-        .chat-preview {
-            background: var(--bg-surface);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-lg);
-            padding: 20px;
+            background-color: var(--bg-color);
+            color: var(--text-color);
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            height: 100vh; /* Ocupa toda a altura da tela */
+            overflow: hidden; /* O conteúdo vai rolar dentro da área principal */
         }
 
-        .chat-msg {
-            padding: 12px 16px;
-            border-radius: var(--radius-md);
-            font-size: 0.9rem;
-            max-width: 85%;
-        }
-
-        .chat-user {
-            background: var(--color-primary-subtle);
-            color: var(--color-primary);
-            align-self: flex-end;
-            border-bottom-right-radius: 2px;
-        }
-
-        .chat-ai {
-            background: var(--color-ai-subtle);
-            color: #f3e8ff;
-            align-self: flex-start;
-            border-bottom-left-radius: 2px;
-            border: 1px solid rgba(168, 85, 247, 0.2);
-        }
-
-        .footer {
-            padding: 40px 0;
-            border-top: 1px solid var(--border-color);
+        /* --- CABEÇALHO DO APP (Header) --- */
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px;
             text-align: center;
-            color: var(--text-secondary);
-            font-size: 0.9rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            z-index: 10;
         }
+
+        header h1 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        header .emoji {
+            font-size: 1.5rem;
+        }
+
+        /* --- ÁREA PRINCIPAL DE CONTEÚDO (Com rolagem) --- */
+        main {
+            flex: 1; /* Ocupa o espaço restante */
+            overflow-y: auto; /* Permite rolagem apenas aqui */
+            padding: 20px;
+            padding-bottom: 80px; /* Espaço para o menu inferior não cobrir o conteúdo */
+        }
+
+        .section {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Estilo de Card de Aplicativo */
+        .app-card {
+            background-color: var(--card-bg);
+            padding: 20px;
+            border-radius: 16px; /* Bordas bem arredondadas, estilo iOS/Android moderno */
+            box-shadow: var(--shadow);
+            margin-bottom: 20px;
+        }
+
+        .app-card h2 {
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .app-card h2 .material-icons {
+            font-size: 1.3rem;
+        }
+
+        .app-card p {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        /* Botões de Estilo App */
+        .btn-app {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            border: none;
+            cursor: pointer;
+            transition: background 0.2s;
+            box-shadow: 0 2px 4px rgba(37, 99, 235, 0.3);
+            width: 100%;
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .btn-app:active {
+            background-color: var(--primary-dark);
+            transform: scale(0.98);
+        }
+
+        /* --- MENU DE NAVEGAÇÃO INFERIOR (Bottom Navigation Bar) --- */
+        nav#bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--card-bg);
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+            z-index: 100;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 0.7rem;
+            font-weight: 500;
+            border: none;
+            background: none;
+            cursor: pointer;
+        }
+
+        .nav-item .material-icons {
+            font-size: 24px;
+            margin-bottom: 2px;
+        }
+
+        .nav-item.active {
+            color: var(--primary-color);
+        }
+
+        /* Estilos específicos dos componentes interativos (Pomodoro/Quiz) */
+        /* (Removidos temporariamente para focar no visual principal) */
     </style>
 </head>
 <body>
 
-    <!-- NAVBAR -->
-    <header class="navbar">
-        <div class="container navbar-container">
-            <a href="#" class="logo-brand">
-                <div class="logo-icon">
-                    <span class="material-icons-round">psychology</span>
-                </div>
-                <div>
-                    <span>EduSmart <strong style="color: var(--color-ai);">AI</strong></span>
-                    <small style="display:block; font-size:0.65rem; color:var(--color-primary); font-weight:700;">PROJETO DE TCC</small>
-                </div>
-            </a>
-
-            <nav class="nav-menu">
-                <a href="#inicio" class="nav-link active">Início</a>
-                <a href="#recursos" class="nav-link">Recursos IA</a>
-                <a href="#arquitetura" class="nav-link">Arquitetura Técnica</a>
-                <a href="#sobre" class="nav-link">Sobre o TCC</a>
-            </nav>
-
-            <div>
-                <a href="#demo" class="btn btn-ai">
-                    <span class="material-icons-round">auto_awesome</span> Testar IA
-                </a>
-            </div>
-        </div>
+    <!-- Cabeçalho (App Bar) -->
+    <header>
+        <h1><span class="emoji">📱</span>EduSmart</h1>
     </header>
 
-    <!-- HERO SECTION -->
-    <section id="inicio" class="hero">
-        <div class="container">
-            <div class="grid-2">
-                <div>
-                    <span class="badge badge-ai" style="margin-bottom: 16px;">
-                        <span class="material-icons-round" style="font-size: 16px;">auto_awesome</span> IA Generativa + m-Learning
-                    </span>
-                    <h1 style="font-size: 2.8rem; margin-bottom: 20px; line-height: 1.2;">
-                        O Smartphone Potencializado pela Inteligência Artificial na Educação
-                    </h1>
-                    <p style="color: var(--text-secondary); font-size: 1.1rem; margin-bottom: 28px;">
-                        Uma Plataforma Web Responsiva (PWA) de alta complexidade que transforma o dispositivo móvel em um ecossistema de aprendizagem adaptativa e interativa no Ensino Médio.
-                    </p>
-                    <div style="display: flex; gap: 14px; flex-wrap: wrap;">
-                        <a href="#demo" class="btn btn-primary">
-                            Explorar Plataforma <span class="material-icons-round">arrow_forward</span>
-                        </a>
-                        <a href="#arquitetura" class="btn btn-ai" style="background: transparent; border: 1px solid var(--color-ai);">
-                            Ver Arquitetura
-                        </a>
-                    </div>
-                </div>
-
-                <!-- PREVIEW DO CHAT SOCRÁTICO COM IA -->
-                <div>
-                    <div class="card" style="border-color: rgba(168, 85, 247, 0.4);">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-                            <div style="display: flex; align-items: center; gap: 8px;">
-                                <span class="material-icons-round" style="color: var(--color-ai);">smart_toy</span>
-                                <strong>Tutor Socrático IA</strong>
-                            </div>
-                            <span class="badge badge-primary" style="font-size: 0.7rem;">Online</span>
-                        </div>
-
-                        <div class="chat-preview">
-                            <div class="chat-msg chat-user">
-                                Como funciona o comando DML em Banco de Dados?
-                            </div>
-                            <div class="chat-msg chat-ai">
-                                🤖 <strong>EduSmart IA:</strong> Boa pergunta! Em vez de te dar a resposta direta: você lembra qual comando usamos para <em>inserir novos dados</em> em uma tabela?
-                            </div>
-                            <div class="chat-msg chat-user">
-                                É o INSERT INTO?
-                            </div>
-                            <div class="chat-msg chat-ai">
-                                🤖 <strong>EduSmart IA:</strong> Exato! O <code>INSERT</code> faz parte da DML (Data Manipulation Language). Quais outros comandos você acha que alteram os dados armazenados?
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- RECURSOS DA INTELIGÊNCIA ARTIFICIAL -->
-    <section id="recursos" style="padding: 90px 0; background: rgba(30, 41, 59, 0.3);">
-        <div class="container">
-            <div style="text-align: center; max-width: 700px; margin: 0 auto 50px auto;">
-                <span class="badge badge-ai" style="margin-bottom: 12px;">Módulos Inteligentes</span>
-                <h2>Funcionalidades de Alta Complexidade</h2>
-                <p style="color: var(--text-secondary); margin-top: 10px;">
-                    Recursos desenhados para resolver desafios reais de aprendizagem e auxílio aos professores.
-                </p>
+    <!-- Área de Conteúdo Principal (Scrollable) -->
+    <main>
+        <!-- Início / Home Section -->
+        <section id="inicio" class="section active">
+            <div class="app-card">
+                <h2><span class="material-icons">waving_hand</span>Boas-vindas!</h2>
+                <p>O smartphone como uma poderosa ferramenta pedagógica no Ensino Médio.</p>
+                <p>Navegue pelo menu inferior para explorar o quiz, ferramentas de foco e materiais de estudo.</p>
             </div>
 
-            <div class="grid-3">
-                <div class="card">
-                    <span class="material-icons-round" style="font-size: 40px; color: var(--color-ai); margin-bottom: 16px;">psychology</span>
-                    <h3>Tutor Virtual Adaptativo</h3>
-                    <p style="color: var(--text-secondary); margin-top: 10px; font-size: 0.95rem;">
-                        Assistente 24/7 treinado para aplicar o método socrático, guiando o aluno na resolução das suas dúvidas sem entregar a resposta de imediato.
-                    </p>
-                </div>
-
-                <div class="card">
-                    <span class="material-icons-round" style="font-size: 40px; color: var(--color-primary); margin-bottom: 16px;">quiz</span>
-                    <h3>Gerador de Quizzes via IA</h3>
-                    <p style="color: var(--text-secondary); margin-top: 10px; font-size: 0.95rem;">
-                        Os professores fazem upload do resumo das aulas e a IA gera automaticamente simulados, alternativas e gabaritos comentados.
-                    </p>
-                </div>
-
-                <div class="card">
-                    <span class="material-icons-round" style="font-size: 40px; color: var(--color-accent); margin-bottom: 16px;">analytics</span>
-                    <h3>Análise Preditiva</h3>
-                    <p style="color: var(--text-secondary); margin-top: 10px; font-size: 0.95rem;">
-                        O sistema analisa os pontos fracos do estudante e recomenda revisões personalizadas antes das provas escolares.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ARQUITETURA TÉCNICA DO PROJETO -->
-    <section id="arquitetura" style="padding: 90px 0;">
-        <div class="container">
-            <div style="text-align: center; max-width: 700px; margin: 0 auto 50px auto;">
-                <span class="badge badge-primary" style="margin-bottom: 12px;">Especificação Técnica</span>
-                <h2>Arquitetura do Sistema</h2>
-                <p style="color: var(--text-secondary); margin-top: 10px;">
-                    A estrutura de desenvolvimento que fundamenta o TCC do Curso Técnico de Informática.
-                </p>
+            <div class="app-card">
+                <h2><span class="material-icons">import_contacts</span>Estudo Dirigido</h2>
+                <p>Acesse resumos e guias de estudo otimizados para leitura no celular.</p>
+                <button class="btn-app" onclick="showSection('materiais')">Ir para Biblioteca</button>
             </div>
 
-            <div class="grid-2">
-                <div class="card">
-                    <h3 style="display: flex; align-items: center; gap: 10px; margin-bottom: 16px;">
-                        <span class="material-icons-round" style="color: var(--color-primary);">code</span> Frontend & PWA
-                    </h3>
-                    <ul style="color: var(--text-secondary); list-style: none; display: flex; flex-direction: column; gap: 10px;">
-                        <li>✅ <strong>HTML5 Semântico & CSS Variables:</strong> Interface fluida, responsiva e suporte nativo a Dark Mode.</li>
-                        <li>✅ <strong>JavaScript ES6+:</strong> Manipulação assíncrona da DOM e consumo de APIs via Fetch/Axios.</li>
-                        <li>✅ <strong>Progressive Web App (PWA):</strong> Funciona como aplicativo nativo no smartphone sem instalação pela loja.</li>
-                    </ul>
-                </div>
-
-                <div class="card">
-                    <h3 style="display: flex; align-items: center; gap: 10px; margin-bottom: 16px;">
-                        <span class="material-icons-round" style="color: var(--color-ai);">storage</span> Backend & API de IA
-                    </h3>
-                    <ul style="color: var(--text-secondary); list-style: none; display: flex; flex-direction: column; gap: 10px;">
-                        <li>✅ <strong>Node.js / Python REST API:</strong> Gerenciamento de rotas, autenticação e regras de negócio.</li>
-                        <li>✅ <strong>Integração com LLM (Gemini API):</strong> Processamento de Linguagem Natural com engenharia de prompts pedagógicos.</li>
-                        <li>✅ <strong>Banco de Dados Relacional/NoSQL:</strong> Armazenamento de turmas, progresso do aluno e métricas do Pomodoro.</li>
-                    </ul>
-                </div>
+            <div class="app-card">
+                <h2><span class="material-icons">timer</span>Gestão do Tempo</h2>
+                <p>Organize suas rotinas de estudos sem distrações do smartphone.</p>
+                <button class="btn-app" onclick="showSection('foco')">Iniciar Foco</button>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- SOBRE O TCC -->
-    <section id="sobre" style="padding: 80px 0; background: rgba(30, 41, 59, 0.3);">
-        <div class="container text-center">
-            <h2 style="margin-bottom: 20px;">Sobre o Trabalho de Conclusão de Curso</h2>
-            <p style="color: var(--text-secondary); max-width: 800px; margin: 0 auto 30px auto; font-size: 1.05rem;">
-                O <strong>EduSmart AI</strong> foi idealizado como uma proposta de intervenção tecnológica pedagógica para o Ensino Médio, demonstrando como a união entre os dispositivos móveis e a Inteligência Artificial pode potencializar a rotina de estudos e auxiliar professores no acompanhamento do aprendizado.
-            </p>
-            <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
-                <span class="badge badge-primary">Terceirão 2026</span>
-                <span class="badge badge-ai">Técnico em Informática</span>
+        <!-- Biblioteca Section -->
+        <section id="materiais" class="section">
+            <div class="app-card">
+                <h2><span class="material-icons">menu_book</span>Biblioteca Digital</h2>
+                <p>Selecione uma disciplina para ver os materiais:</p>
+                <button class="btn-app">Matemática</button>
+                <button class="btn-app">Português</button>
+                <button class="btn-app">Tecnologia</button>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- FOOTER -->
-    <footer class="footer">
-        <div class="container">
-            <p>&copy; 2026 <strong>EduSmart AI</strong> — Projeto de TCC de Informática.</p>
-        </div>
-    </footer>
+        <!-- Quiz Section -->
+        <section id="quiz" class="section">
+            <div class="app-card">
+                <h2><span class="material-icons">quiz</span>Quiz Interativo</h2>
+                <p>Em breve: Teste seus conhecimentos sobre o uso responsável da tecnologia!</p>
+            </div>
+        </section>
 
+        <!-- Foco / Pomodoro Section -->
+        <section id="foco" class="section">
+            <div class="app-card">
+                <h2><span class="material-icons">hourglass_empty</span>Cronômetro de Foco</h2>
+                <p>Use a técnica Pomodoro (25 min de estudo, 5 min de descanso) para manter a concentração.</p>
+                <button class="btn-app">Iniciar Pomodoro</button>
+            </div>
+        </section>
+
+        <!-- Apps Section -->
+        <section id="apps" class="section">
+            <div class="app-card">
+                <h2><span class="material-icons">install_mobile</span>Apps Recomendados</h2>
+                <p>Conheça aplicativos que ajudam nos estudos:</p>
+                <button class="btn-app">Ver Lista</button>
+            </div>
+        </section>
+    </main>
+
+    <!-- Menu de Navegação Inferior (Estilo App Nativo) -->
+    <nav id="bottom-nav">
+        <button class="nav-item active" onclick="showSection('inicio', this)">
+            <span class="material-icons">home</span>
+            Início
+        </button>
+        <button class="nav-item" onclick="showSection('materiais', this)">
+            <span class="material-icons">library_books</span>
+            Biblioteca
+        </button>
+        <button class="nav-item" onclick="showSection('quiz', this)">
+            <span class="material-icons">lightbulb</span>
+            Quiz
+        </button>
+        <button class="nav-item" onclick="showSection('foco', this)">
+            <span class="material-icons">timer</span>
+            Foco
+        </button>
+        <button class="nav-item" onclick="showSection('apps', this)">
+            <span class="material-icons">dashboard</span>
+            Apps
+        </button>
+    </nav>
+
+    <script>
+        function showSection(sectionId, element) {
+            // Esconde todas as seções
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => section.classList.remove('active'));
+
+            // Remove classe active de todos os itens do menu
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(item => item.classList.remove('active'));
+
+            // Mostra a seção selecionada
+            const activeSection = document.getElementById(sectionId);
+            if (activeSection) {
+                activeSection.classList.add('active');
+            }
+
+            // Adiciona classe active ao item do menu clicado (se fornecido)
+            if (element) {
+                element.classList.add('active');
+            }
+        }
+    </script>
 </body>
 </html>
