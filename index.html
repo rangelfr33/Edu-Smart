@@ -2,292 +2,704 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EduSmart - App Pedagógico</title>
-    <!-- Incluindo ícones do Google para parecer um app real -->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>EduSmart - Plataforma Pedagógica & IA</title>
+    
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
     <style>
-        /* --- ESTILOS GERAIS DE APLICATIVO (O segredo do visual) --- */
-        
         :root {
-            --primary-color: #2563eb; /* Azul profissional moderno */
-            --primary-dark: #1d4ed8;
-            --bg-color: #f1f5f9; /* Fundo cinza muito claro, como apps nativos */
-            --text-color: #1e293b;
-            --text-light: #64748b;
-            --card-bg: #ffffff;
-            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+            --primary: #4F46E5;
+            --primary-light: #818CF8;
+            --primary-dark: #3730A3;
+            --secondary: #10B981;
+            --accent: #F59E0B;
+            --danger: #EF4444;
+            
+            --bg: #F3F4F6;
+            --surface: #FFFFFF;
+            --text-main: #111827;
+            --text-muted: #6B7280;
+            --border: #E5E7EB;
+            
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --radius: 16px;
         }
 
-        /* Reset completo para remover estilos padrão de navegador (como na image_4.png) */
+        body.dark-theme {
+            --bg: #0F172A;
+            --surface: #1E293B;
+            --text-main: #F8FAFC;
+            --text-muted: #94A3B8;
+            --border: #334155;
+        }
+
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; /* Fonte nativa do iOS/Android */
-            -webkit-tap-highlight-color: transparent; /* Remove o destaque de toque no mobile */
+            font-family: 'Inter', -apple-system, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
         }
 
         body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
+            background-color: var(--bg);
+            color: var(--text-main);
+            height: 100vh;
             display: flex;
             flex-direction: column;
-            height: 100vh; /* Ocupa toda a altura da tela */
-            overflow: hidden; /* O conteúdo vai rolar dentro da área principal */
+            overflow: hidden;
+            transition: background-color 0.3s, color 0.3s;
         }
 
-        /* --- CABEÇALHO DO APP (Header) --- */
+        /* HEADER */
         header {
-            background-color: var(--primary-color);
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             color: white;
-            padding: 15px;
-            text-align: center;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: var(--shadow-md);
             z-index: 10;
         }
 
-        header h1 {
-            font-size: 1.3rem;
+        .header-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header-title .logo-icon {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px;
+            border-radius: 12px;
+            display: flex;
+        }
+
+        .header-title h1 {
+            font-size: 1.2rem;
+            font-weight: 800;
+        }
+
+        .theme-toggle {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 8px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+        }
+
+        /* MAIN CONTENT */
+        main {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px;
+            padding-bottom: 90px;
+        }
+
+        .tab-content {
+            display: none;
+            animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* CARDS & GAMIFICATION */
+        .card {
+            background: var(--surface);
+            border-radius: var(--radius);
+            padding: 18px;
+            margin-bottom: 16px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border);
+        }
+
+        .gamify-banner {
+            background: linear-gradient(135deg, #6366F1, #8B5CF6);
+            color: white;
+            border-radius: var(--radius);
+            padding: 20px;
+            margin-bottom: 16px;
+            box-shadow: var(--shadow-md);
+        }
+
+        .level-badge {
+            background: rgba(255, 255, 255, 0.25);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
             font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .xp-bar-bg {
+            background: rgba(255, 255, 255, 0.2);
+            height: 10px;
+            border-radius: 10px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+
+        .xp-bar-fill {
+            background: var(--secondary);
+            height: 100%;
+            width: 0%;
+            transition: width 0.4s ease;
+        }
+
+        /* CHAT IA EDU */
+        .chat-box {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            height: 320px;
+            overflow-y: auto;
+            margin-bottom: 12px;
+            padding-right: 4px;
+        }
+
+        .chat-msg {
+            padding: 12px 16px;
+            border-radius: 14px;
+            font-size: 0.88rem;
+            max-width: 85%;
+            line-height: 1.45;
+        }
+
+        .chat-msg.ia {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            align-self: flex-start;
+            border-bottom-left-radius: 2px;
+        }
+
+        .chat-msg.user {
+            background: var(--primary);
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 2px;
+        }
+
+        /* INPUTS & BUTTONS */
+        .input-group {
+            display: flex;
+            gap: 8px;
+        }
+
+        .input-group input, .input-group select {
+            flex: 1;
+            padding: 12px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            background: var(--surface);
+            color: var(--text-main);
+            outline: none;
+            font-size: 0.9rem;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: 12px;
+            border: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
+            transition: 0.2s;
         }
 
-        header .emoji {
-            font-size: 1.5rem;
+        .btn:active { transform: scale(0.97); }
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-secondary { background: var(--bg); color: var(--text-main); border: 1px solid var(--border); }
+        .btn-success { background: var(--secondary); color: white; }
+
+        /* GRID COMPONENTS */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
         }
 
-        /* --- ÁREA PRINCIPAL DE CONTEÚDO (Com rolagem) --- */
-        main {
-            flex: 1; /* Ocupa o espaço restante */
-            overflow-y: auto; /* Permite rolagem apenas aqui */
-            padding: 20px;
-            padding-bottom: 80px; /* Espaço para o menu inferior não cobrir o conteúdo */
-        }
-
-        .section {
-            display: none;
-            animation: fadeIn 0.3s ease;
-        }
-
-        .section.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Estilo de Card de Aplicativo */
-        .app-card {
-            background-color: var(--card-bg);
-            padding: 20px;
-            border-radius: 16px; /* Bordas bem arredondadas, estilo iOS/Android moderno */
-            box-shadow: var(--shadow);
-            margin-bottom: 20px;
-        }
-
-        .app-card h2 {
-            font-size: 1.2rem;
-            color: var(--primary-color);
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .app-card h2 .material-icons {
-            font-size: 1.3rem;
-        }
-
-        .app-card p {
-            color: var(--text-light);
-            font-size: 0.95rem;
-            line-height: 1.5;
-        }
-
-        /* Botões de Estilo App */
-        .btn-app {
-            display: inline-block;
-            background-color: var(--primary-color);
-            color: white;
-            padding: 12px 24px;
-            border-radius: 25px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.9rem;
-            border: none;
-            cursor: pointer;
-            transition: background 0.2s;
-            box-shadow: 0 2px 4px rgba(37, 99, 235, 0.3);
-            width: 100%;
+        .grid-item {
+            background: var(--surface);
+            padding: 16px;
+            border-radius: var(--radius);
             text-align: center;
-            margin-top: 15px;
+            border: 1px solid var(--border);
+            cursor: pointer;
         }
 
-        .btn-app:active {
-            background-color: var(--primary-dark);
-            transform: scale(0.98);
-        }
+        .grid-item span { font-size: 1.8rem; display: block; margin-bottom: 4px; }
 
-        /* --- MENU DE NAVEGAÇÃO INFERIOR (Bottom Navigation Bar) --- */
-        nav#bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
+        /* QUIZ STYLES */
+        .quiz-opt {
             width: 100%;
-            background-color: var(--card-bg);
-            display: flex;
-            justify-content: space-around;
-            padding: 10px 0;
-            box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
-            z-index: 100;
-            border-top: 1px solid #e2e8f0;
+            padding: 14px;
+            border-radius: 12px;
+            border: 1.5px solid var(--border);
+            background: var(--surface);
+            color: var(--text-main);
+            margin-top: 8px;
+            text-align: left;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
         }
 
-        .nav-item {
+        .quiz-opt.correct { background: #D1FAE5; border-color: var(--secondary); color: #065F46; }
+        .quiz-opt.wrong { background: #FEE2E2; border-color: var(--danger); color: #991B1B; }
+
+        /* TIMER STYLES */
+        .timer-circle {
+            width: 170px;
+            height: 170px;
+            border-radius: 50%;
+            border: 6px solid var(--primary-light);
+            margin: 16px auto;
             display: flex;
             flex-direction: column;
             align-items: center;
-            color: var(--text-light);
-            text-decoration: none;
-            font-size: 0.7rem;
-            font-weight: 500;
-            border: none;
+            justify-content: center;
+            background: var(--surface);
+        }
+
+        /* NAVIGATION BAR */
+        nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--surface);
+            display: flex;
+            justify-content: space-around;
+            padding: 8px 0 10px 0;
+            border-top: 1px solid var(--border);
+            z-index: 100;
+        }
+
+        .nav-btn {
             background: none;
+            border: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--text-muted);
+            font-size: 0.65rem;
+            font-weight: 600;
+            gap: 2px;
             cursor: pointer;
+            width: 18%;
         }
 
-        .nav-item .material-icons {
-            font-size: 24px;
-            margin-bottom: 2px;
-        }
-
-        .nav-item.active {
-            color: var(--primary-color);
-        }
-
-        /* Estilos específicos dos componentes interativos (Pomodoro/Quiz) */
-        /* (Removidos temporariamente para focar no visual principal) */
+        .nav-btn span { font-size: 22px; }
+        .nav-btn.active { color: var(--primary); }
     </style>
 </head>
 <body>
 
-    <!-- Cabeçalho (App Bar) -->
     <header>
-        <h1><span class="emoji">📱</span>EduSmart</h1>
+        <div class="header-title">
+            <div class="logo-icon">
+                <span class="material-icons-round">smart_toy</span>
+            </div>
+            <div>
+                <h1>EduSmart IA</h1>
+            </div>
+        </div>
+        <button class="theme-toggle" onclick="toggleTheme()">
+            <span class="material-icons-round" id="theme-icon">dark_mode</span>
+        </button>
     </header>
 
-    <!-- Área de Conteúdo Principal (Scrollable) -->
     <main>
-        <!-- Início / Home Section -->
-        <section id="inicio" class="section active">
-            <div class="app-card">
-                <h2><span class="material-icons">waving_hand</span>Boas-vindas!</h2>
-                <p>O smartphone como uma poderosa ferramenta pedagógica no Ensino Médio.</p>
-                <p>Navegue pelo menu inferior para explorar o quiz, ferramentas de foco e materiais de estudo.</p>
+        
+        <div id="tab-home" class="tab-content active">
+            <div class="gamify-banner">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <div>
+                        <span class="level-badge" id="user-level">Nível 1 - Aprendiz</span>
+                        <h2 style="font-size: 1.5rem; margin-top: 4px;" id="user-xp">0 XP</h2>
+                    </div>
+                    <span class="material-icons-round" style="font-size: 44px; opacity: 0.9;">emoji_events</span>
+                </div>
+                <div class="xp-bar-bg">
+                    <div class="xp-bar-fill" id="xp-bar"></div>
+                </div>
+                <p style="font-size: 0.75rem; margin-top: 6px; opacity: 0.9;">Complete quizzes, tarefas e pomodoros para avançar!</p>
             </div>
 
-            <div class="app-card">
-                <h2><span class="material-icons">import_contacts</span>Estudo Dirigido</h2>
-                <p>Acesse resumos e guias de estudo otimizados para leitura no celular.</p>
-                <button class="btn-app" onclick="showSection('materiais')">Ir para Biblioteca</button>
+            <div class="grid-2">
+                <div class="grid-item" onclick="switchTab('ia')">
+                    <span>🤖</span>
+                    <h4 style="font-size: 0.85rem;">IA Edu</h4>
+                </div>
+                <div class="grid-item" onclick="switchTab('quiz')">
+                    <span>💡</span>
+                    <h4 style="font-size: 0.85rem;">Quiz (+15 XP)</h4>
+                </div>
+                <div class="grid-item" onclick="switchTab('pomodoro')">
+                    <span>⏱️</span>
+                    <h4 style="font-size: 0.85rem;">Foco (+25 XP)</h4>
+                </div>
+                <div class="grid-item" onclick="switchTab('agenda')">
+                    <span>📅</span>
+                    <h4 style="font-size: 0.85rem;">Entregas (+20 XP)</h4>
+                </div>
             </div>
 
-            <div class="app-card">
-                <h2><span class="material-icons">timer</span>Gestão do Tempo</h2>
-                <p>Organize suas rotinas de estudos sem distrações do smartphone.</p>
-                <button class="btn-app" onclick="showSection('foco')">Iniciar Foco</button>
+            <div class="card" style="margin-top: 16px;">
+                <h3 style="font-size: 1rem; margin-bottom: 6px;">📌 Sobre o Projeto</h3>
+                <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.4;">O EduSmart utiliza tecnologia móvel e Inteligência Artificial para engajar estudantes do Ensino Médio em hábitos de estudo eficientes e gamificados.</p>
             </div>
-        </section>
+        </div>
 
-        <!-- Biblioteca Section -->
-        <section id="materiais" class="section">
-            <div class="app-card">
-                <h2><span class="material-icons">menu_book</span>Biblioteca Digital</h2>
-                <p>Selecione uma disciplina para ver os materiais:</p>
-                <button class="btn-app">Matemática</button>
-                <button class="btn-app">Português</button>
-                <button class="btn-app">Tecnologia</button>
-            </div>
-        </section>
+        <div id="tab-ia" class="tab-content">
+            <div class="card">
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+                    <span class="material-icons-round" style="color: var(--primary); font-size: 32px;">smart_toy</span>
+                    <div>
+                        <h2 style="font-size: 1.1rem;">IA Edu - Assistente Escolar</h2>
+                        <p style="font-size: 0.8rem; color: var(--text-muted);">Tire dúvidas de deveres, fórmulas ou redação!</p>
+                    </div>
+                </div>
 
-        <!-- Quiz Section -->
-        <section id="quiz" class="section">
-            <div class="app-card">
-                <h2><span class="material-icons">quiz</span>Quiz Interativo</h2>
-                <p>Em breve: Teste seus conhecimentos sobre o uso responsável da tecnologia!</p>
-            </div>
-        </section>
+                <div class="chat-box" id="chat-box">
+                    <div class="chat-msg ia">
+                        👋 Olá! Sou a <strong>IA Edu</strong>. Como posso ajudar nos seus estudos hoje? Faça uma pergunta sobre qualquer matéria ou peça um resumo!
+                    </div>
+                </div>
 
-        <!-- Foco / Pomodoro Section -->
-        <section id="foco" class="section">
-            <div class="app-card">
-                <h2><span class="material-icons">hourglass_empty</span>Cronômetro de Foco</h2>
-                <p>Use a técnica Pomodoro (25 min de estudo, 5 min de descanso) para manter a concentração.</p>
-                <button class="btn-app">Iniciar Pomodoro</button>
+                <div class="input-group">
+                    <input type="text" id="chat-input" placeholder="Pergunte algo sobre a matéria..." onkeypress="if(event.key==='Enter') sendChatMessage()">
+                    <button class="btn btn-primary" style="width: auto; padding: 0 16px;" onclick="sendChatMessage()">
+                        <span class="material-icons-round">send</span>
+                    </button>
+                </div>
             </div>
-        </section>
+        </div>
 
-        <!-- Apps Section -->
-        <section id="apps" class="section">
-            <div class="app-card">
-                <h2><span class="material-icons">install_mobile</span>Apps Recomendados</h2>
-                <p>Conheça aplicativos que ajudam nos estudos:</p>
-                <button class="btn-app">Ver Lista</button>
+        <div id="tab-quiz" class="tab-content">
+            <div class="card">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 10px;">
+                    <h2 style="font-size: 1.1rem;">Quiz de Conhecimentos</h2>
+                    <span style="font-size: 0.8rem; font-weight:700; color:var(--primary);" id="quiz-cat-tag">Geral</span>
+                </div>
+
+                <div id="quiz-body">
+                    <p id="quiz-question" style="font-weight: 600; font-size: 0.95rem; margin-bottom: 12px;">Carregando...</p>
+                    <div id="quiz-options"></div>
+                </div>
             </div>
-        </section>
+        </div>
+
+        <div id="tab-pomodoro" class="tab-content">
+            <div class="card" style="text-align: center;">
+                <h2 style="font-size: 1.1rem;">Cronômetro de Foco</h2>
+                <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 4px;">Estude 25 minutos sem distrações!</p>
+                
+                <div class="timer-circle">
+                    <span id="timer-display" style="font-size: 2.6rem; font-weight: 800; color: var(--primary);">25:00</span>
+                    <span style="font-size: 0.7rem; color: var(--text-muted); font-weight: 700;">SESSÃO DE FOCO</span>
+                </div>
+
+                <div style="display:flex; gap:8px;">
+                    <button id="btn-timer-start" class="btn btn-primary" onclick="toggleTimer()">Iniciar</button>
+                    <button class="btn btn-secondary" onclick="resetTimer()">Resetar</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="tab-agenda" class="tab-content">
+            <div class="card">
+                <h2 style="font-size: 1.1rem; margin-bottom: 6px;">Minha Agenda & Trabalhos</h2>
+                <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 12px;">Entregue suas atividades para ganhar +20 XP!</p>
+
+                <div class="input-group" style="margin-bottom: 12px;">
+                    <input type="text" id="task-input" placeholder="Nome do trabalho ou atividade...">
+                    <button class="btn btn-primary" style="width: auto;" onclick="addTask()">+</button>
+                </div>
+
+                <div id="task-list"></div>
+            </div>
+        </div>
+
+        <div id="tab-biblio" class="tab-content">
+            <div class="card">
+                <h2 style="font-size: 1.1rem; margin-bottom: 10px;">📚 Resumos & Conteúdos</h2>
+                <div style="display:flex; flex-direction:column; gap:10px;">
+                    <div style="padding:12px; background:var(--bg); border-radius:10px; border-left:4px solid var(--primary);">
+                        <h4 style="font-size:0.9rem;">📐 Matemática - Funções</h4>
+                        <p style="font-size:0.78rem; color:var(--text-muted);">Aprenda gráfico de 1º e 2º grau e fórmulas rápidas.</p>
+                        <button class="btn btn-secondary" style="margin-top:6px; padding:6px;" onclick="openLibModal('Matemática')">Ler Resumo</button>
+                    </div>
+                    <div style="padding:12px; background:var(--bg); border-radius:10px; border-left:4px solid var(--secondary);">
+                        <h4 style="font-size:0.9rem;">📝 Redação ENEM</h4>
+                        <p style="font-size:0.78rem; color:var(--text-muted);">Como estruturar a Proposta de Intervenção Nota 1000.</p>
+                        <button class="btn btn-secondary" style="margin-top:6px; padding:6px;" onclick="openLibModal('Redação')">Ler Resumo</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </main>
 
-    <!-- Menu de Navegação Inferior (Estilo App Nativo) -->
-    <nav id="bottom-nav">
-        <button class="nav-item active" onclick="showSection('inicio', this)">
-            <span class="material-icons">home</span>
-            Início
+    <nav>
+        <button class="nav-btn active" onclick="switchTab('home')">
+            <span class="material-icons-round">home</span>Início
         </button>
-        <button class="nav-item" onclick="showSection('materiais', this)">
-            <span class="material-icons">library_books</span>
-            Biblioteca
+        <button class="nav-btn" onclick="switchTab('ia')">
+            <span class="material-icons-round">smart_toy</span>IA Edu
         </button>
-        <button class="nav-item" onclick="showSection('quiz', this)">
-            <span class="material-icons">lightbulb</span>
-            Quiz
+        <button class="nav-btn" onclick="switchTab('quiz')">
+            <span class="material-icons-round">extension</span>Quiz
         </button>
-        <button class="nav-item" onclick="showSection('foco', this)">
-            <span class="material-icons">timer</span>
-            Foco
+        <button class="nav-btn" onclick="switchTab('pomodoro')">
+            <span class="material-icons-round">timer</span>Foco
         </button>
-        <button class="nav-item" onclick="showSection('apps', this)">
-            <span class="material-icons">dashboard</span>
-            Apps
+        <button class="nav-btn" onclick="switchTab('agenda')">
+            <span class="material-icons-round">event_note</span>Agenda
         </button>
     </nav>
 
     <script>
-        function showSection(sectionId, element) {
-            // Esconde todas as seções
-            const sections = document.querySelectorAll('.section');
-            sections.forEach(section => section.classList.remove('active'));
+        // --- NAVEGAÇÃO ENTRE ABAS ---
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
 
-            // Remove classe active de todos os itens do menu
-            const navItems = document.querySelectorAll('.nav-item');
-            navItems.forEach(item => item.classList.remove('active'));
+            const targetTab = document.getElementById(`tab-${tabName}`);
+            if(targetTab) targetTab.classList.add('active');
 
-            // Mostra a seção selecionada
-            const activeSection = document.getElementById(sectionId);
-            if (activeSection) {
-                activeSection.classList.add('active');
-            }
-
-            // Adiciona classe active ao item do menu clicado (se fornecido)
-            if (element) {
-                element.classList.add('active');
+            const idx = ['home', 'ia', 'quiz', 'pomodoro', 'agenda'].indexOf(tabName);
+            if(idx !== -1) {
+                document.querySelectorAll('.nav-btn')[idx].classList.add('active');
             }
         }
+
+        // --- MODO ESCURO ---
+        function toggleTheme() {
+            document.body.classList.toggle('dark-theme');
+            const icon = document.getElementById('theme-icon');
+            icon.textContent = document.body.classList.contains('dark-theme') ? 'light_mode' : 'dark_mode';
+        }
+
+        // --- SISTEMA DE GAMIFICAÇÃO & XP ---
+        let xp = 0;
+        let xpNextLevel = 50;
+
+        function addXP(amount) {
+            xp += amount;
+            document.getElementById('user-xp').textContent = `${xp} XP`;
+            
+            let levelText = "Nível 1 - Aprendiz";
+            if(xp >= 50 && xp < 100) { levelText = "Nível 2 - Estudante Focado"; xpNextLevel = 100; }
+            else if(xp >= 100 && xp < 180) { levelText = "Nível 3 - Mestre do Saber"; xpNextLevel = 180; }
+            else if(xp >= 180) { levelText = "Nível 4 - Gênio EduSmart"; xpNextLevel = 300; }
+            
+            document.getElementById('user-level').textContent = levelText;
+            
+            const pct = Math.min((xp / xpNextLevel) * 100, 100);
+            document.getElementById('xp-bar').style.width = `${pct}%`;
+        }
+
+        // --- BANCO DE DADOS DO QUIZ DINÂMICO ---
+        const quizDatabase = [
+            { cat: "Matemática", q: "Qual o resultado de (-b ± √Δ) / 2a?", opts: ["Fórmula de Bhaskara", "Teorema de Pitágoras", "Regra de Três"], correct: 0 },
+            { cat: "Tecnologia", q: "Qual a função principal da IA Edu no app?", opts: ["Jogar online", "Tirar dúvidas e auxiliar no aprendizado", "Gravar aulas em vídeo"], correct: 1 },
+            { cat: "Português", q: "O que caracteriza um texto dissertativo-argumentativo?", opts: ["Contar uma história de ficção", "Defender uma tese com argumentos sólidos", "Lista de instruções de uso"], correct: 1 },
+            { cat: "História", q: "Qual o foco principal ao estudar eventos históricos para exames?", opts: ["Apenas memorizar datas", "Compreender as causas socioeconômicas", "Decorar o nome dos reis"], correct: 1 },
+            { cat: "Ciências", q: "Qual a unidade básica da vida de todos os seres vivos?", opts: ["Átomo", "Célula", "Molécula"], correct: 1 },
+            { cat: "Tecnologia", q: "O que significa a sigla HTML na programação web?", opts: ["HyperText Markup Language", "High Tech Machine Learning", "Home Tool Main Line"], correct: 0 }
+        ];
+
+        let currentQuestions = [];
+        let qIndex = 0;
+
+        function initQuiz() {
+            // Embaralha as perguntas para sempre variar
+            currentQuestions = [...quizDatabase].sort(() => Math.random() - 0.5);
+            qIndex = 0;
+            renderQuestion();
+        }
+
+        function renderQuestion() {
+            if(qIndex >= currentQuestions.length) {
+                document.getElementById('quiz-body').innerHTML = `
+                    <div style="text-align:center; padding: 20px;">
+                        <h3>🎉 Parabéns! Você concluiu as perguntas!</h3>
+                        <p style="font-size:0.85rem; color:var(--text-muted); margin: 8px 0;">Você ganhou bastante XP nesta rodada.</p>
+                        <button class="btn btn-primary" onclick="initQuiz()">Reiniciar Quiz com Novas Ordens</button>
+                    </div>
+                `;
+                return;
+            }
+
+            const q = currentQuestions[qIndex];
+            document.getElementById('quiz-cat-tag').textContent = q.cat;
+            document.getElementById('quiz-question').textContent = `${qIndex + 1}. ${q.q}`;
+            
+            const optsDiv = document.getElementById('quiz-options');
+            optsDiv.innerHTML = '';
+
+            // Embaralha as opções também
+            q.opts.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = 'quiz-opt';
+                btn.textContent = opt;
+                btn.onclick = () => selectAnswer(idx, q.correct, btn);
+                optsDiv.appendChild(btn);
+            });
+        }
+
+        function selectAnswer(selectedIdx, correctIdx, btnEl) {
+            const btns = document.querySelectorAll('.quiz-opt');
+            btns.forEach(b => b.disabled = true);
+
+            if(selectedIdx === correctIdx) {
+                btnEl.classList.add('correct');
+                addXP(15);
+            } else {
+                btnEl.classList.add('wrong');
+                btns[correctIdx].classList.add('correct');
+            }
+
+            setTimeout(() => {
+                qIndex++;
+                renderQuestion();
+            }, 1200);
+        }
+
+        // --- IA EDU - CHAT REALISTA INTELIGENTE ---
+        function sendChatMessage() {
+            const input = document.getElementById('chat-input');
+            const text = input.value.trim();
+            if(!text) return;
+
+            const chatBox = document.getElementById('chat-box');
+            chatBox.innerHTML += `<div class="chat-msg user">${text}</div>`;
+            input.value = '';
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            setTimeout(() => {
+                let reply = "Essa é uma excelente pergunta! Para se aprofundar, veja também a nossa sessão de resumos ou use o nosso Pomodoro para manter o foco nos estudos.";
+                const q = text.toLowerCase();
+
+                if(q.includes('redação') || q.includes('enem') || q.includes('texto')) {
+                    reply = "📝 **Dica de Redação:** Divida em 4 parágrafos: 1 de Introdução (com a tese), 2 de Desenvolvimento (com argumentos e repertório) e 1 de Conclusão com a proposta de intervenção!";
+                } else if(q.includes('matematica') || q.includes('matemática') || q.includes('formula') || q.includes('bhaskara')) {
+                    reply = "📐 **Dica de Matemática:** A fórmula de Bhaskara é: x = (-b ± √Δ) / 2a, onde o delta é Δ = b² - 4ac. Fique atento aos sinais dos números!";
+                } else if(q.includes('historia') || q.includes('história') || q.includes('guerra')) {
+                    reply = "📜 **Dica de História:** Não tente apenas memorizar datas! Entenda o motivo de cada conflito e os impactos sociais e econômicos da época.";
+                } else if(q.includes('oi') || q.includes('olá') || q.includes('tudo bem')) {
+                    reply = "👋 Olá! Estou pronta para te ajudar a estudar. O que você gostaria de praticar ou aprender hoje?";
+                } else if(q.includes('resumo') || q.includes('ajuda')) {
+                    reply = "💡 Posso te ajudar com resumos rápidos! Me diga a matéria (ex: Matemática, Português, Ciências) que eu te trago as dicas principais.";
+                }
+
+                chatBox.innerHTML += `<div class="chat-msg ia">${reply}</div>`;
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }, 600);
+        }
+
+        // --- POMODORO TIMER ---
+        let timerSeconds = 25 * 60;
+        let timerInterval = null;
+        let isRunning = false;
+
+        function toggleTimer() {
+            const btn = document.getElementById('btn-timer-start');
+            if(isRunning) {
+                clearInterval(timerInterval);
+                isRunning = false;
+                btn.textContent = "Continuar";
+            } else {
+                isRunning = true;
+                btn.textContent = "Pausar";
+                timerInterval = setInterval(() => {
+                    if(timerSeconds > 0) {
+                        timerSeconds--;
+                        const m = Math.floor(timerSeconds / 60).toString().padStart(2, '0');
+                        const s = (timerSeconds % 60).toString().padStart(2, '0');
+                        document.getElementById('timer-display').textContent = `${m}:${s}`;
+                    } else {
+                        clearInterval(timerInterval);
+                        alert("🎉 Parabéns! Ciclo de foco concluído! Você ganhou +25 XP!");
+                        addXP(25);
+                        resetTimer();
+                    }
+                }, 1000);
+            }
+        }
+
+        function resetTimer() {
+            clearInterval(timerInterval);
+            isRunning = false;
+            timerSeconds = 25 * 60;
+            document.getElementById('timer-display').textContent = "25:00";
+            document.getElementById('btn-timer-start').textContent = "Iniciar";
+        }
+
+        // --- AGENDA & ENTREGAS DE TAREFAS ---
+        const tasks = [
+            { text: "Trabalho de Geografia - Biomas", done: false },
+            { text: "Exercícios de Álgebra", done: false }
+        ];
+
+        function renderTasks() {
+            const list = document.getElementById('task-list');
+            list.innerHTML = '';
+            tasks.forEach((t, i) => {
+                list.innerHTML += `
+                    <div style="display:flex; justify-content:space-between; align-items:center; padding:10px; background:var(--bg); border-radius:10px; margin-bottom:8px; font-size:0.85rem;">
+                        <span style="${t.done ? 'text-decoration:line-through; opacity:0.6;' : ''}">${t.text}</span>
+                        <div>
+                            ${!t.done ? `<button class="btn btn-success" style="padding:4px 8px; font-size:0.75rem; width:auto; display:inline-flex;" onclick="completeTask(${i})">Entregar (+20 XP)</button>` : '<span style="color:var(--secondary); font-weight:bold;">Entregue!</span>'}
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function addTask() {
+            const inp = document.getElementById('task-input');
+            if(inp.value.trim()) {
+                tasks.push({ text: inp.value.trim(), done: false });
+                inp.value = '';
+                renderTasks();
+            }
+        }
+
+        function completeTask(index) {
+            tasks[index].done = true;
+            addXP(20);
+            renderTasks();
+            alert("Atividade entregue com sucesso! Você ganhou +20 XP 🎉");
+        }
+
+        function openLibModal(subject) {
+            alert(`Acessando o resumo completo de ${subject}. Dica: Use a IA Edu para tirar dúvidas específicas desta matéria!`);
+        }
+
+        // INICIALIZAR
+        initQuiz();
+        renderTasks();
     </script>
 </body>
 </html>
