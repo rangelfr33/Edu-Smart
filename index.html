@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aula Conectada — Plataforma Educacional Mobile</title>
+    <title>EduSmart AI — Plataforma Educacional Inteligente</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,43 +11,30 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
 
     <style>
-        /* === VARIÁVEIS DE ESTILO E TEMA === */
         :root {
-            --bg-main: #f8fafc;
-            --bg-surface: #ffffff;
-            --bg-card: rgba(255, 255, 255, 0.85);
-            --text-primary: #0f172a;
-            --text-secondary: #475569;
-            --color-primary: #0284c7;
-            --color-primary-light: #38bdf8;
-            --color-primary-subtle: #e0f2fe;
-            --color-accent: #f59e0b;
-            --border-color: #e2e8f0;
-            --radius-md: 12px;
-            --radius-lg: 16px;
-            --shadow-md: 0 4px 20px -2px rgba(0, 0, 0, 0.08);
-            --font-main: 'Plus Jakarta Sans', sans-serif;
-        }
-
-        [data-theme="dark"] {
             --bg-main: #0f172a;
             --bg-surface: #1e293b;
-            --bg-card: rgba(30, 41, 59, 0.85);
+            --bg-card: rgba(30, 41, 59, 0.7);
             --text-primary: #f8fafc;
             --text-secondary: #94a3b8;
             --color-primary: #38bdf8;
-            --color-primary-light: #0284c7;
-            --color-primary-subtle: rgba(56, 189, 248, 0.15);
+            --color-primary-dark: #0284c7;
+            --color-primary-subtle: rgba(56, 189, 248, 0.12);
+            --color-ai: #a855f7;
+            --color-ai-subtle: rgba(168, 85, 247, 0.15);
+            --color-accent: #f59e0b;
             --border-color: #334155;
+            --radius-md: 12px;
+            --radius-lg: 18px;
+            --shadow-md: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+            --font-main: 'Plus Jakarta Sans', sans-serif;
         }
 
-        /* === RESET BÁSICO === */
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
             font-family: var(--font-main);
-            transition: background-color 0.3s, color 0.3s, border-color 0.3s;
         }
 
         body {
@@ -74,8 +61,8 @@
             top: 0;
             left: 0;
             width: 100%;
-            background: var(--bg-card);
-            backdrop-filter: blur(12px);
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(16px);
             border-bottom: 1px solid var(--border-color);
             z-index: 1000;
             padding: 1rem 0;
@@ -90,72 +77,101 @@
         .logo-brand {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             font-weight: 800;
-            font-size: 1.25rem;
-            color: var(--color-primary);
+            font-size: 1.3rem;
+            color: var(--text-primary);
         }
 
         .logo-icon {
-            background: var(--color-primary-subtle);
-            padding: 8px;
+            background: linear-gradient(135deg, var(--color-primary), var(--color-ai));
+            padding: 10px;
             border-radius: var(--radius-md);
             display: flex;
+            color: #fff;
         }
 
         .nav-menu {
             display: flex;
-            gap: 20px;
+            gap: 24px;
         }
 
         .nav-link {
             font-weight: 600;
             color: var(--text-secondary);
+            font-size: 0.95rem;
+            transition: 0.2s;
         }
 
         .nav-link:hover, .nav-link.active {
             color: var(--color-primary);
         }
 
-        /* === BOTÕES E COMPONENTES === */
+        /* === COMPONENTES E BOTÕES === */
         .btn {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            padding: 10px 20px;
+            padding: 12px 24px;
             border-radius: var(--radius-md);
             font-weight: 700;
             cursor: pointer;
             border: none;
+            transition: all 0.2s ease;
         }
 
         .btn-primary {
-            background-color: var(--color-primary);
+            background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
             color: #ffffff;
+            box-shadow: 0 4px 14px rgba(56, 189, 248, 0.3);
         }
 
-        .btn-secondary {
-            background-color: var(--color-primary-subtle);
-            color: var(--color-primary);
+        .btn-ai {
+            background: linear-gradient(135deg, var(--color-ai), #7e22ce);
+            color: #ffffff;
+            box-shadow: 0 4px 14px rgba(168, 85, 247, 0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.1);
         }
 
         .badge {
-            display: inline-block;
-            padding: 6px 12px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
             border-radius: 20px;
             font-size: 0.8rem;
             font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge-ai {
+            background-color: var(--color-ai-subtle);
+            color: var(--color-ai);
+            border: 1px solid rgba(168, 85, 247, 0.3);
         }
 
         .badge-primary {
             background-color: var(--color-primary-subtle);
             color: var(--color-primary);
+            border: 1px solid rgba(56, 189, 248, 0.3);
         }
 
-        /* === HERO SECTION === */
-        .hero {
-            padding: 160px 0 100px 0;
-            background: linear-gradient(180deg, var(--color-primary-subtle) 0%, var(--bg-main) 100%);
+        .card {
+            background: var(--bg-surface);
+            padding: 28px;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-md);
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            border-color: rgba(56, 189, 248, 0.4);
         }
 
         .grid-2 {
@@ -165,80 +181,143 @@
             align-items: center;
         }
 
-        @media (max-width: 768px) {
-            .grid-2 { grid-template-columns: 1fr; }
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        @media (max-width: 900px) {
+            .grid-2, .grid-3 { grid-template-columns: 1fr; }
             .nav-menu { display: none; }
         }
 
-        .card {
+        /* === SEÇÃO HERO === */
+        .hero {
+            padding: 170px 0 100px 0;
+            background: radial-gradient(circle at top right, rgba(168, 85, 247, 0.15), transparent 40%),
+                        radial-gradient(circle at top left, rgba(56, 189, 248, 0.15), transparent 40%);
+        }
+
+        .chat-preview {
             background: var(--bg-surface);
-            padding: 24px;
-            border-radius: var(--radius-lg);
             border: 1px solid var(--border-color);
-            box-shadow: var(--shadow-md);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .chat-msg {
+            padding: 12px 16px;
+            border-radius: var(--radius-md);
+            font-size: 0.9rem;
+            max-width: 85%;
+        }
+
+        .chat-user {
+            background: var(--color-primary-subtle);
+            color: var(--color-primary);
+            align-self: flex-end;
+            border-bottom-right-radius: 2px;
+        }
+
+        .chat-ai {
+            background: var(--color-ai-subtle);
+            color: #f3e8ff;
+            align-self: flex-start;
+            border-bottom-left-radius: 2px;
+            border: 1px solid rgba(168, 85, 247, 0.2);
         }
 
         .footer {
-            padding: 30px 0;
+            padding: 40px 0;
             border-top: 1px solid var(--border-color);
             text-align: center;
             color: var(--text-secondary);
+            font-size: 0.9rem;
         }
     </style>
 </head>
 <body>
 
+    <!-- NAVBAR -->
     <header class="navbar">
         <div class="container navbar-container">
             <a href="#" class="logo-brand">
                 <div class="logo-icon">
-                    <span class="material-icons-round">smartphone</span>
+                    <span class="material-icons-round">psychology</span>
                 </div>
                 <div>
-                    <span>Aula Conectada</span>
+                    <span>EduSmart <strong style="color: var(--color-ai);">AI</strong></span>
                     <small style="display:block; font-size:0.65rem; color:var(--color-primary); font-weight:700;">PROJETO DE TCC</small>
                 </div>
             </a>
 
             <nav class="nav-menu">
-                <a href="#" class="nav-link active">Início</a>
-                <a href="#sobre" class="nav-link">O Projeto & TCC</a>
-                <a href="#recursos" class="nav-link">Recursos</a>
+                <a href="#inicio" class="nav-link active">Início</a>
+                <a href="#recursos" class="nav-link">Recursos IA</a>
+                <a href="#arquitetura" class="nav-link">Arquitetura Técnica</a>
+                <a href="#sobre" class="nav-link">Sobre o TCC</a>
             </nav>
 
-            <div style="display: flex; gap: 10px; align-items: center;">
-                <button class="btn btn-secondary" id="btn-theme" title="Alternar Tema">
-                    <span class="material-icons-round" id="theme-icon">dark_mode</span>
-                </button>
+            <div>
+                <a href="#demo" class="btn btn-ai">
+                    <span class="material-icons-round">auto_awesome</span> Testar IA
+                </a>
             </div>
         </div>
     </header>
 
-    <section class="hero">
+    <!-- HERO SECTION -->
+    <section id="inicio" class="hero">
         <div class="container">
             <div class="grid-2">
                 <div>
-                    <span class="badge badge-primary" style="margin-bottom: 12px;">Metodologias Ativas & Tecnologias Móveis</span>
-                    <h1 style="font-size: 2.5rem; margin-bottom: 16px; line-height: 1.2;">O Smartphone como Aliado da Aprendizagem no Ensino Médio</h1>
-                    <p style="color: var(--text-secondary); font-size: 1.1rem; margin-bottom: 24px;">
-                        Transformamos a distração digital em engajamento pedagógico. Uma plataforma estruturada para conectar estudantes e tecnologias educacionais de forma consciente e eficiente.
+                    <span class="badge badge-ai" style="margin-bottom: 16px;">
+                        <span class="material-icons-round" style="font-size: 16px;">auto_awesome</span> IA Generativa + m-Learning
+                    </span>
+                    <h1 style="font-size: 2.8rem; margin-bottom: 20px; line-height: 1.2;">
+                        O Smartphone Potencializado pela Inteligência Artificial na Educação
+                    </h1>
+                    <p style="color: var(--text-secondary); font-size: 1.1rem; margin-bottom: 28px;">
+                        Uma Plataforma Web Responsiva (PWA) de alta complexidade que transforma o dispositivo móvel em um ecossistema de aprendizagem adaptativa e interativa no Ensino Médio.
                     </p>
-                    <div style="display: flex; gap: 12px;">
-                        <a href="#sobre" class="btn btn-primary">
-                            Explorar Projeto <span class="material-icons-round">arrow_forward</span>
+                    <div style="display: flex; gap: 14px; flex-wrap: wrap;">
+                        <a href="#demo" class="btn btn-primary">
+                            Explorar Plataforma <span class="material-icons-round">arrow_forward</span>
+                        </a>
+                        <a href="#arquitetura" class="btn btn-ai" style="background: transparent; border: 1px solid var(--color-ai);">
+                            Ver Arquitetura
                         </a>
                     </div>
                 </div>
 
+                <!-- PREVIEW DO CHAT SOCRÁTICO COM IA -->
                 <div>
-                    <div class="card" style="text-align: center; border: 2px solid var(--color-primary);">
-                        <span class="badge badge-primary" style="margin-bottom: 12px;">m-Learning</span>
-                        <div style="padding: 20px;">
-                            <span class="material-icons-round" style="font-size: 64px; color: var(--color-primary);">devices</span>
-                            <h3 style="margin-top: 8px;">Aprendizagem Conectada</h3>
-                            <p style="font-size: 0.9rem; color: var(--text-secondary); margin-top: 6px;">
-                                Acesso a conteúdos educativos diretamente pelo dispositivo móvel para a rede pública de ensino.
-                            </p>
+                    <div class="card" style="border-color: rgba(168, 85, 247, 0.4);">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <span class="material-icons-round" style="color: var(--color-ai);">smart_toy</span>
+                                <strong>Tutor Socrático IA</strong>
+                            </div>
+                            <span class="badge badge-primary" style="font-size: 0.7rem;">Online</span>
+                        </div>
+
+                        <div class="chat-preview">
+                            <div class="chat-msg chat-user">
+                                Como funciona o comando DML em Banco de Dados?
+                            </div>
+                            <div class="chat-msg chat-ai">
+                                🤖 <strong>EduSmart IA:</strong> Boa pergunta! Em vez de te dar a resposta direta: você lembra qual comando usamos para <em>inserir novos dados</em> em uma tabela?
+                            </div>
+                            <div class="chat-msg chat-user">
+                                É o INSERT INTO?
+                            </div>
+                            <div class="chat-msg chat-ai">
+                                🤖 <strong>EduSmart IA:</strong> Exato! O <code>INSERT</code> faz parte da DML (Data Manipulation Language). Quais outros comandos você acha que alteram os dados armazenados?
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -246,48 +325,102 @@
         </div>
     </section>
 
-    <section id="sobre" style="padding: 80px 0;">
+    <!-- RECURSOS DA INTELIGÊNCIA ARTIFICIAL -->
+    <section id="recursos" style="padding: 90px 0; background: rgba(30, 41, 59, 0.3);">
         <div class="container">
-            <h2 style="text-align: center; margin-bottom: 40px;">Sobre o Projeto de TCC</h2>
-            <div class="grid-2">
+            <div style="text-align: center; max-width: 700px; margin: 0 auto 50px auto;">
+                <span class="badge badge-ai" style="margin-bottom: 12px;">Módulos Inteligentes</span>
+                <h2>Funcionalidades de Alta Complexidade</h2>
+                <p style="color: var(--text-secondary); margin-top: 10px;">
+                    Recursos desenhados para resolver desafios reais de aprendizagem e auxílio aos professores.
+                </p>
+            </div>
+
+            <div class="grid-3">
                 <div class="card">
-                    <h3>Autoria do Projeto</h3>
-                    <p style="color: var(--text-secondary); margin-top: 10px;">
-                        Desenvolvido por estudantes do Terceirão do curso técnico em Informática como proposta de intervenção pedagógica digital.
+                    <span class="material-icons-round" style="font-size: 40px; color: var(--color-ai); margin-bottom: 16px;">psychology</span>
+                    <h3>Tutor Virtual Adaptativo</h3>
+                    <p style="color: var(--text-secondary); margin-top: 10px; font-size: 0.95rem;">
+                        Assistente 24/7 treinado para aplicar o método socrático, guiando o aluno na resolução das suas dúvidas sem entregar a resposta de imediato.
                     </p>
                 </div>
+
                 <div class="card">
-                    <h3>Objetivo</h3>
-                    <p style="color: var(--text-secondary); margin-top: 10px;">
-                        Promover o uso pedagógico dos smartphones nas salas de aula através do conceito de Mobile Learning (m-Learning).
+                    <span class="material-icons-round" style="font-size: 40px; color: var(--color-primary); margin-bottom: 16px;">quiz</span>
+                    <h3>Gerador de Quizzes via IA</h3>
+                    <p style="color: var(--text-secondary); margin-top: 10px; font-size: 0.95rem;">
+                        Os professores fazem upload do resumo das aulas e a IA gera automaticamente simulados, alternativas e gabaritos comentados.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <span class="material-icons-round" style="font-size: 40px; color: var(--color-accent); margin-bottom: 16px;">analytics</span>
+                    <h3>Análise Preditiva</h3>
+                    <p style="color: var(--text-secondary); margin-top: 10px; font-size: 0.95rem;">
+                        O sistema analisa os pontos fracos do estudante e recomenda revisões personalizadas antes das provas escolares.
                     </p>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- ARQUITETURA TÉCNICA DO PROJETO -->
+    <section id="arquitetura" style="padding: 90px 0;">
+        <div class="container">
+            <div style="text-align: center; max-width: 700px; margin: 0 auto 50px auto;">
+                <span class="badge badge-primary" style="margin-bottom: 12px;">Especificação Técnica</span>
+                <h2>Arquitetura do Sistema</h2>
+                <p style="color: var(--text-secondary); margin-top: 10px;">
+                    A estrutura de desenvolvimento que fundamenta o TCC do Curso Técnico de Informática.
+                </p>
+            </div>
+
+            <div class="grid-2">
+                <div class="card">
+                    <h3 style="display: flex; align-items: center; gap: 10px; margin-bottom: 16px;">
+                        <span class="material-icons-round" style="color: var(--color-primary);">code</span> Frontend & PWA
+                    </h3>
+                    <ul style="color: var(--text-secondary); list-style: none; display: flex; flex-direction: column; gap: 10px;">
+                        <li>✅ <strong>HTML5 Semântico & CSS Variables:</strong> Interface fluida, responsiva e suporte nativo a Dark Mode.</li>
+                        <li>✅ <strong>JavaScript ES6+:</strong> Manipulação assíncrona da DOM e consumo de APIs via Fetch/Axios.</li>
+                        <li>✅ <strong>Progressive Web App (PWA):</strong> Funciona como aplicativo nativo no smartphone sem instalação pela loja.</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3 style="display: flex; align-items: center; gap: 10px; margin-bottom: 16px;">
+                        <span class="material-icons-round" style="color: var(--color-ai);">storage</span> Backend & API de IA
+                    </h3>
+                    <ul style="color: var(--text-secondary); list-style: none; display: flex; flex-direction: column; gap: 10px;">
+                        <li>✅ <strong>Node.js / Python REST API:</strong> Gerenciamento de rotas, autenticação e regras de negócio.</li>
+                        <li>✅ <strong>Integração com LLM (Gemini API):</strong> Processamento de Linguagem Natural com engenharia de prompts pedagógicos.</li>
+                        <li>✅ <strong>Banco de Dados Relacional/NoSQL:</strong> Armazenamento de turmas, progresso do aluno e métricas do Pomodoro.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SOBRE O TCC -->
+    <section id="sobre" style="padding: 80px 0; background: rgba(30, 41, 59, 0.3);">
+        <div class="container text-center">
+            <h2 style="margin-bottom: 20px;">Sobre o Trabalho de Conclusão de Curso</h2>
+            <p style="color: var(--text-secondary); max-width: 800px; margin: 0 auto 30px auto; font-size: 1.05rem;">
+                O <strong>EduSmart AI</strong> foi idealizado como uma proposta de intervenção tecnológica pedagógica para o Ensino Médio, demonstrando como a união entre os dispositivos móveis e a Inteligência Artificial pode potencializar a rotina de estudos e auxiliar professores no acompanhamento do aprendizado.
+            </p>
+            <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
+                <span class="badge badge-primary">Terceirão 2026</span>
+                <span class="badge badge-ai">Técnico em Informática</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
     <footer class="footer">
         <div class="container">
-            <p>&copy; 2026 <strong>Aula Conectada</strong> — Projeto de TCC de Informática.</p>
+            <p>&copy; 2026 <strong>EduSmart AI</strong> — Projeto de TCC de Informática.</p>
         </div>
     </footer>
 
-    <script>
-        /* === SCRIPT PARA MANIPULAÇÃO DE TEMA (CLARO/ESCURO) === */
-        const btnTheme = document.getElementById('btn-theme');
-        const themeIcon = document.getElementById('theme-icon');
-
-        btnTheme.addEventListener('click', function() {
-            const currentTheme = document.body.getAttribute('data-theme');
-            
-            if (currentTheme === 'dark') {
-                document.body.removeAttribute('data-theme');
-                themeIcon.textContent = 'dark_mode';
-            } else {
-                document.body.setAttribute('data-theme', 'dark');
-                themeIcon.textContent = 'light_mode';
-            }
-        });
-    </script>
 </body>
 </html>
