@@ -2,704 +2,373 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>EduSmart - Plataforma Pedagógica & IA</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduSmart 360° — Plataforma Educacional</title>
     
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            --primary: #4F46E5;
-            --primary-light: #818CF8;
-            --primary-dark: #3730A3;
-            --secondary: #10B981;
-            --accent: #F59E0B;
-            --danger: #EF4444;
-            
-            --bg: #F3F4F6;
-            --surface: #FFFFFF;
-            --text-main: #111827;
-            --text-muted: #6B7280;
-            --border: #E5E7EB;
-            
-            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            --radius: 16px;
+            --bg-main: #f8fafc;
+            --bg-surface: #ffffff;
+            --bg-sidebar: #0f172a;
+            --text-primary: #0f172a;
+            --text-secondary: #64748b;
+            --text-on-dark: #f8fafc;
+            --color-primary: #0284c7;
+            --color-primary-light: #e0f2fe;
+            --color-ai: #a855f7;
+            --color-ai-light: #f3e8ff;
+            --border-color: #e2e8f0;
+            --radius-md: 10px;
+            --radius-lg: 16px;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.05);
+            --font-main: 'Plus Jakarta Sans', sans-serif;
         }
 
-        body.dark-theme {
-            --bg: #0F172A;
-            --surface: #1E293B;
-            --text-main: #F8FAFC;
-            --text-muted: #94A3B8;
-            --border: #334155;
+        [data-theme="dark"] {
+            --bg-main: #0b0f19;
+            --bg-surface: #1e293b;
+            --bg-sidebar: #020617;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --border-color: #334155;
+            --color-primary-light: rgba(2, 132, 199, 0.2);
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Inter', -apple-system, sans-serif;
-            -webkit-tap-highlight-color: transparent;
-            user-select: none;
+            font-family: var(--font-main);
         }
 
         body {
-            background-color: var(--bg);
-            color: var(--text-main);
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            transition: background-color 0.3s, color 0.3s;
-        }
-
-        /* HEADER */
-        header {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: white;
-            padding: 16px 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            box-shadow: var(--shadow-md);
-            z-index: 10;
-        }
-
-        .header-title {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .header-title .logo-icon {
-            background: rgba(255, 255, 255, 0.2);
-            padding: 8px;
-            border-radius: 12px;
+            background-color: var(--bg-main);
+            color: var(--text-primary);
+            min-height: 100vh;
             display: flex;
         }
 
-        .header-title h1 {
-            font-size: 1.2rem;
-            font-weight: 800;
-        }
-
-        .theme-toggle {
-            background: rgba(255, 255, 255, 0.2);
-            border: none;
-            color: white;
-            padding: 8px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-        }
-
-        /* MAIN CONTENT */
-        main {
-            flex: 1;
-            overflow-y: auto;
-            padding: 16px;
-            padding-bottom: 90px;
-        }
-
-        .tab-content {
-            display: none;
-            animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(12px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* CARDS & GAMIFICATION */
-        .card {
-            background: var(--surface);
-            border-radius: var(--radius);
-            padding: 18px;
-            margin-bottom: 16px;
-            box-shadow: var(--shadow-sm);
-            border: 1px solid var(--border);
-        }
-
-        .gamify-banner {
-            background: linear-gradient(135deg, #6366F1, #8B5CF6);
-            color: white;
-            border-radius: var(--radius);
-            padding: 20px;
-            margin-bottom: 16px;
-            box-shadow: var(--shadow-md);
-        }
-
-        .level-badge {
-            background: rgba(255, 255, 255, 0.25);
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            text-transform: uppercase;
-        }
-
-        .xp-bar-bg {
-            background: rgba(255, 255, 255, 0.2);
-            height: 10px;
-            border-radius: 10px;
-            margin-top: 10px;
-            overflow: hidden;
-        }
-
-        .xp-bar-fill {
-            background: var(--secondary);
-            height: 100%;
-            width: 0%;
-            transition: width 0.4s ease;
-        }
-
-        /* CHAT IA EDU */
-        .chat-box {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            height: 320px;
-            overflow-y: auto;
-            margin-bottom: 12px;
-            padding-right: 4px;
-        }
-
-        .chat-msg {
-            padding: 12px 16px;
-            border-radius: 14px;
-            font-size: 0.88rem;
-            max-width: 85%;
-            line-height: 1.45;
-        }
-
-        .chat-msg.ia {
-            background: var(--bg);
-            border: 1px solid var(--border);
-            align-self: flex-start;
-            border-bottom-left-radius: 2px;
-        }
-
-        .chat-msg.user {
-            background: var(--primary);
-            color: white;
-            align-self: flex-end;
-            border-bottom-right-radius: 2px;
-        }
-
-        /* INPUTS & BUTTONS */
-        .input-group {
-            display: flex;
-            gap: 8px;
-        }
-
-        .input-group input, .input-group select {
-            flex: 1;
-            padding: 12px;
-            border-radius: 12px;
-            border: 1px solid var(--border);
-            background: var(--surface);
-            color: var(--text-main);
-            outline: none;
-            font-size: 0.9rem;
-        }
-
-        .btn {
-            width: 100%;
-            padding: 12px 16px;
-            border-radius: 12px;
-            border: none;
-            font-weight: 600;
-            font-size: 0.9rem;
-            cursor: pointer;
+        /* === TELA DE SELEÇÃO / LOGIN === */
+        .portal-selection {
+            position: fixed;
+            inset: 0;
+            background: var(--bg-main);
+            z-index: 2000;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
-            transition: 0.2s;
+            padding: 20px;
         }
 
-        .btn:active { transform: scale(0.97); }
-        .btn-primary { background: var(--primary); color: white; }
-        .btn-secondary { background: var(--bg); color: var(--text-main); border: 1px solid var(--border); }
-        .btn-success { background: var(--secondary); color: white; }
+        .portal-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            box-shadow: var(--shadow-md);
+        }
 
-        /* GRID COMPONENTS */
-        .grid-2 {
+        .role-options {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 12px;
+            gap: 16px;
+            margin-top: 24px;
         }
 
-        .grid-item {
-            background: var(--surface);
-            padding: 16px;
-            border-radius: var(--radius);
-            text-align: center;
-            border: 1px solid var(--border);
+        .btn-role {
+            padding: 20px;
+            border-radius: var(--radius-md);
+            border: 2px solid var(--border-color);
+            background: var(--bg-main);
+            color: var(--text-primary);
             cursor: pointer;
+            font-weight: 700;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.2s;
         }
 
-        .grid-item span { font-size: 1.8rem; display: block; margin-bottom: 4px; }
+        .btn-role:hover {
+            border-color: var(--color-primary);
+            background: var(--color-primary-light);
+            color: var(--color-primary);
+        }
 
-        /* QUIZ STYLES */
-        .quiz-opt {
+        /* === ESTRUTURA DO DASHBOARD === */
+        .app-container {
+            display: flex;
             width: 100%;
-            padding: 14px;
-            border-radius: 12px;
-            border: 1.5px solid var(--border);
-            background: var(--surface);
-            color: var(--text-main);
-            margin-top: 8px;
-            text-align: left;
-            font-weight: 500;
-            cursor: pointer;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 260px;
+            background: var(--bg-sidebar);
+            color: var(--text-on-dark);
+            padding: 24px 16px;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .brand {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: #38bdf8;
+            margin-bottom: 20px;
+        }
+
+        .user-profile {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 12px;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .nav-section-title {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: #64748b;
+            font-weight: 700;
+            margin: 16px 0 8px 12px;
+        }
+
+        .nav-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .nav-item a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 12px;
+            color: #94a3b8;
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: var(--radius-md);
+            font-size: 0.9rem;
             transition: 0.2s;
         }
 
-        .quiz-opt.correct { background: #D1FAE5; border-color: var(--secondary); color: #065F46; }
-        .quiz-opt.wrong { background: #FEE2E2; border-color: var(--danger); color: #991B1B; }
+        .nav-item.active a, .nav-item a:hover {
+            background: var(--color-primary);
+            color: #ffffff;
+        }
 
-        /* TIMER STYLES */
-        .timer-circle {
-            width: 170px;
-            height: 170px;
-            border-radius: 50%;
-            border: 6px solid var(--primary-light);
-            margin: 16px auto;
+        .main-content {
+            margin-left: 260px;
+            flex: 1;
+            padding: 32px;
+        }
+
+        .top-header {
             display: flex;
-            flex-direction: column;
+            justify-content: space-between;
             align-items: center;
-            justify-content: center;
-            background: var(--surface);
+            margin-bottom: 32px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border-color);
         }
 
-        /* NAVIGATION BAR */
-        nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: var(--surface);
-            display: flex;
-            justify-content: space-around;
-            padding: 8px 0 10px 0;
-            border-top: 1px solid var(--border);
-            z-index: 100;
+        .grid-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
         }
 
-        .nav-btn {
-            background: none;
-            border: none;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            color: var(--text-muted);
-            font-size: 0.65rem;
-            font-weight: 600;
-            gap: 2px;
-            cursor: pointer;
-            width: 18%;
+        .card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            box-shadow: var(--shadow-sm);
         }
 
-        .nav-btn span { font-size: 22px; }
-        .nav-btn.active { color: var(--primary); }
+        .hidden { display: none !important; }
+
+        @media (max-width: 768px) {
+            .sidebar { width: 70px; padding: 12px 8px; }
+            .sidebar .brand, .sidebar .user-info, .sidebar .nav-section-title, .sidebar span:not(.material-icons-round) { display: none; }
+            .main-content { margin-left: 70px; padding: 16px; }
+        }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="header-title">
-            <div class="logo-icon">
-                <span class="material-icons-round">smart_toy</span>
-            </div>
-            <div>
-                <h1>EduSmart IA</h1>
+    <!-- SELEÇÃO DE AMBIENTE -->
+    <div id="portal-selection" class="portal-selection">
+        <div class="portal-card">
+            <h2>EduSmart 360°</h2>
+            <p style="color: var(--text-secondary); margin-top: 8px;">Como você vai utilizar o EduSmart?</p>
+            <div class="role-options">
+                <button class="btn-role" onclick="selectEnvironment('aluno')">
+                    <span class="material-icons-round" style="font-size: 36px;">school</span>
+                    ALUNO
+                </button>
+                <button class="btn-role" onclick="selectEnvironment('professor')">
+                    <span class="material-icons-round" style="font-size: 36px;">record_voice_over</span>
+                    PROFESSOR
+                </button>
             </div>
         </div>
-        <button class="theme-toggle" onclick="toggleTheme()">
-            <span class="material-icons-round" id="theme-icon">dark_mode</span>
-        </button>
-    </header>
+    </div>
 
-    <main>
+    <!-- PAINEL PRINCIPAL -->
+    <div class="app-container">
         
-        <div id="tab-home" class="tab-content active">
-            <div class="gamify-banner">
-                <div style="display:flex; justify-content:space-between; align-items:center;">
-                    <div>
-                        <span class="level-badge" id="user-level">Nível 1 - Aprendiz</span>
-                        <h2 style="font-size: 1.5rem; margin-top: 4px;" id="user-xp">0 XP</h2>
-                    </div>
-                    <span class="material-icons-round" style="font-size: 44px; opacity: 0.9;">emoji_events</span>
-                </div>
-                <div class="xp-bar-bg">
-                    <div class="xp-bar-fill" id="xp-bar"></div>
-                </div>
-                <p style="font-size: 0.75rem; margin-top: 6px; opacity: 0.9;">Complete quizzes, tarefas e pomodoros para avançar!</p>
-            </div>
-
-            <div class="grid-2">
-                <div class="grid-item" onclick="switchTab('ia')">
-                    <span>🤖</span>
-                    <h4 style="font-size: 0.85rem;">IA Edu</h4>
-                </div>
-                <div class="grid-item" onclick="switchTab('quiz')">
-                    <span>💡</span>
-                    <h4 style="font-size: 0.85rem;">Quiz (+15 XP)</h4>
-                </div>
-                <div class="grid-item" onclick="switchTab('pomodoro')">
-                    <span>⏱️</span>
-                    <h4 style="font-size: 0.85rem;">Foco (+25 XP)</h4>
-                </div>
-                <div class="grid-item" onclick="switchTab('agenda')">
-                    <span>📅</span>
-                    <h4 style="font-size: 0.85rem;">Entregas (+20 XP)</h4>
+        <!-- MENU LATERAL -->
+        <aside class="sidebar">
+            <div class="brand">EduSmart 360°</div>
+            
+            <div class="user-profile">
+                <span class="material-icons-round" style="font-size: 32px; color: #38bdf8;">account_circle</span>
+                <div class="user-info">
+                    <strong id="user-name" style="display: block; font-size: 0.9rem;">Maria Elisa</strong>
+                    <small id="user-role" style="color: #94a3b8;">Aluno</small>
                 </div>
             </div>
 
-            <div class="card" style="margin-top: 16px;">
-                <h3 style="font-size: 1rem; margin-bottom: 6px;">📌 Sobre o Projeto</h3>
-                <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.4;">O EduSmart utiliza tecnologia móvel e Inteligência Artificial para engajar estudantes do Ensino Médio em hábitos de estudo eficientes e gamificados.</p>
+            <!-- MENU ALUNO -->
+            <div id="menu-aluno">
+                <div class="nav-section-title">Menu</div>
+                <ul class="nav-list">
+                    <li class="nav-item active"><a href="#"><span class="material-icons-round">home</span> <span>Início</span></a></li>
+                    <li class="nav-item"><a href="#"><span class="material-icons-round" style="color: #a855f7;">auto_awesome</span> <span>IA Edu</span></a></li>
+                    <li class="nav-item"><a href="#"><span class="material-icons-round">quiz</span> <span>Quiz</span></a></li>
+                    <li class="nav-item"><a href="#"><span class="material-icons-round">timer</span> <span>Foco</span></a></li>
+                    <li class="nav-item"><a href="#"><span class="material-icons-round">menu_book</span> <span>Resumos</span></a></li>
+                    <li class="nav-item"><a href="#"><span class="material-icons-round">calendar_today</span> <span>Agenda</span></a></li>
+                    <li class="nav-item"><a href="#"><span class="material-icons-round">bar_chart</span> <span>Meu desempenho</span></a></li>
+                    <li class="nav-item"><a href="#"><span class="material-icons-round">inventory_2</span> <span>Entregas</span></a></li>
+                </ul>
             </div>
-        </div>
 
-        <div id="tab-ia" class="tab-content">
-            <div class="card">
-                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
-                    <span class="material-icons-round" style="color: var(--primary); font-size: 32px;">smart_toy</span>
-                    <div>
-                        <h2 style="font-size: 1.1rem;">IA Edu - Assistente Escolar</h2>
-                        <p style="font-size: 0.8rem; color: var(--text-muted);">Tire dúvidas de deveres, fórmulas ou redação!</p>
-                    </div>
-                </div>
-
-                <div class="chat-box" id="chat-box">
-                    <div class="chat-msg ia">
-                        👋 Olá! Sou a <strong>IA Edu</strong>. Como posso ajudar nos seus estudos hoje? Faça uma pergunta sobre qualquer matéria ou peça um resumo!
-                    </div>
-                </div>
-
-                <div class="input-group">
-                    <input type="text" id="chat-input" placeholder="Pergunte algo sobre a matéria..." onkeypress="if(event.key==='Enter') sendChatMessage()">
-                    <button class="btn btn-primary" style="width: auto; padding: 0 16px;" onclick="sendChatMessage()">
-                        <span class="material-icons-round">send</span>
-                    </button>
-                </div>
+            <!-- MENU PROFESSOR -->
+            <div id="menu-professor" class="hidden">
+                <div class="nav-section-title">Menu Gestão</div>
+                <ul class="nav-list">
+                    <li class="nav-item active"><a href="#"><span class="material-icons-round">groups</span> <span>Turmas</span></a></li>
+                    <li class="nav-item"><a href="#"><span class="material-icons-round">add_task</span> <span>Criar atividades</span></a></li>
+                    <li class="nav-item"><a href="#"><span class="material-icons-round">post_add</span> <span>Criar quizzes</span></a></li>
+                    <li class="nav-item"><a href="#"><span class="material-icons-round">insights</span> <span>Acompanhar alunos</span></a></li>
+                    <li class="nav-item"><a href="#"><span class="material-icons-round">analytics</span> <span>Resultados da turma</span></a></li>
+                    <li class="nav-item"><a href="#"><span class="material-icons-round">folder_open</span> <span>Materiais</span></a></li>
+                </ul>
             </div>
-        </div>
 
-        <div id="tab-quiz" class="tab-content">
-            <div class="card">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 10px;">
-                    <h2 style="font-size: 1.1rem;">Quiz de Conhecimentos</h2>
-                    <span style="font-size: 0.8rem; font-weight:700; color:var(--primary);" id="quiz-cat-tag">Geral</span>
+            <!-- CONTA -->
+            <div class="nav-section-title">Conta</div>
+            <ul class="nav-list">
+                <li class="nav-item"><a href="#"><span class="material-icons-round">settings</span> <span>Minha conta</span></a></li>
+                <li class="nav-item"><a href="#"><span class="material-icons-round">notifications</span> <span>Notificações</span></a></li>
+                <li class="nav-item"><a href="#" onclick="resetPortal()"><span class="material-icons-round">logout</span> <span>Sair</span></a></li>
+            </ul>
+        </aside>
+
+        <!-- CONTEÚDO DA PÁGINA -->
+        <main class="main-content">
+            <header class="top-header">
+                <div>
+                    <span id="env-badge" style="font-size: 0.8rem; font-weight: 700; color: var(--color-primary); text-transform: uppercase;">Área do Aluno</span>
+                    <h1 id="welcome-title">Olá, Maria Elisa!</h1>
                 </div>
+                <button onclick="toggleTheme()" style="background: transparent; border: 1px solid var(--border-color); padding: 8px 12px; border-radius: var(--radius-md); cursor: pointer; color: var(--text-primary); display: flex; gap: 8px; align-items: center;">
+                    <span class="material-icons-round">dark_mode</span> Tema
+                </button>
+            </header>
 
-                <div id="quiz-body">
-                    <p id="quiz-question" style="font-weight: 600; font-size: 0.95rem; margin-bottom: 12px;">Carregando...</p>
-                    <div id="quiz-options"></div>
+            <!-- CONTEÚDO ALUNO -->
+            <div id="content-aluno" class="grid-cards">
+                <div class="card">
+                    <h3>🤖 Tutor IA</h3>
+                    <p style="color: var(--text-secondary); margin-top: 8px;">Tire dúvidas sobre suas matérias agora.</p>
                 </div>
-            </div>
-        </div>
-
-        <div id="tab-pomodoro" class="tab-content">
-            <div class="card" style="text-align: center;">
-                <h2 style="font-size: 1.1rem;">Cronômetro de Foco</h2>
-                <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 4px;">Estude 25 minutos sem distrações!</p>
-                
-                <div class="timer-circle">
-                    <span id="timer-display" style="font-size: 2.6rem; font-weight: 800; color: var(--primary);">25:00</span>
-                    <span style="font-size: 0.7rem; color: var(--text-muted); font-weight: 700;">SESSÃO DE FOCO</span>
+                <div class="card">
+                    <h3>🎯 Modo Foco (Pomodoro)</h3>
+                    <p style="color: var(--text-secondary); margin-top: 8px;">25 minutos de estudo concentrado.</p>
                 </div>
-
-                <div style="display:flex; gap:8px;">
-                    <button id="btn-timer-start" class="btn btn-primary" onclick="toggleTimer()">Iniciar</button>
-                    <button class="btn btn-secondary" onclick="resetTimer()">Resetar</button>
-                </div>
-            </div>
-        </div>
-
-        <div id="tab-agenda" class="tab-content">
-            <div class="card">
-                <h2 style="font-size: 1.1rem; margin-bottom: 6px;">Minha Agenda & Trabalhos</h2>
-                <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 12px;">Entregue suas atividades para ganhar +20 XP!</p>
-
-                <div class="input-group" style="margin-bottom: 12px;">
-                    <input type="text" id="task-input" placeholder="Nome do trabalho ou atividade...">
-                    <button class="btn btn-primary" style="width: auto;" onclick="addTask()">+</button>
-                </div>
-
-                <div id="task-list"></div>
-            </div>
-        </div>
-
-        <div id="tab-biblio" class="tab-content">
-            <div class="card">
-                <h2 style="font-size: 1.1rem; margin-bottom: 10px;">📚 Resumos & Conteúdos</h2>
-                <div style="display:flex; flex-direction:column; gap:10px;">
-                    <div style="padding:12px; background:var(--bg); border-radius:10px; border-left:4px solid var(--primary);">
-                        <h4 style="font-size:0.9rem;">📐 Matemática - Funções</h4>
-                        <p style="font-size:0.78rem; color:var(--text-muted);">Aprenda gráfico de 1º e 2º grau e fórmulas rápidas.</p>
-                        <button class="btn btn-secondary" style="margin-top:6px; padding:6px;" onclick="openLibModal('Matemática')">Ler Resumo</button>
-                    </div>
-                    <div style="padding:12px; background:var(--bg); border-radius:10px; border-left:4px solid var(--secondary);">
-                        <h4 style="font-size:0.9rem;">📝 Redação ENEM</h4>
-                        <p style="font-size:0.78rem; color:var(--text-muted);">Como estruturar a Proposta de Intervenção Nota 1000.</p>
-                        <button class="btn btn-secondary" style="margin-top:6px; padding:6px;" onclick="openLibModal('Redação')">Ler Resumo</button>
-                    </div>
+                <div class="card">
+                    <h3>📅 Próxima Entrega</h3>
+                    <p style="color: var(--text-secondary); margin-top: 8px;">Trabalho de Banco de Dados — Sexta-feira.</p>
                 </div>
             </div>
-        </div>
 
-    </main>
-
-    <nav>
-        <button class="nav-btn active" onclick="switchTab('home')">
-            <span class="material-icons-round">home</span>Início
-        </button>
-        <button class="nav-btn" onclick="switchTab('ia')">
-            <span class="material-icons-round">smart_toy</span>IA Edu
-        </button>
-        <button class="nav-btn" onclick="switchTab('quiz')">
-            <span class="material-icons-round">extension</span>Quiz
-        </button>
-        <button class="nav-btn" onclick="switchTab('pomodoro')">
-            <span class="material-icons-round">timer</span>Foco
-        </button>
-        <button class="nav-btn" onclick="switchTab('agenda')">
-            <span class="material-icons-round">event_note</span>Agenda
-        </button>
-    </nav>
+            <!-- CONTEÚDO PROFESSOR -->
+            <div id="content-professor" class="grid-cards hidden">
+                <div class="card">
+                    <h3>📚 Turmas Ativas</h3>
+                    <p style="color: var(--text-secondary); margin-top: 8px;">3º Ano - Técnico em Informática.</p>
+                </div>
+                <div class="card">
+                    <h3>📝 Quizzes Criados</h3>
+                    <p style="color: var(--text-secondary); margin-top: 8px;">12 avaliações publicadas.</p>
+                </div>
+                <div class="card">
+                    <h3>📊 Desempenho Geral</h3>
+                    <p style="color: var(--text-secondary); margin-top: 8px;">Média da turma: 8.5.</p>
+                </div>
+            </div>
+        </main>
+    </div>
 
     <script>
-        // --- NAVEGAÇÃO ENTRE ABAS ---
-        function switchTab(tabName) {
-            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-
-            const targetTab = document.getElementById(`tab-${tabName}`);
-            if(targetTab) targetTab.classList.add('active');
-
-            const idx = ['home', 'ia', 'quiz', 'pomodoro', 'agenda'].indexOf(tabName);
-            if(idx !== -1) {
-                document.querySelectorAll('.nav-btn')[idx].classList.add('active');
+        function selectEnvironment(role) {
+            document.getElementById('portal-selection').classList.add('hidden');
+            
+            if (role === 'aluno') {
+                document.getElementById('menu-aluno').classList.remove('hidden');
+                document.getElementById('menu-professor').classList.add('hidden');
+                document.getElementById('content-aluno').classList.remove('hidden');
+                document.getElementById('content-professor').classList.add('hidden');
+                
+                document.getElementById('user-name').innerText = "Maria Elisa";
+                document.getElementById('user-role').innerText = "Aluno";
+                document.getElementById('env-badge').innerText = "Área do Aluno";
+                document.getElementById('welcome-title').innerText = "Olá, Maria Elisa!";
+            } else {
+                document.getElementById('menu-aluno').classList.add('hidden');
+                document.getElementById('menu-professor').classList.remove('hidden');
+                document.getElementById('content-aluno').classList.add('hidden');
+                document.getElementById('content-professor').classList.remove('hidden');
+                
+                document.getElementById('user-name').innerText = "Prof. Cauã";
+                document.getElementById('user-role').innerText = "Professor";
+                document.getElementById('env-badge').innerText = "Área do Professor";
+                document.getElementById('welcome-title').innerText = "Bem-vindo, Professor!";
             }
         }
 
-        // --- MODO ESCURO ---
+        function resetPortal() {
+            document.getElementById('portal-selection').classList.remove('hidden');
+        }
+
         function toggleTheme() {
-            document.body.classList.toggle('dark-theme');
-            const icon = document.getElementById('theme-icon');
-            icon.textContent = document.body.classList.contains('dark-theme') ? 'light_mode' : 'dark_mode';
-        }
-
-        // --- SISTEMA DE GAMIFICAÇÃO & XP ---
-        let xp = 0;
-        let xpNextLevel = 50;
-
-        function addXP(amount) {
-            xp += amount;
-            document.getElementById('user-xp').textContent = `${xp} XP`;
-            
-            let levelText = "Nível 1 - Aprendiz";
-            if(xp >= 50 && xp < 100) { levelText = "Nível 2 - Estudante Focado"; xpNextLevel = 100; }
-            else if(xp >= 100 && xp < 180) { levelText = "Nível 3 - Mestre do Saber"; xpNextLevel = 180; }
-            else if(xp >= 180) { levelText = "Nível 4 - Gênio EduSmart"; xpNextLevel = 300; }
-            
-            document.getElementById('user-level').textContent = levelText;
-            
-            const pct = Math.min((xp / xpNextLevel) * 100, 100);
-            document.getElementById('xp-bar').style.width = `${pct}%`;
-        }
-
-        // --- BANCO DE DADOS DO QUIZ DINÂMICO ---
-        const quizDatabase = [
-            { cat: "Matemática", q: "Qual o resultado de (-b ± √Δ) / 2a?", opts: ["Fórmula de Bhaskara", "Teorema de Pitágoras", "Regra de Três"], correct: 0 },
-            { cat: "Tecnologia", q: "Qual a função principal da IA Edu no app?", opts: ["Jogar online", "Tirar dúvidas e auxiliar no aprendizado", "Gravar aulas em vídeo"], correct: 1 },
-            { cat: "Português", q: "O que caracteriza um texto dissertativo-argumentativo?", opts: ["Contar uma história de ficção", "Defender uma tese com argumentos sólidos", "Lista de instruções de uso"], correct: 1 },
-            { cat: "História", q: "Qual o foco principal ao estudar eventos históricos para exames?", opts: ["Apenas memorizar datas", "Compreender as causas socioeconômicas", "Decorar o nome dos reis"], correct: 1 },
-            { cat: "Ciências", q: "Qual a unidade básica da vida de todos os seres vivos?", opts: ["Átomo", "Célula", "Molécula"], correct: 1 },
-            { cat: "Tecnologia", q: "O que significa a sigla HTML na programação web?", opts: ["HyperText Markup Language", "High Tech Machine Learning", "Home Tool Main Line"], correct: 0 }
-        ];
-
-        let currentQuestions = [];
-        let qIndex = 0;
-
-        function initQuiz() {
-            // Embaralha as perguntas para sempre variar
-            currentQuestions = [...quizDatabase].sort(() => Math.random() - 0.5);
-            qIndex = 0;
-            renderQuestion();
-        }
-
-        function renderQuestion() {
-            if(qIndex >= currentQuestions.length) {
-                document.getElementById('quiz-body').innerHTML = `
-                    <div style="text-align:center; padding: 20px;">
-                        <h3>🎉 Parabéns! Você concluiu as perguntas!</h3>
-                        <p style="font-size:0.85rem; color:var(--text-muted); margin: 8px 0;">Você ganhou bastante XP nesta rodada.</p>
-                        <button class="btn btn-primary" onclick="initQuiz()">Reiniciar Quiz com Novas Ordens</button>
-                    </div>
-                `;
-                return;
-            }
-
-            const q = currentQuestions[qIndex];
-            document.getElementById('quiz-cat-tag').textContent = q.cat;
-            document.getElementById('quiz-question').textContent = `${qIndex + 1}. ${q.q}`;
-            
-            const optsDiv = document.getElementById('quiz-options');
-            optsDiv.innerHTML = '';
-
-            // Embaralha as opções também
-            q.opts.forEach((opt, idx) => {
-                const btn = document.createElement('button');
-                btn.className = 'quiz-opt';
-                btn.textContent = opt;
-                btn.onclick = () => selectAnswer(idx, q.correct, btn);
-                optsDiv.appendChild(btn);
-            });
-        }
-
-        function selectAnswer(selectedIdx, correctIdx, btnEl) {
-            const btns = document.querySelectorAll('.quiz-opt');
-            btns.forEach(b => b.disabled = true);
-
-            if(selectedIdx === correctIdx) {
-                btnEl.classList.add('correct');
-                addXP(15);
+            const body = document.body;
+            if (body.getAttribute('data-theme') === 'dark') {
+                body.removeAttribute('data-theme');
             } else {
-                btnEl.classList.add('wrong');
-                btns[correctIdx].classList.add('correct');
-            }
-
-            setTimeout(() => {
-                qIndex++;
-                renderQuestion();
-            }, 1200);
-        }
-
-        // --- IA EDU - CHAT REALISTA INTELIGENTE ---
-        function sendChatMessage() {
-            const input = document.getElementById('chat-input');
-            const text = input.value.trim();
-            if(!text) return;
-
-            const chatBox = document.getElementById('chat-box');
-            chatBox.innerHTML += `<div class="chat-msg user">${text}</div>`;
-            input.value = '';
-            chatBox.scrollTop = chatBox.scrollHeight;
-
-            setTimeout(() => {
-                let reply = "Essa é uma excelente pergunta! Para se aprofundar, veja também a nossa sessão de resumos ou use o nosso Pomodoro para manter o foco nos estudos.";
-                const q = text.toLowerCase();
-
-                if(q.includes('redação') || q.includes('enem') || q.includes('texto')) {
-                    reply = "📝 **Dica de Redação:** Divida em 4 parágrafos: 1 de Introdução (com a tese), 2 de Desenvolvimento (com argumentos e repertório) e 1 de Conclusão com a proposta de intervenção!";
-                } else if(q.includes('matematica') || q.includes('matemática') || q.includes('formula') || q.includes('bhaskara')) {
-                    reply = "📐 **Dica de Matemática:** A fórmula de Bhaskara é: x = (-b ± √Δ) / 2a, onde o delta é Δ = b² - 4ac. Fique atento aos sinais dos números!";
-                } else if(q.includes('historia') || q.includes('história') || q.includes('guerra')) {
-                    reply = "📜 **Dica de História:** Não tente apenas memorizar datas! Entenda o motivo de cada conflito e os impactos sociais e econômicos da época.";
-                } else if(q.includes('oi') || q.includes('olá') || q.includes('tudo bem')) {
-                    reply = "👋 Olá! Estou pronta para te ajudar a estudar. O que você gostaria de praticar ou aprender hoje?";
-                } else if(q.includes('resumo') || q.includes('ajuda')) {
-                    reply = "💡 Posso te ajudar com resumos rápidos! Me diga a matéria (ex: Matemática, Português, Ciências) que eu te trago as dicas principais.";
-                }
-
-                chatBox.innerHTML += `<div class="chat-msg ia">${reply}</div>`;
-                chatBox.scrollTop = chatBox.scrollHeight;
-            }, 600);
-        }
-
-        // --- POMODORO TIMER ---
-        let timerSeconds = 25 * 60;
-        let timerInterval = null;
-        let isRunning = false;
-
-        function toggleTimer() {
-            const btn = document.getElementById('btn-timer-start');
-            if(isRunning) {
-                clearInterval(timerInterval);
-                isRunning = false;
-                btn.textContent = "Continuar";
-            } else {
-                isRunning = true;
-                btn.textContent = "Pausar";
-                timerInterval = setInterval(() => {
-                    if(timerSeconds > 0) {
-                        timerSeconds--;
-                        const m = Math.floor(timerSeconds / 60).toString().padStart(2, '0');
-                        const s = (timerSeconds % 60).toString().padStart(2, '0');
-                        document.getElementById('timer-display').textContent = `${m}:${s}`;
-                    } else {
-                        clearInterval(timerInterval);
-                        alert("🎉 Parabéns! Ciclo de foco concluído! Você ganhou +25 XP!");
-                        addXP(25);
-                        resetTimer();
-                    }
-                }, 1000);
+                body.setAttribute('data-theme', 'dark');
             }
         }
-
-        function resetTimer() {
-            clearInterval(timerInterval);
-            isRunning = false;
-            timerSeconds = 25 * 60;
-            document.getElementById('timer-display').textContent = "25:00";
-            document.getElementById('btn-timer-start').textContent = "Iniciar";
-        }
-
-        // --- AGENDA & ENTREGAS DE TAREFAS ---
-        const tasks = [
-            { text: "Trabalho de Geografia - Biomas", done: false },
-            { text: "Exercícios de Álgebra", done: false }
-        ];
-
-        function renderTasks() {
-            const list = document.getElementById('task-list');
-            list.innerHTML = '';
-            tasks.forEach((t, i) => {
-                list.innerHTML += `
-                    <div style="display:flex; justify-content:space-between; align-items:center; padding:10px; background:var(--bg); border-radius:10px; margin-bottom:8px; font-size:0.85rem;">
-                        <span style="${t.done ? 'text-decoration:line-through; opacity:0.6;' : ''}">${t.text}</span>
-                        <div>
-                            ${!t.done ? `<button class="btn btn-success" style="padding:4px 8px; font-size:0.75rem; width:auto; display:inline-flex;" onclick="completeTask(${i})">Entregar (+20 XP)</button>` : '<span style="color:var(--secondary); font-weight:bold;">Entregue!</span>'}
-                        </div>
-                    </div>
-                `;
-            });
-        }
-
-        function addTask() {
-            const inp = document.getElementById('task-input');
-            if(inp.value.trim()) {
-                tasks.push({ text: inp.value.trim(), done: false });
-                inp.value = '';
-                renderTasks();
-            }
-        }
-
-        function completeTask(index) {
-            tasks[index].done = true;
-            addXP(20);
-            renderTasks();
-            alert("Atividade entregue com sucesso! Você ganhou +20 XP 🎉");
-        }
-
-        function openLibModal(subject) {
-            alert(`Acessando o resumo completo de ${subject}. Dica: Use a IA Edu para tirar dúvidas específicas desta matéria!`);
-        }
-
-        // INICIALIZAR
-        initQuiz();
-        renderTasks();
     </script>
 </body>
 </html>
