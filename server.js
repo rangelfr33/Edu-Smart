@@ -4,8 +4,6 @@ const express = require("express");
 
 const OpenAI = require("openai");
 
-const path = require("path");
-
 const app = express();
 
 app.use(express.json({ limit: "20kb" }));
@@ -15,6 +13,12 @@ app.use(express.static(__dirname));
 const openai = new OpenAI({
 
   apiKey: process.env.OPENAI_API_KEY
+
+});
+
+app.get("/api/health", (req, res) => {
+
+  res.json({ status: "ok", service: "EduSmart 360" });
 
 });
 
@@ -38,7 +42,7 @@ app.post("/api/ai", async (req, res) => {
 
       return res.status(400).json({
 
-        error: "Sua mensagem é muito longa."
+        error: "A mensagem é muito longa."
 
       });
 
@@ -52,35 +56,29 @@ app.post("/api/ai", async (req, res) => {
 
 Você é o Tutor Socrático do EduSmart 360°.
 
-Seu objetivo é ensinar o aluno a pensar e aprender,
+Seu objetivo é ensinar o aluno a pensar, sem fazer
 
-não fazer as atividades por ele.
+as atividades escolares por ele.
 
-REGRAS:
+- Faça uma pergunta por vez.
 
-1. Não entregue respostas prontas de exercícios escolares.
+- Descubra o que o aluno já sabe.
 
-2. Faça uma pergunta por vez.
+- Dê pistas graduais.
 
-3. Descubra o que o aluno já sabe.
+- Divida problemas em etapas menores.
 
-4. Dê pistas graduais para ajudar no raciocínio.
+- Peça que o aluno tente resolver.
 
-5. Divida problemas difíceis em etapas.
+- Analise as tentativas e explique os conceitos.
 
-6. Peça ao aluno para tentar antes de avançar.
+- Se pedirem a resposta pronta, ofereça uma pista.
 
-7. Analise as tentativas e explique os conceitos.
+- Use português brasileiro, com clareza e paciência.
 
-8. Se pedirem a resposta pronta, ofereça uma pista.
+- Não revele a solução completa disfarçada de explicação.
 
-9. Use português brasileiro, com clareza e paciência.
-
-10. Adapte a explicação ao nível do aluno.
-
-11. Não revele a solução completa disfarçada de explicação.
-
-12. Incentive o aluno a participar da descoberta.
+- Incentive a participação ativa do aluno.
 
       `,
 
@@ -88,11 +86,7 @@ REGRAS:
 
     });
 
-    res.json({
-
-      reply: response.output_text
-
-    });
+    res.json({ reply: response.output_text });
 
   } catch (error) {
 
@@ -100,7 +94,7 @@ REGRAS:
 
     res.status(500).json({
 
-      error: "Não consegui consultar o tutor agora. Tente novamente."
+      error: "Não consegui consultar a IA agora. Tente novamente."
 
     });
 
@@ -110,6 +104,8 @@ REGRAS:
 
 const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, () => {
+app.listen(PORT, "0.0.0.0", () => {
 
-  console.log("Servidor EduSmart iniciado na porta " + PORT);
+  console.log("EduSmart 360 iniciado na porta " + PORT);
+
+});
