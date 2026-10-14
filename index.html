@@ -1,3 +1,6 @@
+O problema principal era que a função navigateTo estava faltando a chave de fechamento } antes de começar a função sendChatMessage(). Isso fazia o interpretador de JavaScript engolir a função seguinte ou gerar um erro de sintaxe.
+Além disso, ajustei um detalhe na função toggleTheme() para alternar corretamente o atributo data-theme no <html> em vez do <body> (já que o seletor CSS usa [data-theme="dark"]).
+Aqui está o seu código completo e corrigido:
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -597,57 +600,59 @@
                 document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
                 element.classList.add('active');
             }
-        async function sendChatMessage() {
-    const input = document.getElementById('chat-input');
-    const chat = document.getElementById('chat-messages');
-    const userText = input.value.trim();
-
-    if (!userText) return;
-
-    const userDiv = document.createElement('div');
-    userDiv.className = 'msg msg-user';
-    userDiv.innerText = userText;
-    chat.appendChild(userDiv);
-
-    input.value = '';
-    input.disabled = true;
-
-    const aiDiv = document.createElement('div');
-    aiDiv.className = 'msg msg-ai';
-    aiDiv.innerText = '🤖 Edu está pensando...';
-    chat.appendChild(aiDiv);
-    chat.scrollTop = chat.scrollHeight;
-
-    try {
-        const response = await fetch(
-            'https://edu-smart-0n0z.onrender.com/api/ai',
-            {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    message: userText
-                })
-            }
-        );
-
-        const data = await response.json();
-
-        if (!response.ok) {
-            throw new Error(data.error || 'Erro ao consultar a IA.');
         }
 
-        aiDiv.innerText = data.reply || 'Não recebi uma resposta.';
-    } catch (error) {
-        console.error('Erro no EduSmart:', error);
-        aiDiv.innerText =
-            'Não consegui conectar à IA agora. Tente novamente.';
-    } finally {
-        input.disabled = false;
-        chat.scrollTop = chat.scrollHeight;
-    }
-}
+        async function sendChatMessage() {
+            const input = document.getElementById('chat-input');
+            const chat = document.getElementById('chat-messages');
+            const userText = input.value.trim();
+
+            if (!userText) return;
+
+            const userDiv = document.createElement('div');
+            userDiv.className = 'msg msg-user';
+            userDiv.innerText = userText;
+            chat.appendChild(userDiv);
+
+            input.value = '';
+            input.disabled = true;
+
+            const aiDiv = document.createElement('div');
+            aiDiv.className = 'msg msg-ai';
+            aiDiv.innerText = '🤖 Edu está pensando...';
+            chat.appendChild(aiDiv);
+            chat.scrollTop = chat.scrollHeight;
+
+            try {
+                const response = await fetch(
+                    'https://edu-smart-0n0z.onrender.com/api/ai',
+                    {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            message: userText
+                        })
+                    }
+                );
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.error || 'Erro ao consultar a IA.');
+                }
+
+                aiDiv.innerText = data.reply || 'Não recebi uma resposta.';
+            } catch (error) {
+                console.error('Erro no EduSmart:', error);
+                aiDiv.innerText = 'Não consegui conectar à IA agora. Tente novamente.';
+            } finally {
+                input.disabled = false;
+                chat.scrollTop = chat.scrollHeight;
+            }
+        }
+
         function checkQuiz(btn, isCorrect) {
             const res = document.getElementById('quiz-result');
             if (isCorrect) {
@@ -690,7 +695,12 @@
         }
 
         function toggleTheme() {
-            document.body.toggleAttribute('data-theme');
+            const html = document.documentElement;
+            if (html.hasAttribute('data-theme')) {
+                html.removeAttribute('data-theme');
+            } else {
+                html.setAttribute('data-theme', 'dark');
+            }
         }
     </script>
 </body>
