@@ -634,16 +634,28 @@
                     }
                 );
 
-                const data = await response.json();
+                const texto = await response.text();
+                let data;
 
-                if (!response.ok) {
-                    throw new Error(data.error || 'Erro ao consultar a IA.');
+                try {
+                    data = JSON.parse(texto);
+                } catch {
+                    throw new Error('Resposta inválida do servidor (HTTP ' + response.status + '): ' + texto.slice(0, 250));
                 }
 
-                aiDiv.innerText = data.reply || 'Não recebi uma resposta.';
+                if (!response.ok) {
+                    throw new Error('HTTP ' + response.status + ': ' + (data.error || texto.slice(0, 250)));
+                }
+
+                if (!data.reply) {
+                    throw new Error('O servidor respondeu, mas não enviou o campo “reply”.');
+                }
+
+                aiDiv.innerText = data.reply;
+
             } catch (error) {
                 console.error('Erro no EduSmart:', error);
-                aiDiv.innerText = 'Não consegui conectar à IA agora. Tente novamente.';
+                aiDiv.innerText = 'ERRO NO EDU: ' + error.message;
             } finally {
                 input.disabled = false;
                 chat.scrollTop = chat.scrollHeight;
